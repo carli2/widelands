@@ -2,10 +2,6 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 
 -- TODO:
 -- Weinberg -> Wein
--- Dattelhain -> Dattelkuchen
--- Olivenhain -> Oliven
--- Ölmühle -> Olivenöl
--- Schäfer + Schärer -> Wolle, Fleisch
 -- Wolle -> Garn
 -- Garn -> Ziziot
 -- Garn -> Stoff
@@ -15,13 +11,7 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 -- Gold -> Münze
 -- Münze -> Zedernholz
 -- Gold -> Blattgold
--- Weizen -> (Tenne) Weizenkörner
--- Weizenkörner -> Mehl
--- Mehl + Öl -> Fladenbrot
--- Lehm
--- Donkey
--- Leather
--- Leather -> Tephelin
+-- fur -> Tephelin
 
 image_dirname = path.dirname(__file__) .. "images/"
 
