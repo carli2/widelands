@@ -28,8 +28,7 @@ wl.Descriptions():new_worker_type {
          "walk=object",
          "animate=idle duration:1s",
          "removeobject",
-         "createware=meat",
-         "createware=fur",
+         "createware=sheep2",
          "return"
       },
       sheer = {

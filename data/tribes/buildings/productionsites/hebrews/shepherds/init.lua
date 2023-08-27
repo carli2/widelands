@@ -82,7 +82,7 @@ wl.Descriptions():new_productionsite_type {
          descname = _("hunting"),
          actions = {
             -- time total: 53 sec
-            "return=skipped when not economy needs meat",
+            "return=skipped when not economy needs sheep2",
             "callworker=hunt",
             "sleep=duration:53s"
          }
