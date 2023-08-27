@@ -14,9 +14,10 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 -- Granite Mine
 -- Coal Mine
 -- Smeltery
--- Smithy: knife + sword (iron:2)
--- workshop: granite + fur -> slingshot, axe, pick, angel
+-- workshop: granite + fur -> slingshot, axe, pick
 -- log stoff -> ship
+-- rabbi as trainer for initiation site, yeshiva & trainingssite
+-- fisher works with net instead of angel
 
 -- Soldier with: tunica + slingshot (in initiation camp)
 -- 2x attack: knife, sword (in trainingcamp)
@@ -24,6 +25,7 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 -- 3x evade -> gold, gold:2 gold:3 (in yeshiva)
 
 -- other todos:
+-- seafearing
 -- fix all help texts
 -- check for remaining barbarians_ or empire_ in all buildings and workers
 -- create graphics + animations
@@ -486,7 +488,45 @@ wl.Descriptions():new_tribe {
                }
             }
 			},
-	 -- TODO: slingshot, ziziot, urim+turim
+         {
+            name = "slingshot",
+            default_target_quantity = 10,
+            preciousness = 0,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 1
+                  pgettext("ware", "Fishing rods are needed by fishers to catch fish."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 2
+                  pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
+               }
+            }
+			},
+         {
+            name = "dagger",
+            default_target_quantity = 2,
+            preciousness = 0,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 1
+                  pgettext("ware", "Fishing rods are needed by fishers to catch fish."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 2
+                  pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
+               }
+            }
+			},
+         {
+            name = "sword_short",
+            default_target_quantity = 2,
+            preciousness = 0,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 1
+                  pgettext("ware", "Fishing rods are needed by fishers to catch fish."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 2
+                  pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
+               }
+            }
+			},
       }
    },
 
@@ -630,7 +670,7 @@ wl.Descriptions():new_tribe {
       {
          -- Tools
          {
-            name = "barbarians_blacksmith",
+            name = "hebrews_blacksmith",
             helptexts = {
                -- TRANSLATORS: Helptext for a Barbarian worker: Blacksmith
                purpose = pgettext("barbarians_worker", "Produces weapons for soldiers and tools for workers.")
@@ -648,7 +688,7 @@ wl.Descriptions():new_tribe {
          },
          {
             name = "hebrews_soldier",
-            default_target_quantity = 10,
+            default_target_quantity = 30,
             preciousness = 5,
             helptexts = {
                -- TRANSLATORS: Helptext for a Barbarian worker: Soldier
@@ -1160,6 +1200,32 @@ wl.Descriptions():new_tribe {
       },
       {
          name = "hebrews_dressmakery",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
+      {
+         name = "hebrews_weaponsmithy",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
+      {
+         name = "hebrews_initiation_site",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
             lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),

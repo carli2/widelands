@@ -29,6 +29,8 @@ init = {
 	 felling_ax = 2,
 	 sheep2 = 5,
 	 water = 15,
+	 hammer = 8,
+	 iron = 10,
       },
       workers = {
 	 hebrews_donkey = 5,
@@ -36,7 +38,8 @@ init = {
 	 hebrews_stonemason = 1,
 	 hebrews_claydigger = 1,
 	 hebrews_geologist = 1,
-	 hebrews_fisher = 3
+	 hebrews_fisher = 3,
+	 hebrews_blacksmith = 1,
       },
       soldiers = {
          [{0,0,0,0}] = 45,
