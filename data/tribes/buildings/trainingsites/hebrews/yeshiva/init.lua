@@ -3,9 +3,9 @@ push_textdomain("tribes")
 local dirname = path.dirname(__file__)
 
 wl.Descriptions():new_trainingsite_type {
-   name = "hebrews_arena",
+   name = "hebrews_yeshiva",
    -- TRANSLATORS: This is a building name used in lists of buildings
-   descname = pgettext("empire_building", "Arena"),
+   descname = pgettext("hebrews_building", "Yeshiva"),
    icon = dirname .. "menu.png",
    size = "big",
 
@@ -60,7 +60,7 @@ wl.Descriptions():new_trainingsite_type {
       },
       upgrade_soldier_evade_0 = {
          -- TRANSLATORS: Completed/Skipped/Did not start upgrading ... because ...
-         descname = pgettext("empire_building", "upgrading soldier evade from level 0 to level 1"),
+         descname = pgettext("hebrews_building", "upgrading soldier evade from level 0 to level 1"),
          actions = {
             "checksoldier=soldier:evade level:0", -- Fails when aren't any soldier of level 0 evade
             "return=failed unless site has barbarians_bread",

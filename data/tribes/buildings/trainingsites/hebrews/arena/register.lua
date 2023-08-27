@@ -1,3 +1,0 @@
-return {
-   hebrews_arena = {},
-}

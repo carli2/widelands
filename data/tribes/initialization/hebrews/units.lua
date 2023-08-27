@@ -2,16 +2,39 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 
 -- TODO:
 -- Weinberg -> Wein
--- Wolle -> Garn
--- Garn -> Ziziot
--- Garn -> Stoff
--- Stoff -> Tallit
+-- Wolle -> Garn (spinnery)
+-- Garn:4 -> Ziziot (in ziziot manufacturer)
+-- Garn:6 -> cloth (weavery)
+-- cloth ziziot:4 -> Tallit Katan (in sewery)
+-- cloth:2 ziziot:4 -> Tallit (sewery)
+-- cloth:2 -> tunica
+-- log fur blattgold -> tephilin (in workshop)
+-- Steinmetz -> Mühlstein 4x granite (Baumaterial für Mühle und winery)
 -- Eisen = Kupfererz
 -- Smeltery -> Bronze
 -- Gold -> Münze
--- Münze -> Zedernholz
+-- Münze -> Zedernholz:2
 -- Gold -> Blattgold
--- fur -> Tephelin
+-- mine consume: wine barbarians_bread
+-- Copper Mine
+-- Gold Mine
+-- Granite Mine
+-- Coal Mine
+-- Smeltery
+-- Smithy: knife + sword (iron:2)
+-- workshop: granite + fur -> slingshot, axe, pick, angel
+-- log stoff -> ship
+
+-- Soldier with: tunica + slingshot (in initiation camp)
+-- 2x attack: knife, sword (in trainingcamp)
+-- 3x health -> tallit katan, tephilin, tallit (in trainingcamp)
+-- 3x evade -> gold, gold:2 gold:3 (in yeshiva)
+
+-- other todos:
+-- fix all help texts
+-- check for remaining barbarians_ or empire_ in all buildings and workers
+-- create graphics + animations
+-- 
 
 image_dirname = path.dirname(__file__) .. "images/"
 
@@ -544,6 +567,20 @@ wl.Descriptions():new_tribe {
                purpose = pgettext("barbarians_worker", "Bakes pitta bread for the miners, soldiers and scouts.")
             }
          },
+         {
+            name = "hebrews_vinefarmer",
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian worker: Baker
+               purpose = pgettext("barbarians_worker", "Bakes pitta bread for the miners, soldiers and scouts.")
+            }
+         },
+         {
+            name = "hebrews_vintner",
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian worker: Baker
+               purpose = pgettext("barbarians_worker", "Bakes pitta bread for the miners, soldiers and scouts.")
+            }
+         },
       },
       {
          -- Mining
@@ -575,14 +612,14 @@ wl.Descriptions():new_tribe {
       {
          -- Military
          {
-            name = "barbarians_recruit",
+            name = "hebrews_recruit",
             helptexts = {
                -- TRANSLATORS: Helptext for a Barbarian worker: Recruit
                purpose = pgettext("barbarians_worker", "Eager to become a soldier and defend his tribe!")
             }
          },
          {
-            name = "barbarians_soldier",
+            name = "hebrews_soldier",
             default_target_quantity = 10,
             preciousness = 5,
             helptexts = {
@@ -1058,6 +1095,19 @@ wl.Descriptions():new_tribe {
             performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
          }
       },
+      {
+         name = "hebrews_winery",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
 
       -- Big
       {
@@ -1103,6 +1153,27 @@ wl.Descriptions():new_tribe {
       },
 
       -- Mines
+      {
+         name = "hebrews_vineyard",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Granite Mine
+            lore = pgettext("barbarians_building", "‘I can handle tons of granite, man, but no more of your vain prattle.’"),
+            lore_author = {
+               -- TRANSLATORS: Lore author helptext for a Barbarian production site: Granite Mine, part 1
+               pgettext("barbarians_building", "This phrase was the reply Rimbert the miner – later known as Rimbert the loner – gave, when he was asked to remain seated on an emergency meeting at Stonford in the year of the great flood."),
+               -- TRANSLATORS: Lore author helptext for a Barbarian production site: Granite Mine, part 2
+               pgettext("barbarians_building", "The same man had all the 244 granite blocks ready only a week later, and they still fortify the city’s levee.")
+            },
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Granite Mine
+            purpose = pgettext("barbarians_building", "Carves granite out of the rock in mountain terrain."),
+            note = {
+               -- TRANSLATORS: 'It' is a mine
+               pgettext("barbarians_building", "It cannot be enhanced.")
+            },
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Granite Mine
+            performance = pgettext("barbarians_building", "If the food supply is steady, this mine can produce granite in %s on average."):bformat(format_seconds(24))
+         }
+      },
       --[[
       {
          name = "barbarians_granitemine",
@@ -1170,7 +1241,7 @@ wl.Descriptions():new_tribe {
 
       -- Training Sites
       {
-         name = "hebrews_arena",
+         name = "hebrews_yeshiva",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian training site: Battle Arena
             lore = pgettext("barbarians_building", "‘No better friend you have in battle than the enemy’s blow that misses.’"),
@@ -1263,8 +1334,9 @@ wl.Descriptions():new_tribe {
             note = pgettext("barbarians_building", "If you’re low on soldiers to occupy new military sites, use the downward arrow button to decrease the capacity. You can also click on a soldier to send him away.")
          }
       },
+		]]--
       {
-         name = "barbarians_citadel",
+         name = "hebrews_massada",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian military site: Citadel
             lore = pgettext("barbarians_building", "‘The Citadel of Adlen surely is the finest masterpiece of Barbarian craftsmanship. Nothing as strong and big and beautiful has ever been built in such a short time.’"),
@@ -1278,6 +1350,7 @@ wl.Descriptions():new_tribe {
       },
 
       -- Seafaring/Ferry Sites - these are only displayed on seafaring/ferry maps
+		--[[
       {
          name = "barbarians_ferry_yard",
          helptexts = {
@@ -1398,7 +1471,7 @@ wl.Descriptions():new_tribe {
 
    -- Soldier strings to be used in Military Status strings
 
-   soldier_context = "barbarians_soldier",
+   soldier_context = "hebrews_soldier",
    soldier_0_sg = "%1% soldier (+%2%)",
    soldier_0_pl = "%1% soldiers (+%2%)",
    soldier_1_sg = "%1% soldier",
@@ -1407,21 +1480,21 @@ wl.Descriptions():new_tribe {
    soldier_2_pl = "%1%(+%2%) soldiers (+%3%)",
    soldier_3_sg = "%1%(+%2%) soldier",
    soldier_3_pl = "%1%(+%2%) soldiers",
-   -- TRANSLATORS: %1% is the number of Barbarian soldiers the plural refers to. %2% is the maximum number of soldier slots in the building.
-   UNUSED_soldier_0 = npgettext("barbarians_soldier", "%1% soldier (+%2%)", "%1% soldiers (+%2%)", 0),
-   -- TRANSLATORS: Number of Barbarian soldiers stationed at a militarysite.
-   UNUSED_soldier_1 = npgettext("barbarians_soldier", "%1% soldier", "%1% soldiers", 0),
-   -- TRANSLATORS: %1% is the number of Barbarian soldiers the plural refers to. %2% are currently open soldier slots in the building. %3% is the maximum number of soldier slots in the building
-   UNUSED_soldier_2 = npgettext("barbarians_soldier", "%1%(+%2%) soldier (+%3%)", "%1%(+%2%) soldiers (+%3%)", 0),
-   -- TRANSLATORS: %1% is the number of Barbarian soldiers the plural refers to. %2% are currently open soldier slots in the building.
-   UNUSED_soldier_3 = npgettext("barbarians_soldier", "%1%(+%2%) soldier", "%1%(+%2%) soldiers", 0),
+   -- TRANSLATORS: %1% is the number of Amazon soldiers the plural refers to. %2% is the maximum number of soldier slots in the building.
+   UNUSED_soldier_0 = npgettext("amazons_soldier", "%1% soldier (+%2%)", "%1% soldiers (+%2%)", 0),
+   -- TRANSLATORS: Number of Amazon soldiers stationed at a militarysite.
+   UNUSED_soldier_1 = npgettext("amazons_soldier", "%1% soldier", "%1% soldiers", 0),
+   -- TRANSLATORS: %1% is the number of Amazon soldiers the plural refers to. %2% are currently open soldier slots in the building. %3% is the maximum number of soldier slots in the building
+   UNUSED_soldier_2 = npgettext("amazons_soldier", "%1%(+%2%) soldier (+%3%)", "%1%(+%2%) soldiers (+%3%)", 0),
+   -- TRANSLATORS: %1% is the number of Amazon soldiers the plural refers to. %2% are currently open soldier slots in the building.
+   UNUSED_soldier_3 = npgettext("amazons_soldier", "%1%(+%2%) soldier", "%1%(+%2%) soldiers", 0),
 
    -- Special types
    builder = "hebrews_builder",
    carriers = {"hebrews_carrier", "hebrews_donkey"},
    geologist = "hebrews_geologist",
    scouts_house = "hebrews_scouts_hut",
-   soldier = "barbarians_soldier",
+   soldier = "hebrews_soldier",
    ship = "barbarians_ship",
    ferry = "hebrews_ferry",
    port = "hebrews_port",
@@ -1429,12 +1502,12 @@ wl.Descriptions():new_tribe {
    fastplace = {
       warehouse = "hebrews_warehouse",
       port = "hebrews_port",
-      training_small = "hebrews_arena",
+      training_small = "hebrews_yeshiva",
       training_large = "hebrews_trainingcamp",
-      military_small_primary = "barbarians_sentry",
+      military_small_primary = "hebrews_tent_small",
       military_medium_primary = "barbarians_barrier",
       military_tower = "barbarians_tower",
-      military_fortress = "barbarians_fortress",
+      military_fortress = "hebrews_massada",
       woodcutter = "hebrews_lumberjacks_hut",
       quarry = "hebrews_quarry",
       building_materials_primary = "hebrews_claydigger",
