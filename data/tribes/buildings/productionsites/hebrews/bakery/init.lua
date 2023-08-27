@@ -35,27 +35,32 @@ wl.Descriptions():new_productionsite_type {
    },
 
    working_positions = {
-      --hebrews_donkey = 1
+      hebrews_baker = 1
    },
 
    inputs = {
       { name = "water", amount = 6 },
-      { name = "wheat", amount = 6 }
+      { name = "flour", amount = 6 },
+      { name = "olive_oil", amount = 6 }
    },
 
    programs = {
       main = {
          -- TRANSLATORS: Completed/Skipped/Did not start baking bread because ...
-         descname = pgettext("barbarians_building", "baking pitta bread"),
+         descname = pgettext("hebrews_building", "baking bread"),
          actions = {
             -- time total: 20.8 + 2 * (20 + 3.6) = 68 sec
-            "return=skipped unless economy needs hebrews_bread",
-            "consume=water:3 wheat:3",
+            "return=skipped unless economy needs barbarians_bread",
+            "consume=water:3 flour:3 olive_oil:1",
             "sleep=duration:20s800ms",
             "animate=working duration:20s",
-            "produce=hebrews_bread",
+            "produce=barbarians_bread",
             "animate=working duration:20s",
-            "produce=hebrews_bread"
+            "produce=barbarians_bread",
+            "animate=working duration:20s",
+            "produce=barbarians_bread",
+            "animate=working duration:20s",
+            "produce=barbarians_bread"
          }
       },
    },

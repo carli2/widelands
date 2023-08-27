@@ -202,6 +202,31 @@ wl.Descriptions():new_tribe {
             }
          },
          {
+            name = "wheat_grains",
+            preciousness = 12,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Wheat, part 1
+                  pgettext("ware", "Wheat is essential for survival."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Wheat, part 2
+                  pgettext("barbarians_ware", "Wheat is produced by farms and consumed by bakeries, micro breweries and breweries. Cattle farms also need to be supplied with wheat.")
+               }
+            }
+         },
+         {
+            name = "flour",
+            preciousness = 12,
+            default_target_quantity = 10,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Wheat, part 1
+                  pgettext("ware", "Wheat is essential for survival."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Wheat, part 2
+                  pgettext("barbarians_ware", "Wheat is produced by farms and consumed by bakeries, micro breweries and breweries. Cattle farms also need to be supplied with wheat.")
+               }
+            }
+         },
+         {
             name = "barbarians_bread",
             default_target_quantity = 20,
             preciousness = 4,
@@ -221,6 +246,24 @@ wl.Descriptions():new_tribe {
          },
          {
             name = "wine",
+            default_target_quantity = 20,
+            preciousness = 4,
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian ware: Pitta Bread
+               purpose = pgettext("barbarians_ware", "The Barbarian bakers are best in making this flat and tasty pitta bread. It is made out of wheat and water following a secret recipe. Pitta bread is used in the taverns, inns and big inns to prepare rations, snacks and meals. It is also consumed at training sites (training camp and battle arena).")
+            }
+         },
+         {
+            name = "olives",
+            default_target_quantity = 20,
+            preciousness = 4,
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian ware: Pitta Bread
+               purpose = pgettext("barbarians_ware", "The Barbarian bakers are best in making this flat and tasty pitta bread. It is made out of wheat and water following a secret recipe. Pitta bread is used in the taverns, inns and big inns to prepare rations, snacks and meals. It is also consumed at training sites (training camp and battle arena).")
+            }
+         },
+         {
+            name = "olive_oil",
             default_target_quantity = 20,
             preciousness = 4,
             helptexts = {
@@ -473,20 +516,6 @@ wl.Descriptions():new_tribe {
                purpose = pgettext("barbarians_worker", "Works at construction sites to raise new buildings.")
             }
          },
-         {
-            name = "hebrews_shepherd",
-            helptexts = {
-               -- TRANSLATORS: Helptext for a Barbarian worker: Builder
-               purpose = pgettext("barbarians_worker", "Works at construction sites to raise new buildings.")
-            }
-         },
-         {
-            name = "hebrews_butcher",
-            helptexts = {
-               -- TRANSLATORS: Helptext for a Barbarian worker: Builder
-               purpose = pgettext("barbarians_worker", "Works at construction sites to raise new buildings.")
-            }
-         },
       },
       {
          -- Food
@@ -505,7 +534,21 @@ wl.Descriptions():new_tribe {
             }
          },
          {
-            name = "barbarians_baker",
+            name = "hebrews_shepherd",
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian worker: Builder
+               purpose = pgettext("barbarians_worker", "Works at construction sites to raise new buildings.")
+            }
+         },
+         {
+            name = "hebrews_butcher",
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Barbarian worker: Baker
+               purpose = pgettext("barbarians_worker", "Bakes pitta bread for the miners, soldiers and scouts.")
+            }
+         },
+         {
+            name = "hebrews_baker",
             helptexts = {
                -- TRANSLATORS: Helptext for a Barbarian worker: Baker
                purpose = pgettext("barbarians_worker", "Bakes pitta bread for the miners, soldiers and scouts.")
@@ -986,7 +1029,6 @@ wl.Descriptions():new_tribe {
             performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
          }
       },
-      --[[
       {
          name = "hebrews_bakery",
          helptexts = {
@@ -1000,11 +1042,36 @@ wl.Descriptions():new_tribe {
             performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
          }
       },
-      ]]--
+      {
+         name = "hebrews_threshing_floor",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
+      {
+         name = "hebrews_mill",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
 
       -- Big
-      --[[{
-         name = "hebrews_cattlefarm",
+      {
+         name = "hebrews_donkeyfarm",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian production site: Cattle Farm
             lore = pgettext("barbarians_building", "‘The smart leader builds roads, while the really wise leader breeds cattle.’"),
@@ -1015,9 +1082,23 @@ wl.Descriptions():new_tribe {
             -- TRANSLATORS: Performance helptext for a Barbarian production site: Cattle Farm
             performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce an ox in %s on average."):bformat(format_seconds(30))
          }
-      },]]--
+      },
       {
          name = "hebrews_farm",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Farm
+            lore = pgettext("barbarians_building", [[‘See the crop fields from here to the horizons. They are a huge, heaving, golden sea.<br>]] ..
+                  [[Oh wheat, source of wealth, soul of beer, strength of our warriors!’]]),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Farm
+            lore_author = pgettext("barbarians_building", "Line from the harvesting song ‘The Wealth of the Fields’"),
+            -- TRANSLATORS: Purpose helptext for production site: Farm
+            purpose = pgettext("building", "Sows and harvests wheat."),
+            -- TRANSLATORS: Performance helptext for production site: Farm
+            performance = pgettext("barbarians_building", "The farmer needs %1% on average to sow and harvest a sheaf of wheat."):bformat(format_minutes_seconds(1, 40))
+         }
+      },
+      {
+         name = "hebrews_oliveplant",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian production site: Farm
             lore = pgettext("barbarians_building", [[‘See the crop fields from here to the horizons. They are a huge, heaving, golden sea.<br>]] ..

@@ -22,12 +22,13 @@ init = {
 
    hq = prefilled_buildings(player, { "hebrews_headquarters", sf.x, sf.y,
       wares = {
-	 granite = 20,
-	 clay = 20,
+	 granite = 30,
+	 clay = 50,
          log = 5,
 	 pick = 5,
 	 felling_ax = 2,
 	 sheep2 = 5,
+	 water = 15,
       },
       workers = {
 	 hebrews_donkey = 5,
