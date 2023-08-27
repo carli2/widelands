@@ -491,7 +491,7 @@ wl.Descriptions():new_tribe {
       {
          -- Food
          {
-            name = "barbarians_fisher",
+            name = "hebrews_fisher",
             helptexts = {
                -- TRANSLATORS: Helptext for a Barbarian worker: Fisher
                purpose = pgettext("barbarians_worker", "Catches fish in the sea.")
@@ -850,6 +850,21 @@ wl.Descriptions():new_tribe {
       },
 
       -- Small
+      {
+         name = "hebrews_fishers_hut",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Quarry
+            lore = pgettext("barbarians_building", "‘We open up roads and make houses from mountains.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Quarry
+            lore_author = pgettext("barbarians_building", "Slogan of the stonemasons’ guild"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Quarry
+            purpose = pgettext("barbarians_building", "Cuts raw pieces of granite out of rocks in the vicinity."),
+            -- TRANSLATORS: Note helptext for a Barbarian production site: Quarry
+            note = pgettext("barbarians_building", "The quarry needs rocks to cut within the work area."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Quarry
+            performance = pgettext("barbarians_building", "The stonemason pauses %s before going back to work again."):bformat(format_minutes_seconds(1, 5))
+         }
+      },
       {
          name = "hebrews_well",
          helptexts = {
@@ -1354,7 +1369,7 @@ wl.Descriptions():new_tribe {
       building_materials_primary = "hebrews_claydigger",
       building_materials_secondary = "barbarians_lime_kiln",
       building_materials_tertiary = "barbarians_reed_yard",
-      fisher = "barbarians_fishers_hut",
+      fisher = "hebrews_fishers_hut",
       well = "hebrews_well",
       farm_primary = "barbarians_farm",
       bakery = "barbarians_bakery",

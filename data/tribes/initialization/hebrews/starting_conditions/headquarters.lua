@@ -34,7 +34,8 @@ init = {
          hebrews_builder = 5,
 	 hebrews_stonemason = 1,
 	 hebrews_claydigger = 1,
-	 hebrews_geologist = 1
+	 hebrews_geologist = 1,
+	 hebrews_fisher = 3
       },
       soldiers = {
          [{0,0,0,0}] = 45,
