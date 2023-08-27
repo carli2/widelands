@@ -50,6 +50,7 @@ wl.Descriptions():new_productionsite_type {
             "sleep=duration:15s",
             "playsound=sound/atlanteans/goldspin priority:50% allow_multiple",
             "animate=working duration:15s",
+            "produce=yarn",
             "produce=yarn"
          }
       },

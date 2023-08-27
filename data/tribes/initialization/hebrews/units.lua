@@ -1,13 +1,6 @@
 descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibility with 1.0, do not use.
 
 -- TODO:
--- Weinberg -> Wein
--- Wolle -> Garn (spinnery)
--- Garn:4 -> Ziziot (in ziziot manufacturer)
--- Garn:6 -> cloth (weavery)
--- cloth ziziot:4 -> Tallit Katan (in sewery)
--- cloth:2 ziziot:4 -> Tallit (sewery)
--- cloth:2 -> tunica
 -- log fur blattgold -> tephilin (in workshop)
 -- Steinmetz -> Mühlstein 4x granite (Baumaterial für Mühle und winery)
 -- Eisen = Kupfererz
@@ -158,15 +151,6 @@ wl.Descriptions():new_tribe {
                }
             }
          },
-         {
-            name = "cloth",
-            default_target_quantity = 10,
-            preciousness = 0,
-            helptexts = {
-               -- TRANSLATORS: Helptext for a Barbarian ware: Cloth
-               purpose = pgettext("barbarians_ware", "Cloth is needed for Barbarian ships. It is produced out of reed.")
-            }
-         }
       },
       {
          -- Food
@@ -374,6 +358,24 @@ wl.Descriptions():new_tribe {
 				}
 			},
 			{
+				name = "zizit",
+				default_target_quantity = 10,
+				preciousness = 20,
+				helptexts = {
+					-- TRANSLATORS: Helptext for Hebrews ware: Wool
+					purpose = pgettext("hebrews_ware", "Most textiles are made from wool")
+				}
+			},
+			{
+				name = "cloth",
+				default_target_quantity = 10,
+				preciousness = 20,
+				helptexts = {
+					-- TRANSLATORS: Helptext for Hebrews ware: Wool
+					purpose = pgettext("hebrews_ware", "Most textiles are made from wool")
+				}
+			},
+			{
 				name = "fur",
 				default_target_quantity = 10,
 				preciousness = 20,
@@ -457,7 +459,33 @@ wl.Descriptions():new_tribe {
                   pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
                }
             }
-			}
+			},
+         {
+            name = "tallit_katan",
+            default_target_quantity = 2,
+            preciousness = 0,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 1
+                  pgettext("ware", "Fishing rods are needed by fishers to catch fish."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 2
+                  pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
+               }
+            }
+			},
+         {
+            name = "tallit",
+            default_target_quantity = 2,
+            preciousness = 0,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 1
+                  pgettext("ware", "Fishing rods are needed by fishers to catch fish."),
+                  -- TRANSLATORS: Helptext for a Barbarian ware: Fishing Rod, part 2
+                  pgettext("barbarians_ware", "They are one of the basic tools produced in a metal workshop (but cease to be produced by the building if it is enhanced to an ax workshop and war mill).")
+               }
+            }
+			},
 	 -- TODO: slingshot, ziziot, urim+turim
       }
    },
@@ -1014,23 +1042,32 @@ wl.Descriptions():new_tribe {
             }
          }
       },
-      --[[
-      {
-         name = "barbarians_well",
-         helptexts = {
-            -- TRANSLATORS: Lore helptext for a Barbarian production site: Well
-            lore = pgettext("barbarians_building", [[‘Oh how sweet is the source of life,<br> that comes down from the sky <br> and lets the earth drink.’] ]),
-            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Well
-            lore_author = pgettext("barbarians_building", "Song written by Sigurd the Bard when the first rain fell after the Great Drought in the 21ˢᵗ year of Chat’Karuth’s reign."),
-            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Well
-            purpose = pgettext("building", "Draws water out of the deep."),
-            -- TRANSLATORS: Performance helptext for a Barbarian production site: Well
-            performance = pgettext("barbarians_building", "The carrier needs %s to get one bucket full of water."):bformat(format_seconds(40))
-         }
-      },
-      ]]--
       {
          name = "hebrews_scouts_hut",
+         helptexts = {
+            no_scouting_building_connected = pgettext("barbarians_building", "You need to connect this flag to a scout’s hut before you can send a scout here."),
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Scout's Hut
+            lore = pgettext("barbarians_building", "‘Behind the next hill there might be wealth and happiness but also hostility and doom.<br>He who will not explore it commits the crime of stupidity.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Scout's Hut
+            lore_author = pgettext("barbarians_building", "Chat’Karuth<br>at the oath taking ceremony of the first scout troupe"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Scout's Hut
+            purpose = pgettext("building", "Explores unknown territory.")
+         }
+      },
+      {
+         name = "hebrews_spinning_mill",
+         helptexts = {
+            no_scouting_building_connected = pgettext("barbarians_building", "You need to connect this flag to a scout’s hut before you can send a scout here."),
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Scout's Hut
+            lore = pgettext("barbarians_building", "‘Behind the next hill there might be wealth and happiness but also hostility and doom.<br>He who will not explore it commits the crime of stupidity.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Scout's Hut
+            lore_author = pgettext("barbarians_building", "Chat’Karuth<br>at the oath taking ceremony of the first scout troupe"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Scout's Hut
+            purpose = pgettext("building", "Explores unknown territory.")
+         }
+      },
+      {
+         name = "hebrews_zizijot_makers_hut",
          helptexts = {
             no_scouting_building_connected = pgettext("barbarians_building", "You need to connect this flag to a scout’s hut before you can send a scout here."),
             -- TRANSLATORS: Lore helptext for a Barbarian production site: Scout's Hut
@@ -1097,6 +1134,32 @@ wl.Descriptions():new_tribe {
       },
       {
          name = "hebrews_winery",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
+      {
+         name = "hebrews_weaving_mill",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
+            lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
+            -- TRANSLATORS: Lore author helptext for a Barbarian production site: Bakery
+            lore_author = pgettext("barbarians_building", "Khantarakh, ‘The Modern Barbarian Economy’,<br>3ʳᵈ cowhide ‘Craftsmanship and Trade’"),
+            -- TRANSLATORS: Purpose helptext for a Barbarian production site: Bakery
+            purpose = pgettext("barbarians_building", "Bakes pitta bread for soldiers and miners alike."),
+            -- TRANSLATORS: Performance helptext for a Barbarian production site: Bakery
+            performance = pgettext("barbarians_building", "If all needed wares are delivered in time, this building can produce a pitta bread in %s on average."):bformat(format_seconds(34))
+         }
+      },
+      {
+         name = "hebrews_dressmakery",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Barbarian production site: Bakery
             lore = pgettext("barbarians_building", "‘He who has enough bread will never be too tired to dig the ore and wield the ax.’"),
