@@ -1,3 +1,3 @@
 return {
-   sheep = { "eatable" }
+   sheep = { "eatable", "kosher" }
 }
