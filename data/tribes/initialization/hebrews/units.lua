@@ -1,6 +1,7 @@
 descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibility with 1.0, do not use.
 
 -- TODO:
+-- workshop: granite + fur -> slingshot, axe, pick, tephilin
 -- log fur blattgold -> tephilin (in workshop)
 -- Steinmetz -> Mühlstein 4x granite (Baumaterial für Mühle und winery)
 -- Eisen = Kupfererz
@@ -14,7 +15,6 @@ descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibi
 -- Granite Mine
 -- Coal Mine
 -- Smeltery
--- workshop: granite + fur -> slingshot, axe, pick
 -- log stoff -> ship
 -- rabbi as trainer for initiation site, yeshiva & trainingssite
 -- fisher works with net instead of angel
