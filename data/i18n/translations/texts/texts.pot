@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Widelands svnVERSION\n"
 "Report-Msgid-Bugs-To: https://www.widelands.org/wiki/ReportingBugs/\n"
-"POT-Creation-Date: 2026-01-01 03:54+0000\n"
+"POT-Creation-Date: 2026-02-13 22:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <widelands-public@lists.sourceforge.net>\n"
@@ -580,6 +580,7 @@ msgstr ""
 
 #: ../../../../data/txts/tips/barbarians.lua:4
 #: ../../../../data/txts/tips/empire.lua:4
+#: ../../../../data/txts/tips/hebrews.lua:8
 msgid ""
 "Keep an eye on your fishers. After fish resources are exhausted in their "
 "work area, they will stop fishing."
@@ -853,6 +854,24 @@ msgstr ""
 msgid ""
 "Trading can help your economy and strengthen relationships between players. "
 "Learn the basics in the tutorial ‘Economy and Trading’."
+msgstr ""
+
+#: ../../../../data/txts/tips/hebrews.lua:4
+msgid ""
+"The Hebrews have no wood of their own. Trade gold at the market to obtain "
+"this scarce resource."
+msgstr ""
+
+#: ../../../../data/txts/tips/hebrews.lua:12
+msgid ""
+"Hebrew soldiers fight with faith! Equip them with tefilin, tallit and ziziot "
+"for spiritual strength."
+msgstr ""
+
+#: ../../../../data/txts/tips/hebrews.lua:16
+msgid ""
+"Gold is your most valuable resource. Build gold mines early and use the "
+"market to trade for wood."
 msgstr ""
 
 #: ../../../../data/txts/tips/multiplayer.lua:4

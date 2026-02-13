@@ -52,7 +52,7 @@ init = {
             hebrews_stonemason = 2,
             hebrews_fisher = 3,
             hebrews_shepherd = 1,
-            hebrews_donkey = 5,
+            hebrews_donkey = 15,
          },
          -- Max health: 3, Max attack: 5, Max defense: 0, Max evade: 2
          soldiers = {

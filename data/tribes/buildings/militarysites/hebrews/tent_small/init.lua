@@ -24,7 +24,11 @@ wl.Descriptions():new_militarysite_type {
       },
    },
 
-   aihints = {},
+   aihints = {
+      expansion = true,
+      fighting = true,
+      prohibited_till = 300
+   },
 
    max_soldiers = 3,
    heal_per_second = 60, -- very low -> smallest building

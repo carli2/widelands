@@ -29,7 +29,10 @@ wl.Descriptions():new_productionsite_type {
    },
 
    aihints = {
-      basic_amount = 6
+      basic_amount = 2,
+      prohibited_till = 450,
+      very_weak_ai_limit = 1,
+      weak_ai_limit = 3,
    },
 
    working_positions = {

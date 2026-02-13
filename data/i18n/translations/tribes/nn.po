@@ -1,6 +1,6 @@
 # Widelands PATH/TO/FILE.PO
 # Copyright (C) 2005-2026 Widelands Development Team
-# 
+#
 # Translators:
 # GunChleoc, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012
@@ -11,14 +11,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Widelands\n"
 "Report-Msgid-Bugs-To: https://www.widelands.org/wiki/ReportingBugs/\n"
-"POT-Creation-Date: 2026-02-09 04:27+0000\n"
+"POT-Creation-Date: 2026-02-13 22:41+0000\n"
 "PO-Revision-Date: 2015-11-03 18:55+0000\n"
 "Last-Translator: Ola Haugen Havrevoll <havrevoll@gmail.com>, 2025-2026\n"
 "Language-Team: Norwegian Nynorsk (http://app.transifex.com/widelands/widelands/language/nn/)\n"
+"Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nn\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -48,6 +48,13 @@ msgstr "Marknad"
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/markets/frisians/market/init.lua:8
 msgctxt "frisians_building"
+msgid "Market"
+msgstr "Marknad"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/markets/hebrews/market/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
 msgid "Market"
 msgstr "Marknad"
 
@@ -1167,15 +1174,97 @@ msgctxt "frisians_building"
 msgid "Your soldiers defeated the enemy at the high wooden tower."
 msgstr "Soldatane dine slo fienden ved det høge tretårnet."
 
-#. TRANSLATORS: This is a name used in lists of buildings for buildings under
-#. construction
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Massada"
+msgstr "Nassau"
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:42
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers have occupied your castle."
+msgstr "Soldatane dine har teke borga di i bruk."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:44
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your castle discovered an aggressor."
+msgstr "Borga di oppdaga ein angripar."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:46
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your castle is under attack."
+msgstr "Borga di er under åtak."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:48
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The enemy defeated your soldiers at the castle."
+msgstr "Fienden slo soldatane dine ved borga."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:50
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers defeated the enemy at the castle."
+msgstr "Soldatane dine slo fienden ved borga."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Small army tent"
+msgstr "Lita rustningssmie"
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:40
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers have occupied your small tent."
+msgstr "Soldatane dine har teke det vesle tårnet ditt i bruk."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:42
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your small tent discovered an aggressor."
+msgstr "Det vesle tårnet ditt oppdaga ein angripar."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:44
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your small tent is under attack."
+msgstr "Det vesle tårnet ditt er under åtak."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:46
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The enemy defeated your soldiers at the small tent."
+msgstr "Fienden slo soldatane dine ved det vesle tårnet."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:48
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers defeated the enemy at the small tent."
+msgstr "Soldatane dine slo fienden ved det vesle tårnet."
+
+#. TRANSLATORS: This is a name used in lists of buildings for buildings under construction
 #: ../../../../data/tribes/buildings/partially_finished/constructionsite/init.lua:61
 msgctxt "building"
 msgid "Construction Site"
 msgstr "Byggjeplass"
 
-#. TRANSLATORS: This is a name used in lists of buildings for buildings being
-#. taken apart
+#. TRANSLATORS: This is a name used in lists of buildings for buildings being taken apart
 #: ../../../../data/tribes/buildings/partially_finished/dismantlesite/init.lua:58
 msgctxt "building"
 msgid "Dismantle Site"
@@ -1265,6 +1354,19 @@ msgstr "Kassavaplantasje"
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/frisians/tavern/init.lua:88
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:49
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:49
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:54
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:47
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:58
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:59
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:50
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:52
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:50
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:53
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:44
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:52
 msgid "working"
 msgstr "arbeider"
 
@@ -1288,6 +1390,9 @@ msgstr "å hausta kassava"
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:109
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:100
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:74
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:77
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:76
 msgid "No Fields"
 msgstr "Ingen åkrar"
 
@@ -1301,14 +1406,15 @@ msgstr "Ingen åkrar"
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:91
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:110
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:101
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:75
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:77
 msgid "Out of Fields"
 msgstr "Tomt for åkrar"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/cassava_plantation/init.lua:83
 msgctxt "amazons_building"
-msgid ""
-"The farmer working at this cassava plantation has no cleared soil to plant "
-"her seeds."
+msgid "The farmer working at this cassava plantation has no cleared soil to plant her seeds."
 msgstr "Bonden ved denne kassavaplantasjen har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1365,9 +1471,7 @@ msgstr "å hausta kakao"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/cocoa_farm/init.lua:91
 msgctxt "amazons_building"
-msgid ""
-"The cocoa farmer working at this cocoa farm has no cleared soil to plant her"
-" seeds."
+msgid "The cocoa farmer working at this cocoa farm has no cleared soil to plant her seeds."
 msgstr "Kakaobonden ved denne kakaogarden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1378,29 +1482,26 @@ msgstr "Kjolesaum"
 
 #. TRANSLATORS: Completed/Skipped/Did not start sewing a tunic because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:74
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:64
 msgid "sewing a tunic"
 msgstr "å sy ein tunika"
 
-#. TRANSLATORS: Completed/Skipped/Did not start producing a light wooden armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start producing a light wooden armor because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:86
 msgid "making a light wooden armor"
 msgstr "å laga ein lett trerustning"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a wooden helmet because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a wooden helmet because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:98
 msgid "making a wooden helmet"
 msgstr "å laga ein trehjelm"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a warrior’s coat
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a warrior’s coat because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:110
 msgid "sewing a warrior’s coat"
 msgstr "å sy ei krigarkåpe"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making sturdy boots because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making sturdy boots because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:122
 msgid "making sturdy boots"
 msgstr "å laga solide støvlar"
@@ -1415,14 +1516,12 @@ msgstr "å laga snøgge støvlar"
 msgid "making hero boots"
 msgstr "å laga heltestøvlar"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a padded vest because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a padded vest because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:158
 msgid "making a padded vest"
 msgstr "å laga ein polstra vest"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a padded protector
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a padded protector because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:170
 msgid "making a padded protector"
 msgstr "å laga ein polstra vernar"
@@ -1471,8 +1570,7 @@ msgctxt "amazons_building"
 msgid "Gardening Center"
 msgstr "Hagesenter"
 
-#. TRANSLATORS: Completed/Skipped/Did not start enhancing the fertility of
-#. land because ...
+#. TRANSLATORS: Completed/Skipped/Did not start enhancing the fertility of land because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/gardening_center/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/amazons/gardening_center/init.lua:67
 msgid "enhancing the fertility of land"
@@ -1500,6 +1598,9 @@ msgstr "Gullgravarbustad"
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:72
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:69
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:39
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:54
 msgid "mining gold"
 msgstr "å utvinna gull"
 
@@ -1512,6 +1613,8 @@ msgstr "å utvinna gull"
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:83
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:104
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:90
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:82
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:72
 msgid "No Gold"
 msgstr "Inkje gull"
 
@@ -1524,15 +1627,14 @@ msgstr "Inkje gull"
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:84
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:105
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:91
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:83
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:73
 msgid "Main Gold Vein Exhausted"
 msgstr "Gullhovudåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/gold_digger_dwelling/init.lua:69
 msgctxt "amazons_building"
-msgid ""
-"This gold digger dwelling’s main vein is exhausted. Expect strongly "
-"diminished returns on investment. You should consider dismantling or "
-"destroying it."
+msgid "This gold digger dwelling’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra til denne gullgravarbustaden er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja han."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1568,9 +1670,7 @@ msgstr "Tomt for vilt og fisk"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/amazons/hunter_gatherers_hut/init.lua:79
 msgctxt "amazons_building"
-msgid ""
-"The hunter-gatherer working out of this hunter-gatherer’s hut can’t find any"
-" game or fish in her work area."
+msgid "The hunter-gatherer working out of this hunter-gatherer’s hut can’t find any game or fish in her work area."
 msgstr "Jeger-sankaren i denne jeger- og sankarhytta finn ikkje noko vilt eller fisk i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1612,12 +1712,16 @@ msgid "cutting lianas"
 msgstr "hogging av lianar"
 
 #. TRANSLATORS: Short for "No Tree to Cut Lianas" for a resource
+#. TRANSLATORS: Short for "No Tree to Collect Branches" for a resource
+#. TRANSLATORS: Short for "No Trees" for a resource
 #: ../../../../data/tribes/buildings/productionsites/amazons/liana_cutters_hut/init.lua:52
 #: ../../../../data/tribes/buildings/productionsites/amazons/woodcutters_hut/init.lua:65
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/woodcutters_house/init.lua:50
 #: ../../../../data/tribes/buildings/productionsites/barbarians/lumberjacks_hut/init.lua:62
 #: ../../../../data/tribes/buildings/productionsites/empire/lumberjacks_house/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/frisians/woodcutters_house/init.lua:66
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:55
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:54
 msgid "No Trees"
 msgstr "Ingen tre"
 
@@ -1627,10 +1731,7 @@ msgstr "Ingen tre for å hogga lianar"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/liana_cutters_hut/init.lua:54
 msgctxt "amazons_building"
-msgid ""
-"The liana cutter working at this site can’t find any tree in her work area. "
-"You should consider dismantling or destroying the building or building a "
-"jungle preserver’s hut."
+msgid "The liana cutter working at this site can’t find any tree in her work area. You should consider dismantling or destroying the building or building a jungle preserver’s hut."
 msgstr "Lianehoggaren som arbeider her finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja ei jungelvernarhytte."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1639,20 +1740,17 @@ msgctxt "amazons_building"
 msgid "Rare Tree Cutter’s Hut"
 msgstr "Sjeldsynt-tre-hoggarhytte"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:42
 msgid "harvesting balsa"
 msgstr "hausting av balsa"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:54
 msgid "harvesting rubber"
 msgstr "hausting av gummi"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:66
 msgid "harvesting ironwood"
 msgstr "hausting av jernved"
@@ -1663,20 +1761,17 @@ msgctxt "amazons_building"
 msgid "Rare Tree Plantation"
 msgstr "Plantasje for sjeldne tre"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:56
 msgid "planting balsa tree"
 msgstr "planting av balsatre"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:69
 msgid "planting rubber tree"
 msgstr "planting av gummitre"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:82
 msgid "planting ironwood tree"
 msgstr "planting av jernvedtre"
@@ -1709,6 +1804,8 @@ msgstr "Speidarhytte"
 #: ../../../../data/tribes/buildings/productionsites/empire/scouts_house/init.lua:63
 #: ../../../../data/tribes/buildings/productionsites/frisians/scouts_house/init.lua:58
 #: ../../../../data/tribes/buildings/productionsites/frisians/scouts_house/init.lua:70
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:59
 msgid "scouting"
 msgstr "speiding"
 
@@ -1718,8 +1815,7 @@ msgctxt "amazons_building"
 msgid "Shipyard"
 msgstr "Skipsverft"
 
-#. TRANSLATORS: Completed/Skipped/Did not start constructing a ship because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start constructing a ship because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/shipyard/init.lua:66
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/shipyard/init.lua:83
 #: ../../../../data/tribes/buildings/productionsites/barbarians/shipyard/init.lua:80
@@ -1743,8 +1839,7 @@ msgstr "Steinverkstad"
 msgid "making a shovel"
 msgstr "laging av spade"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a felling ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a felling ax because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:99
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:118
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:75
@@ -1756,6 +1851,7 @@ msgstr "laging av felleøks"
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:173
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:196
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:179
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:61
 msgid "making a pick"
 msgstr "laging av hakke"
 
@@ -1764,8 +1860,7 @@ msgstr "laging av hakke"
 msgid "making a machete"
 msgstr "laging av machete"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making kitchen tools because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making kitchen tools because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:135
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:183
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:166
@@ -1779,6 +1874,7 @@ msgstr "laging av kjøkkenreiskap"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:157
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:140
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:154
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:73
 msgid "making a hammer"
 msgstr "laging av hammar"
 
@@ -1793,8 +1889,7 @@ msgstr "laging av meisel"
 msgid "making needles"
 msgstr "laging av nåler"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a stone bowl because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a stone bowl because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:183
 msgid "making a stone bowl"
 msgstr "laging av steinskål"
@@ -1804,20 +1899,17 @@ msgstr "laging av steinskål"
 msgid "making firestones"
 msgstr "laging av fyrtøy"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a wooden spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a wooden spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:207
 msgid "making a wooden spear"
 msgstr "laging av trespyd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a stone-tipped spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a stone-tipped spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:219
 msgid "making a stone-tipped spear"
 msgstr "laging av spyd med steinspiss"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hardened spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hardened spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:231
 msgid "making a hardened spear"
 msgstr "laging av herda spyd"
@@ -1838,6 +1930,7 @@ msgstr "hogging av granitt"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:60
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:80
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:66
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:52
 msgid "No Rocks"
 msgstr "Ingen stein"
 
@@ -1846,14 +1939,13 @@ msgstr "Ingen stein"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:61
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:81
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:53
 msgid "Out of Rocks"
 msgstr "Tomt for stein"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/stonecutters_hut/init.lua:50
 msgctxt "amazons_building"
-msgid ""
-"The stonecutter working at this stonecutter’s hut can’t find any rocks in "
-"her work area."
+msgid "The stonecutter working at this stonecutter’s hut can’t find any rocks in her work area."
 msgstr "Steinhoggaren som arbeider i denne steinhoggarhytta finn ikkje noko stein i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1880,6 +1972,8 @@ msgstr "gruvedrift"
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:104
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:75
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:54
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:65
 msgid "mining granite"
 msgstr "utvinning av granitt"
 
@@ -1900,9 +1994,7 @@ msgstr "Hovudsteinåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/stonemine/init.lua:94
 msgctxt "amazons_building"
-msgid ""
-"This stone mine’s main vein is exhausted. Expect strongly diminished returns"
-" on investment. You should consider dismantling or destroying it."
+msgid "This stone mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra i denne steingruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1928,6 +2020,7 @@ msgstr "Vass-samlarhytte"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/well/init.lua:67
 #: ../../../../data/tribes/buildings/productionsites/empire/well/init.lua:62
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:64
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:56
 msgid "No Water"
 msgstr "Inkje vatn"
 
@@ -1936,14 +2029,13 @@ msgstr "Inkje vatn"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/well/init.lua:68
 #: ../../../../data/tribes/buildings/productionsites/empire/well/init.lua:63
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:65
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:57
 msgid "Out of Water"
 msgstr "Tomt for vatn"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/water_gatherers_hut/init.lua:57
 msgctxt "amazons_building"
-msgid ""
-"The carrier working at this water gatherer’s hut can’t find any water in its"
-" vicinity."
+msgid "The carrier working at this water gatherer’s hut can’t find any water in its vicinity."
 msgstr "Beraren som arbeider i denne vass-samlarhytta finn ikkje noko vatn i nærleiken."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1990,10 +2082,7 @@ msgstr "Tomt for tre"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/woodcutters_hut/init.lua:67
 msgctxt "amazons_building"
-msgid ""
-"The woodcutter working at this woodcutter’s hut can’t find any trees in her "
-"work area. You should consider dismantling or destroying the building or "
-"building a jungle preserver’s hut."
+msgid "The woodcutter working at this woodcutter’s hut can’t find any trees in her work area. You should consider dismantling or destroying the building or building a jungle preserver’s hut."
 msgstr "Tømmerhuggaren som arbeider i denne tømmerhoggarhytta finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja ei jungelvernarhytte."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2002,14 +2091,12 @@ msgctxt "atlanteans_building"
 msgid "Armor Smithy"
 msgstr "Rustningssmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a steel shield because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a steel shield because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/armorsmithy/init.lua:223
 msgid "forging a steel shield"
 msgstr "smiing av stålskjold"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced shield
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced shield because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/armorsmithy/init.lua:235
 msgid "forging an advanced shield"
 msgstr "smiing av avansert skjold"
@@ -2049,17 +2136,14 @@ msgstr "Svartrotgard"
 msgid "planting blackroot"
 msgstr "planting av svartrot"
 
-#. TRANSLATORS: Completed/Skipped/Did not start harvesting blackroot because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting blackroot because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/blackroot_farm/init.lua:72
 msgid "harvesting blackroot"
 msgstr "hausting av svartrot"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/blackroot_farm/init.lua:86
 msgctxt "atlanteans_building"
-msgid ""
-"The blackroot farmer working at this blackroot farm has no cleared soil to "
-"plant his seeds."
+msgid "The blackroot farmer working at this blackroot farm has no cleared soil to plant his seeds."
 msgstr "Svartrotbonden på denne svartrotgarden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2126,9 +2210,7 @@ msgstr "Hovudkolåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/coalmine/init.lua:97
 msgctxt "atlanteans_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2153,9 +2235,7 @@ msgstr "Hovudkrystallåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/crystalmine/init.lua:160
 msgctxt "atlanteans_building"
-msgid ""
-"This crystal mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. You should consider dismantling or destroying it."
+msgid "This crystal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra i denne krystallgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2176,8 +2256,7 @@ msgstr "hausting av mais"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/farm/init.lua:90
 msgctxt "atlanteans_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Bonden som arbeider på denne garden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2197,6 +2276,7 @@ msgstr "Fiskeoppdrettar"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:65
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:69
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:54
 msgid "No Fish"
 msgstr "Ingen fisk"
 
@@ -2205,16 +2285,13 @@ msgstr "Ingen fisk"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:66
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:57
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:70
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:55
 msgid "Out of Fish"
 msgstr "Tomt for fisk"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishbreeders_house/init.lua:57
 msgctxt "atlanteans_building"
-msgid ""
-"The fish breeder working out of this fish breeder’s house can’t find any "
-"water where he can breed fish in his work area. Remember that you can only "
-"regenerate your fish resources if there ever were some fish in the vicinity "
-"in the first place."
+msgid "The fish breeder working out of this fish breeder’s house can’t find any water where he can breed fish in his work area. Remember that you can only regenerate your fish resources if there ever were some fish in the vicinity in the first place."
 msgstr "Fiskeoppdrettaren i dette fiskeoppdrettarhuset finn ikkje noko vatn i arbeidsområdet der han kan ala opp fisk. Hugs at du berre kan regenerera fiskeressursane om det opphavleg var fisk i nærleiken."
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishbreeders_house/init.lua:61
@@ -2233,15 +2310,13 @@ msgstr "Fiskarhus"
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:43
 #: ../../../../data/tribes/buildings/productionsites/frisians/aqua_farm/init.lua:86
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:56
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:45
 msgid "fishing"
 msgstr "fisking"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishers_house/init.lua:58
 msgctxt "atlanteans_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area. Remember that you can increase the number of existing fish by "
-"building a fish breeder’s house."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area. Remember that you can increase the number of existing fish by building a fish breeder’s house."
 msgstr "Fiskaren i dette fiskarhuset finn ikkje noko fisk i arbeidsområdet sitt. Hugs at du kan auka mengda fisk ved å byggja eit fiskealarhus."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2269,9 +2344,7 @@ msgstr "Gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/goldmine/init.lua:86
 msgctxt "atlanteans_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2293,10 +2366,12 @@ msgid "Hunter’s House"
 msgstr "Jegerhus"
 
 #. TRANSLATORS: Completed/Skipped/Did not start hunting because ...
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/hunters_house/init.lua:39
 #: ../../../../data/tribes/buildings/productionsites/barbarians/hunters_hut/init.lua:57
 #: ../../../../data/tribes/buildings/productionsites/empire/hunters_house/init.lua:42
 #: ../../../../data/tribes/buildings/productionsites/frisians/hunters_house/init.lua:55
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:76
 msgid "hunting"
 msgstr "jakt"
 
@@ -2318,9 +2393,7 @@ msgstr "Tomt for vilt"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/hunters_house/init.lua:56
 msgctxt "atlanteans_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Jegeren som arbeider i dette jegerhuset finn ikkje noko vilt i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2371,9 +2444,7 @@ msgstr "Hovudjernåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/ironmine/init.lua:89
 msgctxt "atlanteans_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2403,14 +2474,13 @@ msgstr "Steinbrot"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:47
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:55
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:53
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:43
 msgid "quarrying granite"
 msgstr "bryting av granitt"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/quarry/init.lua:51
 msgctxt "atlanteans_building"
-msgid ""
-"The stonecutter working at this quarry can’t find any rocks in his work "
-"area."
+msgid "The stonecutter working at this quarry can’t find any rocks in his work area."
 msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2486,8 +2556,7 @@ msgctxt "atlanteans_building"
 msgid "Toolsmithy"
 msgstr "Verktøysmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a bread paddle because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a bread paddle because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:69
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:105
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:101
@@ -2495,8 +2564,7 @@ msgstr "Verktøysmie"
 msgid "making a bread paddle"
 msgstr "laging av brødspade"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a pair of buckets
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a pair of buckets because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:82
 msgid "making a pair of buckets"
 msgstr "laging av eit par bøtter"
@@ -2509,8 +2577,7 @@ msgstr "laging av eit par bøtter"
 msgid "making fire tongs"
 msgstr "laging av eldtong"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a fishing net because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a fishing net because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:108
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:142
 msgid "making a fishing net"
@@ -2521,14 +2588,12 @@ msgstr "laging av fiskegarn"
 msgid "making a hook pole"
 msgstr "laging av krokstong"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hunting bow because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hunting bow because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:147
 msgid "making a hunting bow"
 msgstr "laging av jaktboge"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making milking tongs because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making milking tongs because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:160
 msgid "making milking tongs"
 msgstr "laging av mjølketong"
@@ -2553,32 +2618,27 @@ msgctxt "atlanteans_building"
 msgid "Weapon Smithy"
 msgstr "Våpensmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a light trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a light trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:66
 msgid "forging a light trident"
 msgstr "smiing av lett trefork"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a long trident because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a long trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:81
 msgid "forging a long trident"
 msgstr "smiing av lang trefork"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a steel trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a steel trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:96
 msgid "forging a steel trident"
 msgstr "smiing av ståltrefork"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a double trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a double trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:111
 msgid "forging a double trident"
 msgstr "smiing av dobbel trefork"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy double trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy double trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:126
 msgid "forging a heavy double trident"
 msgstr "smiing av tung dobbel trefork"
@@ -2589,8 +2649,7 @@ msgctxt "atlanteans_building"
 msgid "Weaving Mill"
 msgstr "Veveri"
 
-#. TRANSLATORS: Completed/Skipped/Did not start weaving spidercloth because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start weaving spidercloth because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaving_mill/init.lua:63
 msgid "weaving spidercloth"
 msgstr "veving av edderkoppty"
@@ -2600,8 +2659,7 @@ msgstr "veving av edderkoppty"
 msgid "tailoring a tabard"
 msgstr "saum av tabard"
 
-#. TRANSLATORS: Completed/Skipped/Did not start tailoring a golden tabard
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start tailoring a golden tabard because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaving_mill/init.lua:89
 msgid "tailoring a golden tabard"
 msgstr "saum av gulltabard"
@@ -2625,10 +2683,7 @@ msgstr "Tømmerhoggarhus"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/woodcutters_house/init.lua:52
 msgctxt "atlanteans_building"
-msgid ""
-"The woodcutter working at this woodcutter’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The woodcutter working at this woodcutter’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Tømmerhuggaren som arbeider i dette tømmerhoggarhuset finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja eit skogvaktarhus."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2704,8 +2759,7 @@ msgctxt "barbarians_building"
 msgid "Brewery"
 msgstr "Bryggeri"
 
-#. TRANSLATORS: Completed/Skipped/Did not start brewing strong beer because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start brewing strong beer because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/brewery/init.lua:38
 msgid "brewing strong beer"
 msgstr "brygging av sterkt øl"
@@ -2737,9 +2791,7 @@ msgstr "Kolgruve"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine/init.lua:107
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2756,10 +2808,7 @@ msgstr "Djupare kolgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine_deeper/init.lua:89
 msgctxt "barbarians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2771,19 +2820,20 @@ msgstr "Gard"
 #. TRANSLATORS: Completed/Skipped/Did not start planting wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:82
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:55
 msgid "planting wheat"
 msgstr "planting av kveite"
 
 #. TRANSLATORS: Completed/Skipped/Did not start harvesting wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:94
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:64
 msgid "harvesting wheat"
 msgstr "hausting av kveite"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:109
 msgctxt "barbarians_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Bonden som arbeider på denne garden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2800,9 +2850,7 @@ msgstr "Fiskarhytte"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:67
 msgctxt "barbarians_building"
-msgid ""
-"The fisher working out of this fisher’s hut can’t find any fish in his work "
-"area."
+msgid "The fisher working out of this fisher’s hut can’t find any fish in his work area."
 msgstr "Fiskaren i denne fiskarhytta finn ikkje noko fisk i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2820,9 +2868,7 @@ msgstr "Gullgruve"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2839,10 +2885,7 @@ msgstr "Djupare gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine_deeper/init.lua:88
 msgctxt "barbarians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2854,21 +2897,20 @@ msgstr "Granittgruve"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:92
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:122
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:93
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:83
 msgid "No Granite"
 msgstr "Ingen granitt"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:93
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:123
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:94
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:84
 msgid "Main Granite Vein Exhausted"
 msgstr "Hovudgranittåra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:95
 msgctxt "barbarians_building"
-msgid ""
-"This granite mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. This mine can’t be enhanced any further, so you "
-"should consider dismantling or destroying it."
+msgid "This granite mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne granittgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2903,10 +2945,7 @@ msgstr "Jegerhytte"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/barbarians/hunters_hut/init.lua:74
 msgctxt "barbarians_building"
-msgid ""
-"The hunter working out of this hunter’s hut can’t find any game in his work "
-"area. Remember that you can build a gamekeeper’s hut to release more game "
-"into the wild."
+msgid "The hunter working out of this hunter’s hut can’t find any game in his work area. Remember that you can build a gamekeeper’s hut to release more game into the wild."
 msgstr "Jegeren i denne jegerhytta finn ikkje noko vilt i arbeidsområdet sitt. Hugs at du kan byggja ei viltvaktarhytte for å setja ut meir vilt i naturen."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2924,9 +2963,7 @@ msgstr "Jerngruve"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2943,10 +2980,7 @@ msgstr "Djupare jerngruve"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine_deeper/init.lua:89
 msgctxt "barbarians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2968,10 +3002,7 @@ msgstr "Tømmerhoggarhytte"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/lumberjacks_hut/init.lua:64
 msgctxt "barbarians_building"
-msgid ""
-"The lumberjack working at this lumberjack’s hut can’t find any trees in his "
-"work area. You should consider dismantling or destroying the building or "
-"building a ranger’s hut."
+msgid "The lumberjack working at this lumberjack’s hut can’t find any trees in his work area. You should consider dismantling or destroying the building or building a ranger’s hut."
 msgstr "Tømmerhuggaren som arbeider i denne tømmerhoggarhytta finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja ei skogvaktarhytte."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2980,15 +3011,14 @@ msgctxt "barbarians_building"
 msgid "Metal Workshop"
 msgstr "Metallverkstad"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a fishing rod because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a fishing rod because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:144
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:127
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:85
 msgid "making a fishing rod"
 msgstr "laging av fiskestong"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hunting spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hunting spear because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:170
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:153
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:166
@@ -3017,8 +3047,7 @@ msgstr "Steinbrot"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:62
 msgctxt "barbarians_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3047,9 +3076,7 @@ msgstr "hausting av siv"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/reed_yard/init.lua:83
 msgctxt "barbarians_building"
-msgid ""
-"The gardener working at this reed yard has no cleared soil to plant his "
-"seeds."
+msgid "The gardener working at this reed yard has no cleared soil to plant his seeds."
 msgstr "Gartnaren ved denne sivgarden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3082,20 +3109,17 @@ msgctxt "barbarians_building"
 msgid "War Mill"
 msgstr "Krigsmølle"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a bronze ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a bronze ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:116
 msgid "forging a bronze ax"
 msgstr "smiing av bronseøks"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a battle ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a battle ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:131
 msgid "forging a battle ax"
 msgstr "smiing av stridsøks"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a warrior’s ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a warrior’s ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:146
 msgid "forging a warrior’s ax"
 msgstr "smiing av krigarøks"
@@ -3109,6 +3133,7 @@ msgstr "Veveri"
 #. TRANSLATORS: Completed/Skipped/Did not start weaving because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/weaving_mill/init.lua:52
 #: ../../../../data/tribes/buildings/productionsites/empire/weaving_mill/init.lua:63
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:60
 msgid "weaving"
 msgstr "veving"
 
@@ -3140,20 +3165,17 @@ msgctxt "empire_building"
 msgid "Armor Smithy"
 msgstr "Rustningssmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:95
 msgid "forging a suit of armor"
 msgstr "smiing av ei rustning"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of chain armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of chain armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:107
 msgid "forging a suit of chain armor"
 msgstr "smiing av ei ringbrynje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of gilded armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of gilded armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:119
 msgid "forging a suit of gilded armor"
 msgstr "smiing av ei forgylt rustning"
@@ -3202,9 +3224,7 @@ msgstr "Kolgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/coalmine/init.lua:108
 msgctxt "empire_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3215,10 +3235,7 @@ msgstr "Djup kolgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/coalmine_deep/init.lua:88
 msgctxt "empire_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3241,8 +3258,7 @@ msgstr "Gard"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:92
 msgctxt "empire_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Bonden som arbeider på denne garden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3259,9 +3275,7 @@ msgstr "Fiskarhus"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:58
 msgctxt "empire_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area."
 msgstr "Fiskaren i dette fiskarhuset finn ikkje noko fisk i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3278,9 +3292,7 @@ msgstr "Gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine/init.lua:107
 msgctxt "empire_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3291,10 +3303,7 @@ msgstr "Djup gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:86
 msgctxt "empire_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3306,9 +3315,7 @@ msgstr "Jegerhus"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/empire/hunters_house/init.lua:59
 msgctxt "empire_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Jegeren i dette jegerhuset finn ikkje noko vilt i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3325,9 +3332,7 @@ msgstr "Jerngruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/ironmine/init.lua:108
 msgctxt "empire_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3338,10 +3343,7 @@ msgstr "Djup jerngruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/ironmine_deep/init.lua:87
 msgctxt "empire_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3352,10 +3354,7 @@ msgstr "Tømmerhoggarhus"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/lumberjacks_house/init.lua:55
 msgctxt "empire_building"
-msgid ""
-"The lumberjack working at this lumberjack’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The lumberjack working at this lumberjack’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Tømmerhoggaren som arbeider i dette tømmerhoggarhuset finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja eit skogvaktarhus."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3384,10 +3383,7 @@ msgstr "Hovudmarmoråra er tom"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/marblemine/init.lua:151
 msgctxt "empire_building"
-msgid ""
-"This marble mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. You should consider enhancing, dismantling or "
-"destroying it."
+msgid "This marble mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne marmorgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3398,10 +3394,7 @@ msgstr "Djup marmorgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/marblemine_deep/init.lua:96
 msgctxt "empire_building"
-msgid ""
-"This marble mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. This mine can’t be enhanced any further, so you "
-"should consider dismantling or destroying it."
+msgid "This marble mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne marmorgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3412,6 +3405,7 @@ msgstr "Mølle"
 
 #. TRANSLATORS: Completed/Skipped/Did not start grinding wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/mill/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:70
 msgid "grinding wheat"
 msgstr "kverning av kveite"
 
@@ -3439,8 +3433,7 @@ msgstr "bryting av marmor"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:82
 msgctxt "empire_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3484,8 +3477,7 @@ msgctxt "empire_building"
 msgid "Stonemason’s House"
 msgstr "Steinhoggarhus"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sculpting a marble column
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sculpting a marble column because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/stonemasons_house/init.lua:57
 msgid "sculpting a marble column"
 msgstr "uthogging av marmorsøyle"
@@ -3514,23 +3506,21 @@ msgctxt "empire_building"
 msgid "Vineyard"
 msgstr "Vingard"
 
-#. TRANSLATORS: Completed/Skipped/Did not start planting grapevines because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start planting grapevines because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:58
 msgid "planting grapevines"
 msgstr "planting av vindruer"
 
-#. TRANSLATORS: Completed/Skipped/Did not start harvesting grapevines because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting grapevines because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:67
 msgid "harvesting grapes"
 msgstr "hausting av druer"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:92
 msgctxt "empire_building"
-msgid ""
-"The vine farmer working at this vineyard has no cleared soil to plant his "
-"grapevines."
+msgid "The vine farmer working at this vineyard has no cleared soil to plant his grapevines."
 msgstr "Vinbonden på denne vingarden har ikkje noko rydda jord å planta vinrankene sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3539,8 +3529,7 @@ msgctxt "empire_building"
 msgid "Weapon Smithy"
 msgstr "Våpensmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a wooden spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a wooden spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:84
 msgid "forging a wooden spear"
 msgstr "smiing av trespyd"
@@ -3550,20 +3539,17 @@ msgstr "smiing av trespyd"
 msgid "forging a spear"
 msgstr "smiing av spyd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:114
 msgid "forging an advanced spear"
 msgstr "smiing av avansert spyd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:129
 msgid "forging a heavy spear"
 msgstr "smiing av tungt spyd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a war spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a war spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:144
 msgid "forging a war spear"
 msgstr "smiing av krigsspyd"
@@ -3593,6 +3579,7 @@ msgstr "Vinpresse"
 
 #. TRANSLATORS: Completed/Skipped/Did not start making wine because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/winery/init.lua:59
+#: ../../../../data/tribes/buildings/productionsites/hebrews/winery/init.lua:50
 msgid "making wine"
 msgstr "vinlegging"
 
@@ -3613,11 +3600,7 @@ msgstr "Tomt for fiskedammar"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/aqua_farm/init.lua:110
 msgctxt "frisians_building"
-msgid ""
-"The fisher working at this aqua farm can’t find any fish ponds in his work "
-"area. Please make sure there is a working clay pit nearby and the aqua farm "
-"is supplied with all needed wares, or consider dismantling or destroying "
-"this building."
+msgid "The fisher working at this aqua farm can’t find any fish ponds in his work area. Please make sure there is a working clay pit nearby and the aqua farm is supplied with all needed wares, or consider dismantling or destroying this building."
 msgstr "Fiskaren som arbeider ved denne vassgarden finn ingen fiskedammar i arbeidsområdet sitt. Ver venleg og syt for at det finst ei aktiv leiregrav i nærleiken og at vassgarden har alle naudsynte varer, eller vurder å demontera eller øydeleggja denne bygningen."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3626,20 +3609,17 @@ msgctxt "frisians_building"
 msgid "Large Armor Smithy"
 msgstr "Stor rustningssmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a broadsword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a broadsword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:67
 msgid "forging a broadsword"
 msgstr "smiing av breisverd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a double-edged sword
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a double-edged sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:82
 msgid "forging a double-edged sword"
 msgstr "smiing av tveegga sverd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a golden helmet
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a golden helmet because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:97
 msgid "forging a golden helmet"
 msgstr "smiing av gullhjelm"
@@ -3650,14 +3630,12 @@ msgctxt "frisians_building"
 msgid "Small Armor Smithy"
 msgstr "Lita rustningssmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a short sword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a short sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_small/init.lua:96
 msgid "forging a short sword"
 msgstr "smiing av kortsverd"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a long sword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a long sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_small/init.lua:111
 msgid "forging a long sword"
 msgstr "smiing av langsverd"
@@ -3696,10 +3674,7 @@ msgstr "Tomt for blomar"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/beekeepers_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The beekeeper working at this beekeeper’s house can’t find any flowering "
-"fields or bushes in his work area. You should consider building another farm"
-" or berry farm nearby, or dismantling or destroying this building."
+msgid "The beekeeper working at this beekeeper’s house can’t find any flowering fields or bushes in his work area. You should consider building another farm or berry farm nearby, or dismantling or destroying this building."
 msgstr "Birøktaren som arbeider i dette birøktarhuset finn ingen blømande åkrar eller buskar i arbeidsområdet sitt. Du bør vurdera å byggja ein ny gard eller bærplantasje i nærleiken, eller å demontera eller øydeleggja denne bygningen."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3719,8 +3694,7 @@ msgctxt "frisians_building"
 msgid "Blacksmithy"
 msgstr "Grovsmie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a felling ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a felling ax because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:118
 msgid "forging a felling ax"
 msgstr "smiing av felleøks"
@@ -3753,8 +3727,7 @@ msgctxt "frisians_building"
 msgid "Charcoal Burner’s House"
 msgstr "Kolbrennarhus"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a charcoal stack
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a charcoal stack because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/charcoal_burners_house/init.lua:73
 msgid "making a charcoal stack"
 msgstr "laging av kolmile"
@@ -3770,11 +3743,7 @@ msgstr "Tomt for leiredammar"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/charcoal_burners_house/init.lua:110
 msgctxt "frisians_building"
-msgid ""
-"The charcoal burner working at this charcoal burner’s house can’t find any "
-"clay ponds in his work area. Please make sure there is a working clay pit "
-"nearby and the charcoal burner’s house is supplied with all needed wares, or"
-" consider dismantling or destroying this building."
+msgid "The charcoal burner working at this charcoal burner’s house can’t find any clay ponds in his work area. Please make sure there is a working clay pit nearby and the charcoal burner’s house is supplied with all needed wares, or consider dismantling or destroying this building."
 msgstr "Kolbrennaren som arbeider i dette kolbrennarhuset finn ingen leiredammar i arbeidsområdet sitt. Syt for at det finst ei aktiv leiregrav i nærleiken og at kolbrennarhuset er forsynt med alle naudsynte varer, eller vurder å demontera eller øydeleggja denne bygningen."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3791,24 +3760,24 @@ msgstr "Leiregrav"
 
 #. TRANSLATORS: Completed/Skipped/Did not start making clay because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:49
 msgid "making clay"
 msgstr "laging av leire"
 
 #. TRANSLATORS: Short for "No Level Ground" for clay pits
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:86
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:66
 msgid "No Ground"
 msgstr "Ingen grunn"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:87
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:67
 msgid "No Level Ground"
 msgstr "Inkje flatt lende"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:88
 msgctxt "frisians_building"
-msgid ""
-"The clay digger working at this clay pit can’t find any level ground in his "
-"work area. Consider dismantling this clay pit and rebuilding it somewhere "
-"else."
+msgid "The clay digger working at this clay pit can’t find any level ground in his work area. Consider dismantling this clay pit and rebuilding it somewhere else."
 msgstr "Leiregravaren som arbeider i denne leiregrava finn ikkje noko flatt lende i arbeidsområdet sitt. Vurder å demontera denne leiregrava og byggja henne opp att ein annan stad."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3819,9 +3788,7 @@ msgstr "Kolgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/coalmine/init.lua:122
 msgctxt "frisians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3832,10 +3799,7 @@ msgstr "Djup kolgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/coalmine_deep/init.lua:95
 msgctxt "frisians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3859,10 +3823,7 @@ msgstr "Tomt for bær"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/collectors_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The fruit collector working at this fruit collector’s house can’t find any "
-"berry bushes in his work area. You should consider building another berry "
-"farm, or dismantling or destroying this building."
+msgid "The fruit collector working at this fruit collector’s house can’t find any berry bushes in his work area. You should consider building another berry farm, or dismantling or destroying this building."
 msgstr "Fruktsankaren som arbeider i dette fruktsankarhuset finn ingen bærbuskar i arbeidsområdet sitt. Du bør vurdera å byggja ein ny bærplantasje, eller å demontera eller øydeleggja denne bygningen."
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/dikers_house/init.lua:7
@@ -3904,8 +3865,7 @@ msgstr "hausting av bygg"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:111
 msgctxt "frisians_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Bonden som arbeider på denne garden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3922,9 +3882,7 @@ msgstr "Fiskarhus"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area."
 msgstr "Fiskaren som arbeider i dette fiskarhuset finn ikkje noko fisk i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3947,9 +3905,7 @@ msgstr "Gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:107
 msgctxt "frisians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3960,10 +3916,7 @@ msgstr "Djup gullgruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:93
 msgctxt "frisians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3987,9 +3940,7 @@ msgstr "Jegerhus"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/frisians/hunters_house/init.lua:81
 msgctxt "frisians_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Jegeren som arbeider i dette jegerhuset finn ikkje noko vilt i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4000,9 +3951,7 @@ msgstr "Jerngruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/ironmine/init.lua:107
 msgctxt "frisians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4013,10 +3962,7 @@ msgstr "Djup jerngruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/ironmine_deep/init.lua:95
 msgctxt "frisians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4039,8 +3985,7 @@ msgstr "Steinbrot"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:68
 msgctxt "frisians_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4061,8 +4006,7 @@ msgctxt "frisians_building"
 msgid "recycling iron"
 msgstr "gjenvinning av jern"
 
-#. TRANSLATORS: Completed/Skipped/Did not start recycling iron and gold
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start recycling iron and gold because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/recycling_center/init.lua:118
 msgctxt "frisians_building"
 msgid "recycling iron and gold"
@@ -4076,9 +4020,7 @@ msgstr "Sivgard"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:102
 msgctxt "frisians_building"
-msgid ""
-"The reed farmer working at this reed farm has no cleared soil to plant his "
-"seeds."
+msgid "The reed farmer working at this reed farm has no cleared soil to plant his seeds."
 msgstr "Sivbonden som arbeider ved denne sivgarden har ikkje noko rydda jord å så frøa sine i."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4108,9 +4050,7 @@ msgstr "Steingruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:125
 msgctxt "frisians_building"
-msgid ""
-"This rock mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This rock mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hovudåra i denne steingruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4121,10 +4061,7 @@ msgstr "Djup steingruve"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:96
 msgctxt "frisians_building"
-msgid ""
-"This rock mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This rock mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hovudåra i denne steingruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4162,14 +4099,12 @@ msgctxt "frisians_building"
 msgid "Tailor’s Shop"
 msgstr "Skreddarverkstad"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sewing studded fur garment
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sewing studded fur garment because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:64
 msgid "sewing studded fur garment"
 msgstr "sying av nagla pelskledning"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sewing golden fur garment
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sewing golden fur garment because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:76
 msgid "sewing golden fur garment"
 msgstr "sying av gyllen pelskledning"
@@ -4180,8 +4115,7 @@ msgctxt "frisians_building"
 msgid "Tavern"
 msgstr "Vertshus"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/frisians/tavern/init.lua:97
 msgid "preparing only one ration"
 msgstr "tilreiing av berre éin rasjon"
@@ -4221,11 +4155,540 @@ msgstr "Tømmerhoggarhus"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/woodcutters_house/init.lua:68
 msgctxt "frisians_building"
-msgid ""
-"The woodcutter working at this woodcutter’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The woodcutter working at this woodcutter’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Tømmerhuggaren som arbeider i dette tømmerhoggarhuset finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja eit skogvaktarhus."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/bakery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Bakery"
+msgstr "Bakeri"
+
+#. TRANSLATORS: Completed/Skipped/Did not start baking bread because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/bakery/init.lua:55
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "baking bread"
+msgstr "å baka brød"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Branch Collector's Hut"
+msgstr "Fruktsankarhus"
+
+#. TRANSLATORS: Completed/Skipped/Did not start collecting branches because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:42
+#, fuzzy
+msgid "collecting branches"
+msgstr "samling av kol"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:56
+#, fuzzy
+msgid "No Trees to Collect Branches"
+msgstr "Ingen tre for å hogga lianar"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:57
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The branch collector working at this site can't find any tree in his work area. You should consider dismantling or destroying the building or planting trees nearby."
+msgstr "Lianehoggaren som arbeider her finn ingen tre i arbeidsområdet sitt. Du bør vurdera å demontera eller øydeleggja bygningen, eller byggja ei jungelvernarhytte."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/brick_kiln/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Brick Kiln"
+msgstr "Teglverk"
+
+#. TRANSLATORS: Completed/Skipped/Did not start firing bricks because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/brick_kiln/init.lua:49
+#, fuzzy
+msgid "firing bricks"
+msgstr "brenning av murstein"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:8
+msgctxt "hebrews_building"
+msgid "Butchery"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start butchering sheep because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:57
+#, fuzzy
+msgid "butchering sheep"
+msgstr "oppdrett av sau"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_furnace/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clay Furnace"
+msgstr "Smelteomn"
+
+#. TRANSLATORS: Completed/Skipped/Did not start smelting copper because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_furnace/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/smelting_works/init.lua:51
+#, fuzzy
+msgid "smelting copper"
+msgstr "å smelta gull"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clay Pit"
+msgstr "Leiregrav"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:68
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The clay digger working at this clay pit can't find any level ground in his work area. Consider dismantling this clay pit and rebuilding it somewhere else."
+msgstr "Leiregravaren som arbeider i denne leiregrava finn ikkje noko flatt lende i arbeidsområdet sitt. Vurder å demontera denne leiregrava og byggja henne opp att ein annan stad."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clearing Tent"
+msgstr "oppal av reinsdyr"
+
+#. TRANSLATORS: Completed/Skipped/Did not start clearing trees because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:45
+#, fuzzy
+msgid "clearing trees"
+msgstr "planting av tre"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:55
+#, fuzzy
+msgid "No Trees to Clear"
+msgstr "Ingen tre for å hogga lianar"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The worker at the clearing tent can't find any trees in his work area."
+msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Copper Mine"
+msgstr "Kolgruve"
+
+#. TRANSLATORS: Completed/Skipped/Did not start mining copper because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:55
+#, fuzzy
+msgid "mining copper"
+msgstr "kolutvinning"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:68
+#, fuzzy
+msgid "No Copper"
+msgstr "Inkje kol"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:69
+#, fuzzy
+msgid "Main Copper Vein Exhausted"
+msgstr "Hovudkolåra er tom"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:71
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This copper mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
+msgstr "Hovudåra i denne kolgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/donkeyfarm/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Donkey Farm"
+msgstr "Eselgard"
+
+#. TRANSLATORS: Completed/Skipped/Did not start rearing donkeys because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/donkeyfarm/init.lua:51
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "rearing donkeys"
+msgstr "oppal av esel"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Dressmakery"
+msgstr "Kjolesaum"
+
+#. TRANSLATORS: Completed/Skipped/Did not start sewing a tallit katan because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:76
+#, fuzzy
+msgid "sewing a tallit katan"
+msgstr "å sy ein tunika"
+
+#. TRANSLATORS: Completed/Skipped/Did not start sewing a tallit because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:88
+#, fuzzy
+msgid "sewing a tallit"
+msgstr "å sy ein tunika"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Farm"
+msgstr "Gard"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:76
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
+msgstr "Bonden som arbeider på denne garden har ikkje noko rydda jord å så frøa sine i."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Fisher’s Hut"
+msgstr "Fiskarhytte"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The fisher working out of this fisher’s hut can’t find any fish in his work area."
+msgstr "Fiskaren i denne fiskarhytta finn ikkje noko fisk i arbeidsområdet sitt."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Gold Beater's Workshop"
+msgstr "Steinverkstad"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making gold leaf because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:66
+#, fuzzy
+msgid "making gold leaf"
+msgstr "å utvinna gull"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making a menorah because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:78
+#, fuzzy
+msgid "making a menorah"
+msgstr "laging av hammar"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Gold Mine"
+msgstr "Gullgruve"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:85
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This gold mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
+msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å oppgradera, demontera eller øydeleggja henne."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Deep Gold Mine"
+msgstr "Djup gullgruve"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:75
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This deep gold mine's main vein is exhausted. Expect strongly diminished returns on investment. This mine can't be enhanced any further, so you should consider dismantling or destroying it."
+msgstr "Hovudåra i denne gullgruva er tom. Forvent sterkt redusert utbytte. Denne gruva kan ikkje oppgraderast meir, så du bør vurdera å demontera eller øydeleggja henne."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Granite Mine"
+msgstr "Granittgruve"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:86
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This granite mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
+msgstr "Hovudåra i denne jerngruva er tom. Forvent sterkt redusert utbytte. Du bør vurdera å demontera eller øydeleggja henne."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/initiation_site/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Initiation Site"
+msgstr "Innviingsstad"
+
+#. TRANSLATORS: Completed/Skipped/Did not start recruiting soldier because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/initiation_site/init.lua:61
+#: ../../../../data/tribes/buildings/productionsites/hebrews/machane/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "recruiting soldier"
+msgstr "rekruttering av soldat"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/machane/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Machane"
+msgstr "Machete"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Mill"
+msgstr "Mølle"
+
+#. TRANSLATORS: Completed/Skipped/Did not start grinding olives because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:82
+#, fuzzy
+msgid "grinding olives"
+msgstr "kverning av mais"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:8
+msgctxt "hebrews_building"
+msgid "Olive Plant"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start planting olive trees because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:59
+#, fuzzy
+msgid "planting olive trees"
+msgstr "planting av tre"
+
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting olives because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:68
+#, fuzzy
+msgid "harvesting olives"
+msgstr "hausting av balsa"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:79
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The worker at this olive plantation has no cleared soil to plant his olive trees."
+msgstr "Bonden ved denne kassavaplantasjen har ikkje noko rydda jord å så frøa sine i."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Quarry"
+msgstr "Steinbrot"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:54
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
+msgstr "Steinhoggaren som arbeider ved dette steinbrotet finn ikkje noko stein i arbeidsområdet sitt."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Scout’s House"
+msgstr "Speidarhus"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Shepherds Fire"
+msgstr "Gjetar"
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:64
+#, fuzzy
+msgid "releasing sheep"
+msgstr "oppdrett av sau"
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:86
+#, fuzzy
+msgid "sheering"
+msgstr "sanking"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/smelting_works/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Smelting Works"
+msgstr "Smelteverk"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Sofer's Workshop"
+msgstr "Steinverkstad"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making tefilin because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:59
+#, fuzzy
+msgid "making tefilin"
+msgstr "vinlegging"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/solomons_harbour/init.lua:8
+msgctxt "hebrews_building"
+msgid "Solomon's Harbour"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start trading because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/solomons_harbour/init.lua:52
+msgid "trading"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/spinning_mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Spinning Mill"
+msgstr "Gullspinneri"
+
+#. TRANSLATORS: Completed/Skipped/Did not start spinning because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/spinning_mill/init.lua:49
+#, fuzzy
+msgid "spinning"
+msgstr "gullspinning"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/threshing_floor/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Threshing Floor"
+msgstr "hausting av mais"
+
+#. TRANSLATORS: Completed/Skipped/Did not start threshing wheat because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/threshing_floor/init.lua:49
+#, fuzzy
+msgid "threshing wheat"
+msgstr "hausting av kveite"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Vineyard"
+msgstr "Vingard"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:78
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The vine farmer working at this vineyard has no cleared soil to plant his grapevines."
+msgstr "Vinbonden på denne vingarden har ikkje noko rydda jord å planta vinrankene sine i."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Weapon Smithy"
+msgstr "Våpensmie"
+
+#. TRANSLATORS: Completed/Skipped/Did not start forging a slingshot because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:61
+#, fuzzy
+msgid "forging a slingshot"
+msgstr "smiing av langsverd"
+
+#. TRANSLATORS: Completed/Skipped/Did not start forging a dagger because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:76
+#, fuzzy
+msgid "forging a dagger"
+msgstr "smiing av spyd"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Weaving Mill"
+msgstr "Veveri"
+
+#. TRANSLATORS: Completed/Skipped/Did not start felting because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:72
+#, fuzzy
+msgid "felting"
+msgstr "å smelta gull"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Well"
+msgstr "Brønn"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:58
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The carrier working at this well can’t find any water in his well."
+msgstr "Beraren som jobbar ved denne brønnen finn ikkje noko vatn i han."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/winery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Winery"
+msgstr "Vinpresse"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Workshop"
+msgstr "Økseverkstad"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:8
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:8
+msgctxt "hebrews_building"
+msgid "Yeshiva"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:50
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "working"
+msgstr "arbeider"
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Talmid because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:59
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "educating Talmid"
+msgstr "produksjon av kol"
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Talmid Chacham because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:69
+msgctxt "hebrews_building"
+msgid "educating Talmid Chacham"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Rebbe because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:79
+msgctxt "hebrews_building"
+msgid "educating Rebbe"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/zizijot_makers_hut/init.lua:8
+msgctxt "hebrews_building"
+msgid "Zizijot Makers Hut"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start making zizit because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/zizijot_makers_hut/init.lua:44
+#, fuzzy
+msgid "making zizit"
+msgstr "vinlegging"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/trainingsites/amazons/training_glade/init.lua:8
@@ -4245,6 +4708,8 @@ msgstr "Treningslund"
 #: ../../../../data/tribes/buildings/trainingsites/empire/trainingcamp/init.lua:69
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_arena/init.lua:86
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_camp/init.lua:85
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:56
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:52
 msgid "sleeping"
 msgstr "søvn"
 
@@ -4303,8 +4768,7 @@ msgctxt "amazons_building"
 msgid "No soldier to train!"
 msgstr "Ingen soldat å trena!"
 
-#. TRANSLATORS: Amazon training site tooltip when none of the present soldiers
-#. match the current training program
+#. TRANSLATORS: Amazon training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/amazons/training_glade/init.lua:208
 #: ../../../../data/tribes/buildings/trainingsites/amazons/warriors_gathering/init.lua:115
 msgctxt "amazons_building"
@@ -4359,16 +4823,14 @@ msgctxt "atlanteans_building"
 msgid "upgrading soldier attack from level 3 to level 4"
 msgstr "oppgraderer soldatåtak frå nivå 3 til nivå 4"
 
-#. TRANSLATORS: Atlantean training site tooltip when it has no soldiers
-#. assigned
+#. TRANSLATORS: Atlantean training site tooltip when it has no soldiers assigned
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/dungeon/init.lua:290
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/labyrinth/init.lua:142
 msgctxt "atlanteans_building"
 msgid "No soldier to train!"
 msgstr "Ingen soldat å trena!"
 
-#. TRANSLATORS: Atlantean training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Atlantean training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/dungeon/init.lua:292
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/labyrinth/init.lua:144
 msgctxt "atlanteans_building"
@@ -4429,16 +4891,14 @@ msgctxt "barbarians_building"
 msgid "upgrading soldier evade from level 1 to level 2"
 msgstr "oppgradering av soldat-unnviking frå nivå 1 til nivå 2"
 
-#. TRANSLATORS: Barbarian training site tooltip when it has no soldiers
-#. assigned
+#. TRANSLATORS: Barbarian training site tooltip when it has no soldiers assigned
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/battlearena/init.lua:124
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/trainingcamp/init.lua:204
 msgctxt "barbarians_building"
 msgid "No soldier to train!"
 msgstr "Ingen soldat å trena!"
 
-#. TRANSLATORS: Barbarian training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Barbarian training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/battlearena/init.lua:126
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/trainingcamp/init.lua:206
 msgctxt "barbarians_building"
@@ -4520,8 +4980,7 @@ msgctxt "empire_building"
 msgid "No soldier to train!"
 msgstr "Ingen soldat å trena!"
 
-#. TRANSLATORS: Empire training site tooltip when none of the present soldiers
-#. match the current training program
+#. TRANSLATORS: Empire training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/empire/arena/init.lua:113
 #: ../../../../data/tribes/buildings/trainingsites/empire/colosseum/init.lua:86
 #: ../../../../data/tribes/buildings/trainingsites/empire/trainingcamp/init.lua:195
@@ -4638,8 +5097,7 @@ msgctxt "frisians_building"
 msgid "No soldier to train!"
 msgstr "Ingen soldat å trena!"
 
-#. TRANSLATORS: Frisian training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Frisian training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_arena/init.lua:186
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_camp/init.lua:183
 msgctxt "frisians_building"
@@ -4681,6 +5139,81 @@ msgstr "oppgraderer soldathelse frå nivå 0 til nivå 1"
 msgctxt "frisians_building"
 msgid "upgrading soldier defense from level 0 to level 1"
 msgstr "oppgradering av soldatforsvar frå nivå 0 til nivå 1"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Training Camp"
+msgstr "Treningsleir"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:63
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier attack from level 0 to level 1"
+msgstr "oppgradering av soldatåtak frå nivå 0 til nivå 1"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:76
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier attack from level 1 to level 2"
+msgstr "oppgradering av soldatåtak frå nivå 1 til nivå 2"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:89
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier health from level 0 to level 1"
+msgstr "oppgradering av soldathelse frå nivå 0 til nivå 1"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:101
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier health from level 1 to level 2"
+msgstr "oppgradering av soldathelse frå nivå 1 til nivå 2"
+
+#. TRANSLATORS: Completed/Skipped/Did not start upgrading soldier evade because ...
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:113
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:60
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 0 to level 1"
+msgstr "oppgradering av soldat-unnviking frå nivå 0 til nivå 1"
+
+#. TRANSLATORS: Completed/Skipped/Did not start upgrading soldier evade because ...
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:126
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:74
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 1 to level 2"
+msgstr "oppgradering av soldat-unnviking frå nivå 1 til nivå 2"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:139
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 2 to level 3"
+msgstr "oppgradering av soldat-unnviking frå nivå 2 til nivå 3"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:152
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 3 to level 4"
+msgstr "oppgradering av soldat-unnviking frå nivå 2 til nivå 3"
+
+#. TRANSLATORS: Hebrew training site tooltip when it has no soldiers assigned
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:171
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:93
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "No soldier to train!"
+msgstr "Ingen soldat å trena!"
+
+#. TRANSLATORS: Hebrew training site tooltip when none of the present soldiers match the current training program
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:173
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:95
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "No soldier found for this training level!"
+msgstr "Fann ingen soldat for dette treningsnivået!"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/warehouses/amazons/headquarters/init.lua:8
@@ -4776,6 +5309,27 @@ msgstr "Hamn"
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/warehouses/frisians/warehouse/init.lua:8
 msgctxt "frisians_building"
+msgid "Warehouse"
+msgstr "Lager"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/headquarters/init.lua:8
+#: ../../../../data/tribes/buildings/warehouses/hebrews/headquarters_tent/init.lua:8
+msgctxt "hebrews_building"
+msgid "Tabernacle"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/port/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Port"
+msgstr "Hamn"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/warehouse/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
 msgid "Warehouse"
 msgstr "Lager"
 
@@ -5102,6 +5656,27 @@ msgid "Grapevine (tiny)"
 msgstr "Vinranke (ørliten)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/medium/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (medium)"
+msgstr "Einerbær (medium)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/ripe/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (ripe)"
+msgstr "Einerbær (mogen)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/small/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (small)"
+msgstr "Einerbær (liten)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/pond/burning/init.lua:8
 msgctxt "immovable"
 msgid "Burning Charcoal Stack"
@@ -5161,6 +5736,7 @@ msgstr "Strååker (ørliten)"
 #: ../../../../data/tribes/immovables/resi/barbarians/gold_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/gold_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/gold_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/gold_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Gold"
 msgstr "Litt gull"
@@ -5171,6 +5747,7 @@ msgstr "Litt gull"
 #: ../../../../data/tribes/immovables/resi/barbarians/gold_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/gold_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/gold_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/gold_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Gold"
 msgstr "Mykje gull"
@@ -5181,6 +5758,7 @@ msgstr "Mykje gull"
 #: ../../../../data/tribes/immovables/resi/barbarians/none/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/none/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/none/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/none/init.lua:8
 msgctxt "resource_indicator"
 msgid "No Resources"
 msgstr "Ingen ressursar"
@@ -5202,6 +5780,7 @@ msgstr "Mykje kvarts"
 #: ../../../../data/tribes/immovables/resi/barbarians/coal_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/coal_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/coal_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/coal_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Coal"
 msgstr "Litt kol"
@@ -5211,6 +5790,7 @@ msgstr "Litt kol"
 #: ../../../../data/tribes/immovables/resi/barbarians/coal_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/coal_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/coal_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/coal_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Coal"
 msgstr "Mykje kol"
@@ -5220,6 +5800,7 @@ msgstr "Mykje kol"
 #: ../../../../data/tribes/immovables/resi/barbarians/iron_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/iron_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/iron_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/iron_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Iron"
 msgstr "Litt jern"
@@ -5229,6 +5810,7 @@ msgstr "Litt jern"
 #: ../../../../data/tribes/immovables/resi/barbarians/iron_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/iron_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/iron_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/iron_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Iron"
 msgstr "Mykje jern"
@@ -5250,6 +5832,7 @@ msgstr "Mange krystallar"
 #: ../../../../data/tribes/immovables/resi/barbarians/water/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/water/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/water/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/water/init.lua:8
 msgctxt "resource_indicator"
 msgid "Water"
 msgstr "Vatn"
@@ -5257,6 +5840,7 @@ msgstr "Vatn"
 #. TRANSLATORS: This is a resource name used in lists of resources
 #: ../../../../data/tribes/immovables/resi/barbarians/stones_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/stones_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/stones_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Granite"
 msgstr "Litt granitt"
@@ -5264,6 +5848,7 @@ msgstr "Litt granitt"
 #. TRANSLATORS: This is a resource name used in lists of resources
 #: ../../../../data/tribes/immovables/resi/barbarians/stones_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/stones_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/stones_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Granite"
 msgstr "Mykje granitt"
@@ -5488,12 +6073,13 @@ msgstr "Folket frå amasonjungelen."
 #. TRANSLATORS: This is the name of a starting condition
 #. descname = _("Discovery"),
 #. TRANSLATORS: This is the tooltip for the "Discovery" starting condition
-#. tooltip = _("Start the game with three ships on the ocean and only a
-#. handful of supplies"),
+#. tooltip = _("Start the game with three ships on the ocean and only a handful of supplies"),
 #. map_tags = {"seafaring"},
 #. incompatible_wc = {"scripting/win_conditions/hq_hunter.lua"},
 #. uses_map_starting_position = false,
+#.
 #. func = function(player, shared_in_start)
+#.
 #. local map = wl.Game().map
 #. local sf = map.player_slots[player.number].starting_field
 #. if shared_in_start then
@@ -5501,6 +6087,7 @@ msgstr "Folket frå amasonjungelen."
 #. else
 #. player:allow_workers("all")
 #. end
+#.
 #. launch_expeditions(player, {
 #. {
 #. log = 4,
@@ -5533,6 +6120,7 @@ msgstr "Folket frå amasonjungelen."
 #. })
 #. end
 #. }
+#.
 #. pop_textdomain()
 #. return init
 #. =======================================================================
@@ -5544,6 +6132,7 @@ msgstr "Folket frå amasonjungelen."
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/discovery.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/discovery.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/discovery.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/discovery.lua:11
 msgid "Discovery"
 msgstr "Oppdaging"
 
@@ -5553,8 +6142,8 @@ msgstr "Oppdaging"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/discovery.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/discovery.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/discovery.lua:13
-msgid ""
-"Start the game with three ships on the ocean and only a handful of supplies"
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/discovery.lua:13
+msgid "Start the game with three ships on the ocean and only a handful of supplies"
 msgstr "Start spelet med tre skip på havet og berre ei handfull forsyningar"
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5563,16 +6152,17 @@ msgstr "Start spelet med tre skip på havet og berre ei handfull forsyningar"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/fortified_village.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/fortified_village.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/fortified_village.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/fortified_village.lua:11
 msgid "Fortified Village"
 msgstr "Befesta landsby"
 
-#. TRANSLATORS: This is the tooltip for the "Fortified Village" starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Fortified Village" starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/fortified_village.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/fortified_village.lua:13
 msgid "Start the game with a fortified military installation"
 msgstr "Start spelet med eit befesta militæranlegg"
 
@@ -5582,6 +6172,7 @@ msgstr "Start spelet med eit befesta militæranlegg"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/headquarters.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/headquarters.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/headquarters.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/headquarters.lua:11
 msgid "Headquarters"
 msgstr "Hovudkvarter"
 
@@ -5591,6 +6182,7 @@ msgstr "Hovudkvarter"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/headquarters.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/headquarters.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/headquarters.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/headquarters.lua:13
 msgid "Start the game with your headquarters only"
 msgstr "Start spelet med berre hovudkvarteret ditt"
 
@@ -5600,6 +6192,7 @@ msgstr "Start spelet med berre hovudkvarteret ditt"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/new_world.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/new_world.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/new_world.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/new_world.lua:11
 msgid "New World"
 msgstr "Ny verd"
 
@@ -5609,6 +6202,7 @@ msgstr "Ny verd"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/new_world.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/new_world.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/new_world.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/new_world.lua:13
 msgid "Start the game with seven ships full of wares on the ocean"
 msgstr "Start spelet med sju skip fulle av varer på havet"
 
@@ -5618,19 +6212,17 @@ msgstr "Start spelet med sju skip fulle av varer på havet"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:11
 msgid "Poor Hamlet"
 msgstr "Fattig grend"
 
-#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:13
-msgid ""
-"Start the game with just a warehouse and the bare minimum for bootstrapping "
-"an economy. Warning: the AI can’t successfully start from this."
+msgid "Start the game with just a warehouse and the bare minimum for bootstrapping an economy. Warning: the AI can’t successfully start from this."
 msgstr "Start spelet med berre eit lager og det absolutte minimum for å få i gang ein økonomi. Åtvaring: KI-en klarer ikkje å starta frå dette."
 
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:46
@@ -5638,13 +6230,12 @@ msgstr "Start spelet med berre eit lager og det absolutte minimum for å få i g
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:47
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:48
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:49
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:40
 msgid "Be careful"
 msgstr "Ver forsiktig"
 
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:46
-msgid ""
-"You only have exactly the wares for each tool you will need to start your "
-"economy. Make sure no unneeded tool is created."
+msgid "You only have exactly the wares for each tool you will need to start your economy. Make sure no unneeded tool is created."
 msgstr "Du har berre nøyaktig dei varene du treng for kvart verktøy du må laga for å starta økonomien. Syt for at ingen unødvendige verktøy vert laga."
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5653,6 +6244,7 @@ msgstr "Du har berre nøyaktig dei varene du treng for kvart verktøy du må lag
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/struggling_outpost.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/struggling_outpost.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/struggling_outpost.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/struggling_outpost.lua:11
 msgid "Struggling Outpost"
 msgstr "Kjempande utpost"
 
@@ -5662,10 +6254,7 @@ msgstr "Kjempande utpost"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/struggling_outpost.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/struggling_outpost.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/struggling_outpost.lua:13
-msgid ""
-"Start the game with just your headquarters and very few wares for "
-"bootstrapping an economy. Warning: the AI can’t successfully start from "
-"this."
+msgid "Start the game with just your headquarters and very few wares for bootstrapping an economy. Warning: the AI can’t successfully start from this."
 msgstr "Start spelet med berre hovudkvarteret ditt og svært få varer for å få i gang ein økonomi. Åtvaring: KI-en klarer ikkje å starta frå dette."
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5674,19 +6263,18 @@ msgstr "Start spelet med berre hovudkvarteret ditt og svært få varer for å f�
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/trading_outpost.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/trading_outpost.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/trading_outpost.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/trading_outpost.lua:11
 msgid "Trading Outpost"
 msgstr "Handelsutpost"
 
-#. TRANSLATORS: This is the tooltip for the "Trading Outpost" starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Trading Outpost" starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/trading_outpost.lua:13
-msgid ""
-"If this player runs low on important wares, they will be replenished for "
-"free"
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/trading_outpost.lua:13
+msgid "If this player runs low on important wares, they will be replenished for free"
 msgstr "Om denne spelaren har lite igjen av viktige varer, vil dei bli etterfylte gratis"
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5695,6 +6283,7 @@ msgstr "Om denne spelaren har lite igjen av viktige varer, vil dei bli etterfylt
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/village.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/village.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/village.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/village.lua:11
 msgid "Village"
 msgstr "Landsby"
 
@@ -5704,6 +6293,7 @@ msgstr "Landsby"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/village.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/village.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/village.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/village.lua:13
 msgid "Start the game with a peaceful village"
 msgstr "Start spelet med en fredeleg landsby"
 
@@ -5713,18 +6303,14 @@ msgid "Atlanteans"
 msgstr "Atlantikarar"
 
 #: ../../../../data/tribes/initialization/atlanteans/init.lua:14
-msgid ""
-"This tribe is known from the oldest tales. The sons and daughters of "
-"Atlantis."
+msgid "This tribe is known from the oldest tales. The sons and daughters of Atlantis."
 msgstr "Denne stammen er kjend frå dei eldste sogene. Søner og døtrer av Atlantis."
 
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/poor_hamlet.lua:49
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:47
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:48
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:49
-msgid ""
-"You have only one iron for each tool you will need to start your economy. "
-"Make sure no unneeded tool is created."
+msgid "You have only one iron for each tool you will need to start your economy. Make sure no unneeded tool is created."
 msgstr "Du har berre eitt jern for kvart verktøy du må laga for å starta økonomien. Syt for at ingen unødvendige verktøy vert laga."
 
 #. TRANSLATORS: This is a tribe name
@@ -5733,6 +6319,7 @@ msgid "Barbarians"
 msgstr "Barbarar"
 
 #: ../../../../data/tribes/initialization/barbarians/init.lua:13
+#: ../../../../data/tribes/initialization/hebrews/init.lua:13
 msgid "The mighty tribes of the east-lands."
 msgstr "Dei mektige stammane frå austerlanda."
 
@@ -5753,6 +6340,28 @@ msgstr "Frisarar"
 #: ../../../../data/tribes/initialization/frisians/init.lua:13
 msgid "The inhabitants of the rough North Sea shore."
 msgstr "Innbyggjarane på den røffe nordsjøkysten."
+
+#. TRANSLATORS: This is a tribe name
+#: ../../../../data/tribes/initialization/hebrews/init.lua:12
+msgid "Hebrews"
+msgstr ""
+
+#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting condition
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:13
+#, fuzzy
+msgid "Start the game with just a warehouse and the bare minimum for bootstrapping an economy. Warning: the AI can't successfully start from this."
+msgstr "Start spelet med berre eit lager og det absolutte minimum for å få i gang ein økonomi. Åtvaring: KI-en klarer ikkje å starta frå dette."
+
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:40
+#, fuzzy
+msgid "You have very few resources to start your economy. Make sure no unneeded tool is created."
+msgstr "Du har berre eitt jern for kvart verktøy du må laga for å starta økonomien. Syt for at ingen unødvendige verktøy vert laga."
+
+#. TRANSLATORS: This is the tooltip for the "Hardcore" starting condition
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/struggling_outpost.lua:13
+#, fuzzy
+msgid "Start the game with just your headquarters and very few wares for bootstrapping an economy. Warning: the AI can't successfully start from this."
+msgstr "Start spelet med berre hovudkvarteret ditt og svært få varer for å få i gang ein økonomi. Åtvaring: KI-en klarer ikkje å starta frå dette."
 
 #: ../../../../data/tribes/scripting/help/init.lua:85
 msgid "Tribal Encyclopedia"
@@ -8031,15 +8640,13 @@ msgctxt "shipname"
 msgid "Amrum"
 msgstr "Amrum"
 
-#. TRANSLATORS: This Frisian ship is named after a no longer existing island
-#. in Northern Frisia
+#. TRANSLATORS: This Frisian ship is named after a no longer existing island in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:50
 msgctxt "shipname"
 msgid "Alt-Nordstrand"
 msgstr "Alt-Nordstrand"
 
-#. TRANSLATORS: This Frisian ship is named after a peninsula in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a peninsula in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:52
 msgctxt "shipname"
 msgid "Eiderstedt"
@@ -8105,8 +8712,7 @@ msgctxt "shipname"
 msgid "Langeneß"
 msgstr "Langeneß"
 
-#. TRANSLATORS: This Frisian ship is named after a water body in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a water body in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:74
 msgctxt "shipname"
 msgid "Norderaue"
@@ -8148,15 +8754,13 @@ msgctxt "shipname"
 msgid "Pellworm"
 msgstr "Pellworm"
 
-#. TRANSLATORS: This Frisian ship is named after a no longer existing island
-#. in Northern Frisia
+#. TRANSLATORS: This Frisian ship is named after a no longer existing island in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:88
 msgctxt "shipname"
 msgid "Strand"
 msgstr "Strand"
 
-#. TRANSLATORS: This Frisian ship is named after a water body in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a water body in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:90
 msgctxt "shipname"
 msgid "Süderaue"
@@ -8325,6 +8929,13 @@ msgid "Swift Boots"
 msgstr "Snøgge støvlar"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/branch/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Branch"
+msgstr "Koricancha"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/bread_amazons/init.lua:8
 msgctxt "ware"
 msgid "Bread"
@@ -8353,6 +8964,12 @@ msgstr "Brød"
 msgctxt "frisians_ware"
 msgid "Bread"
 msgstr "Brød"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/bread_hebrews/init.lua:8
+msgctxt "hebrews_ware"
+msgid "Unleavened Bread"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/bread_paddle/init.lua:8
@@ -8415,6 +9032,18 @@ msgid "Cocoa Beans"
 msgstr "Kakaobønner"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/copper/init.lua:8
+msgctxt "ware"
+msgid "Copper"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/copper_ore/init.lua:8
+msgctxt "ware"
+msgid "Copper Ore"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/corn/init.lua:8
 msgctxt "ware"
 msgid "Corn"
@@ -8425,6 +9054,13 @@ msgstr "Mais"
 msgctxt "ware"
 msgid "Cornmeal"
 msgstr "Maismjøl"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/dagger/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Dagger"
+msgstr "Grisebinge"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/diamond/init.lua:8
@@ -8521,6 +9157,13 @@ msgstr "Gull"
 msgctxt "ware"
 msgid "Gold Dust"
 msgstr "Gullstøv"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/gold_leaf/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Gold Leaf"
+msgstr "Gullmalm"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/gold_ore/init.lua:8
@@ -8642,8 +9285,7 @@ msgctxt "ware"
 msgid "Kitchen Tools"
 msgstr "Kjøkkenreiskap"
 
-#. TRANSLATORS: This is a ware name used in lists of wares. Used to make
-#. ropes.
+#. TRANSLATORS: This is a ware name used in lists of wares. Used to make ropes.
 #: ../../../../data/tribes/wares/liana/init.lua:8
 msgctxt "ware"
 msgid "Liana"
@@ -8692,6 +9334,12 @@ msgid "Meat"
 msgstr "Kjøt"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/menorah/init.lua:8
+msgctxt "ware"
+msgid "Menorah"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/milking_tongs/init.lua:8
 msgctxt "ware"
 msgid "Milking Tongs"
@@ -8702,6 +9350,18 @@ msgstr "Mjølketong"
 msgctxt "ware"
 msgid "Needles"
 msgstr "Nåler"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/olive_oil/init.lua:8
+msgctxt "ware"
+msgid "Olive Oil"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/olives/init.lua:8
+msgctxt "ware"
+msgid "Olives"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/pick/init.lua:8
@@ -8733,8 +9393,7 @@ msgctxt "ware"
 msgid "Ration"
 msgstr "Rasjon"
 
-#. TRANSLATORS: This is a ware name used in lists of wares. Used for thatching
-#. roofs and as a fiber for weaving cloth, fishing nets etc.
+#. TRANSLATORS: This is a ware name used in lists of wares. Used for thatching roofs and as a fiber for weaving cloth, fishing nets etc.
 #: ../../../../data/tribes/wares/reed/init.lua:8
 msgctxt "ware"
 msgid "Reed"
@@ -8777,6 +9436,13 @@ msgid "Scythe"
 msgstr "Ljå"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/sheep/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Sheep"
+msgstr "Sauegard"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/shield_advanced/init.lua:8
 msgctxt "ware"
 msgid "Advanced Shield"
@@ -8793,6 +9459,12 @@ msgstr "Stålskjold"
 msgctxt "ware"
 msgid "Shovel"
 msgstr "Spade"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/slingshot/init.lua:8
+msgctxt "ware"
+msgid "Slingshot"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/smoked_fish/init.lua:8
@@ -8909,6 +9581,24 @@ msgid "Golden Tabard"
 msgstr "Gulltabard"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tallit/init.lua:8
+msgctxt "ware"
+msgid "Tallit"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tallit_katan/init.lua:8
+msgctxt "ware"
+msgid "Tallit Katan"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tefilin/init.lua:8
+msgctxt "ware"
+msgid "Tefilin"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/trident_double/init.lua:8
 msgctxt "ware"
 msgid "Double Trident"
@@ -8969,6 +9659,12 @@ msgid "Wheat"
 msgstr "Kveite"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/wheat_grains/init.lua:8
+msgctxt "ware"
+msgid "Wheat Grains"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/wine/init.lua:8
 msgctxt "ware"
 msgid "Wine"
@@ -8979,6 +9675,18 @@ msgstr "Vin"
 msgctxt "ware"
 msgid "Wool"
 msgstr "Ull"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/yarn/init.lua:8
+msgctxt "ware"
+msgid "Yarn"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/zizit/init.lua:8
+msgctxt "ware"
+msgid "Zizit"
+msgstr ""
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/amazons/builder/init.lua:8
@@ -9141,10 +9849,12 @@ msgstr "Meistertømmerhoggar"
 #. animation_directory = dirname,
 #. icon = dirname .. "menu.png",
 #. vision_range = 2,
+#.
 #. buildcost = {
 #. empire_carrier = 1,
 #. fishing_rod = 1
 #. },
+#.
 #. programs = {
 #. fish = {
 #. "findspace=size:any radius:7 resource:resource_fish",
@@ -9157,11 +9867,13 @@ msgstr "Meistertømmerhoggar"
 #. "return"
 #. }
 #. },
+#.
 #. animations = {
 #. idle = {
 #. hotspot = { 7, 38 },
 #. },
 #. },
+#.
 #. spritesheets = {
 #. fishing = {
 #. fps = 10,
@@ -9189,6 +9901,7 @@ msgstr "Meistertømmerhoggar"
 #. },
 #. },
 #. }
+#.
 #. pop_textdomain()
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/atlanteans/armorsmith/init.lua:104
@@ -9999,3 +10712,110 @@ msgstr "Trenar"
 msgctxt "frisians_worker"
 msgid "Woodcutter"
 msgstr "Tømmerhoggar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/branch_collector/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Branch Collector"
+msgstr "Fruktsankar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/builder/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Builder"
+msgstr "Byggar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/carrier/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Sabal"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/donkey/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Donkey"
+msgstr "Esel"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/farmer/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Farmer"
+msgstr "Bonde"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/ferry/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Malach"
+msgstr "Malakitt"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/fisher/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Fisher"
+msgstr "Fiskar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/geologist/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Rebbe"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/miner/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Miner"
+msgstr "Gruvearbeidar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/recruit/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Recruit"
+msgstr "Rekrutt"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/scout/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Scout"
+msgstr "Speidar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/shepherd/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Shepherd"
+msgstr "Gjetar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/soldier/init.lua:20
+msgctxt "hebrews_worker"
+msgid "Gibbor"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/stonemason/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Stonemason"
+msgstr "Steinhoggar"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/talmid/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Talmid"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/talmid_chacham/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Talmid Chacham"
+msgstr ""

@@ -28,6 +28,9 @@ init = {
             pick = 1,
             copper_ore = 4,
          },
+         workers = {
+            hebrews_donkey = 3,
+         },
          soldiers = {
             [{0,0,0,0}] = 1,
          }

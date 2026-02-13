@@ -69,6 +69,7 @@ init = {
          granite = 1,
          hebrews_branch_collector = 3,
          hebrews_shepherd = 1,
+         hebrews_donkey = 5,
       },
    })
 end

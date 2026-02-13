@@ -53,7 +53,7 @@ init = {
             hebrews_fisher = 3,
             hebrews_talmid_chacham = 4,
             hebrews_shepherd = 1,
-            hebrews_donkey = 5,
+            hebrews_donkey = 10,
          },
          soldiers = {
             [{0,0,0,0}] = 5,

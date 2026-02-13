@@ -11,9 +11,17 @@ wl.Descriptions():new_productionsite_type {
 
    buildcost = {
       log = 2,
+      clay = 6,
+      granite = 4,
+      cloth = 3,
+      branch = 4,
    },
    return_on_dismantle = {
       log = 1,
+      clay = 2,
+      granite = 2,
+      cloth = 1,
+      branch = 2,
    },
 
    animation_directory = dirname,
@@ -24,6 +32,7 @@ wl.Descriptions():new_productionsite_type {
    },
 
    aihints = {
+      basic_amount = 1,
       prohibited_till = 900,
       very_weak_ai_limit = 1,
       weak_ai_limit = 2

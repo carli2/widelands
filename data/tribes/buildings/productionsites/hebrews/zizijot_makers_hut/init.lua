@@ -23,7 +23,12 @@ wl.Descriptions():new_productionsite_type {
       unoccupied = {hotspot = {39, 46}}
    },
 
-   aihints = {},
+   aihints = {
+      basic_amount = 1,
+      prohibited_till = 300,
+      very_weak_ai_limit = 1,
+      weak_ai_limit = 2
+   },
 
    working_positions = {
       hebrews_carrier = 1

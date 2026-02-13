@@ -30,7 +30,11 @@ wl.Descriptions():new_productionsite_type {
       },
    },
 
-   aihints = {},
+   aihints = {
+      prohibited_till = 900,
+      very_weak_ai_limit = 1,
+      weak_ai_limit = 1
+   },
 
    working_positions = {
       hebrews_scout = 1

@@ -47,6 +47,7 @@ init = {
          hebrews_talmid_chacham = 1,
          hebrews_talmid = 1,
          hebrews_fisher = 1,
+         hebrews_donkey = 5,
       },
    })
 end

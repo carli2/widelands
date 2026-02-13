@@ -51,7 +51,7 @@ init = {
          slingshot = 5,
       },
       workers = {
-         hebrews_donkey = 5,
+         hebrews_donkey = 15,
          hebrews_builder = 5,
          hebrews_stonemason = 1,
          hebrews_geologist = 5,

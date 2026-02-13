@@ -29,7 +29,9 @@ wl.Descriptions():new_productionsite_type {
    },
 
    aihints = {
-      basic_amount = 1
+      basic_amount = 1,
+      very_weak_ai_limit = 2,
+      weak_ai_limit = 3,
    },
 
    working_positions = {

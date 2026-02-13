@@ -1,6 +1,6 @@
 # Widelands PATH/TO/FILE.PO
 # Copyright (C) 2005-2026 Widelands Development Team
-# 
+#
 # Translators:
 # GunChleoc, 2014
 # Karl Vest, 2020
@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Widelands\n"
 "Report-Msgid-Bugs-To: https://www.widelands.org/wiki/ReportingBugs/\n"
-"POT-Creation-Date: 2026-02-09 04:27+0000\n"
+"POT-Creation-Date: 2026-02-13 22:41+0000\n"
 "PO-Revision-Date: 2015-11-03 18:55+0000\n"
 "Last-Translator: Pavol Gono, 2024-2025\n"
 "Language-Team: Slovak (http://app.transifex.com/widelands/widelands/language/sk/)\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -50,6 +50,13 @@ msgstr "Tržnica"
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/markets/frisians/market/init.lua:8
 msgctxt "frisians_building"
+msgid "Market"
+msgstr "Tržnica"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/markets/hebrews/market/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
 msgid "Market"
 msgstr "Tržnica"
 
@@ -1169,15 +1176,96 @@ msgctxt "frisians_building"
 msgid "Your soldiers defeated the enemy at the high wooden tower."
 msgstr "Vaši vojaci porazili nepriateľa pri vysokej drevenej veži."
 
-#. TRANSLATORS: This is a name used in lists of buildings for buildings under
-#. construction
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:8
+msgctxt "hebrews_building"
+msgid "Massada"
+msgstr ""
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:42
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers have occupied your castle."
+msgstr "Vaši vojaci obsadili váš hrad."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:44
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your castle discovered an aggressor."
+msgstr "Váš hrad odhalil útočníka."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:46
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your castle is under attack."
+msgstr "Nepriateľ útočí na váš hrad."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:48
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The enemy defeated your soldiers at the castle."
+msgstr "Nepriateľ porazil vašich vojakov pri hrade."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/massada/init.lua:50
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers defeated the enemy at the castle."
+msgstr "Vaši vojaci porazili nepriateľa pri hrade."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Small army tent"
+msgstr "Malá vyhňa na zbroje"
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:40
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers have occupied your small tent."
+msgstr "Vaši vojaci obsadili vašu malú vežu."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:42
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your small tent discovered an aggressor."
+msgstr "Vaša malá veža odhalila útočníka."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:44
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your small tent is under attack."
+msgstr "Nepriateľ útočí na vašu malú vežu."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:46
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The enemy defeated your soldiers at the small tent."
+msgstr "Nepriateľ porazil vašich vojakov pri malej veži."
+
+#. TRANSLATORS: Message sent by a Hebrew military site
+#: ../../../../data/tribes/buildings/militarysites/hebrews/tent_small/init.lua:48
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Your soldiers defeated the enemy at the small tent."
+msgstr "Vaši vojaci porazili nepriateľa pri malej veži."
+
+#. TRANSLATORS: This is a name used in lists of buildings for buildings under construction
 #: ../../../../data/tribes/buildings/partially_finished/constructionsite/init.lua:61
 msgctxt "building"
 msgid "Construction Site"
 msgstr "Stavenisko"
 
-#. TRANSLATORS: This is a name used in lists of buildings for buildings being
-#. taken apart
+#. TRANSLATORS: This is a name used in lists of buildings for buildings being taken apart
 #: ../../../../data/tribes/buildings/partially_finished/dismantlesite/init.lua:58
 msgctxt "building"
 msgid "Dismantle Site"
@@ -1267,6 +1355,19 @@ msgstr "Manioková plantáž"
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/frisians/tavern/init.lua:88
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:49
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:49
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:54
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:47
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:58
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:59
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:50
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:52
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:50
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:53
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:44
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:52
 msgid "working"
 msgstr "pracovanie"
 
@@ -1290,6 +1391,9 @@ msgstr "zbieranie manioku"
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:109
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:100
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:74
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:77
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:76
 msgid "No Fields"
 msgstr "Došli polia"
 
@@ -1303,14 +1407,15 @@ msgstr "Došli polia"
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:91
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:110
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:101
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:75
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:77
 msgid "Out of Fields"
 msgstr "Došli polia"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/cassava_plantation/init.lua:83
 msgctxt "amazons_building"
-msgid ""
-"The farmer working at this cassava plantation has no cleared soil to plant "
-"her seeds."
+msgid "The farmer working at this cassava plantation has no cleared soil to plant her seeds."
 msgstr "Pestovateľka pracujúca na tejto maniokovej plantáži nemá k dispozícii čistú pôdu, na ktorej by mohla začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1367,9 +1472,7 @@ msgstr "zbieranie kakaovníka"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/cocoa_farm/init.lua:91
 msgctxt "amazons_building"
-msgid ""
-"The cocoa farmer working at this cocoa farm has no cleared soil to plant her"
-" seeds."
+msgid "The cocoa farmer working at this cocoa farm has no cleared soil to plant her seeds."
 msgstr "Pestovateľka pracujúca na tejto kakaovníkovej plantáži nemá k dispozícii čistú pôdu, na ktorej by mohla začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1380,29 +1483,26 @@ msgstr "Krajčírstvo"
 
 #. TRANSLATORS: Completed/Skipped/Did not start sewing a tunic because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:74
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:64
 msgid "sewing a tunic"
 msgstr "šitie tuniky"
 
-#. TRANSLATORS: Completed/Skipped/Did not start producing a light wooden armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start producing a light wooden armor because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:86
 msgid "making a light wooden armor"
 msgstr "vyrábanie ľahkej drevenej zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a wooden helmet because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a wooden helmet because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:98
 msgid "making a wooden helmet"
 msgstr "vyrábanie drevenej helmy"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a warrior’s coat
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a warrior’s coat because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:110
 msgid "sewing a warrior’s coat"
 msgstr "šitie bojovníckeho kabáta"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making sturdy boots because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making sturdy boots because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:122
 msgid "making sturdy boots"
 msgstr "vyrábanie pevných topánok"
@@ -1417,14 +1517,12 @@ msgstr "vyrábanie svižných topánok"
 msgid "making hero boots"
 msgstr "vyrábanie topánok hrdiniek"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a padded vest because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a padded vest because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:158
 msgid "making a padded vest"
 msgstr "vyrábanie polstrovanej vesty"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a padded protector
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a padded protector because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/dressmakery/init.lua:170
 msgid "making a padded protector"
 msgstr "vyrábanie polstrovaného chrániča"
@@ -1473,8 +1571,7 @@ msgctxt "amazons_building"
 msgid "Gardening Center"
 msgstr "Záhradné centrum"
 
-#. TRANSLATORS: Completed/Skipped/Did not start enhancing the fertility of
-#. land because ...
+#. TRANSLATORS: Completed/Skipped/Did not start enhancing the fertility of land because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/gardening_center/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/amazons/gardening_center/init.lua:67
 msgid "enhancing the fertility of land"
@@ -1502,6 +1599,9 @@ msgstr "Obydlie zlatokopky"
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:72
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:69
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:39
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:54
 msgid "mining gold"
 msgstr "ťaženie zlata"
 
@@ -1514,6 +1614,8 @@ msgstr "ťaženie zlata"
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:83
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:104
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:90
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:82
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:72
 msgid "No Gold"
 msgstr "Došlo zlato"
 
@@ -1526,15 +1628,14 @@ msgstr "Došlo zlato"
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:84
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:105
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:91
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:83
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:73
 msgid "Main Gold Vein Exhausted"
 msgstr "Hlavná zlatá žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/gold_digger_dwelling/init.lua:69
 msgctxt "amazons_building"
-msgid ""
-"This gold digger dwelling’s main vein is exhausted. Expect strongly "
-"diminished returns on investment. You should consider dismantling or "
-"destroying it."
+msgid "This gold digger dwelling’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tohto obydlia zlatokopky je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné obydlie rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1570,9 +1671,7 @@ msgstr "Minula sa zver a ryby"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/amazons/hunter_gatherers_hut/init.lua:79
 msgctxt "amazons_building"
-msgid ""
-"The hunter-gatherer working out of this hunter-gatherer’s hut can’t find any"
-" game or fish in her work area."
+msgid "The hunter-gatherer working out of this hunter-gatherer’s hut can’t find any game or fish in her work area."
 msgstr "Lovkyňa-zberačka pracujúca z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadnu divú zver ani ryby."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1614,12 +1713,16 @@ msgid "cutting lianas"
 msgstr "rezanie liany"
 
 #. TRANSLATORS: Short for "No Tree to Cut Lianas" for a resource
+#. TRANSLATORS: Short for "No Tree to Collect Branches" for a resource
+#. TRANSLATORS: Short for "No Trees" for a resource
 #: ../../../../data/tribes/buildings/productionsites/amazons/liana_cutters_hut/init.lua:52
 #: ../../../../data/tribes/buildings/productionsites/amazons/woodcutters_hut/init.lua:65
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/woodcutters_house/init.lua:50
 #: ../../../../data/tribes/buildings/productionsites/barbarians/lumberjacks_hut/init.lua:62
 #: ../../../../data/tribes/buildings/productionsites/empire/lumberjacks_house/init.lua:53
 #: ../../../../data/tribes/buildings/productionsites/frisians/woodcutters_house/init.lua:66
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:55
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:54
 msgid "No Trees"
 msgstr "Došli stromy"
 
@@ -1629,10 +1732,7 @@ msgstr "Nie sú stromy na rezanie lián"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/liana_cutters_hut/init.lua:54
 msgctxt "amazons_building"
-msgid ""
-"The liana cutter working at this site can’t find any tree in her work area. "
-"You should consider dismantling or destroying the building or building a "
-"jungle preserver’s hut."
+msgid "The liana cutter working at this site can’t find any tree in her work area. You should consider dismantling or destroying the building or building a jungle preserver’s hut."
 msgstr "Rezačka lián pracujúca z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Porozmýšľajte nad rozobratím alebo zničením budovy, prípadne postavením chatrče strážkyne džungle."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1641,20 +1741,17 @@ msgctxt "amazons_building"
 msgid "Rare Tree Cutter’s Hut"
 msgstr "Chatrč na ťažbu vzácnych drevín"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:42
 msgid "harvesting balsa"
 msgstr "zberanie balzy"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:54
 msgid "harvesting rubber"
 msgstr "zberanie kaučuku"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_cutters_hut/init.lua:66
 msgid "harvesting ironwood"
 msgstr "zberanie železného dreva"
@@ -1665,20 +1762,17 @@ msgctxt "amazons_building"
 msgid "Rare Tree Plantation"
 msgstr "Plantáž vzácnych drevín"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:56
 msgid "planting balsa tree"
 msgstr "sadenie balzovníka"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:69
 msgid "planting rubber tree"
 msgstr "sadenie kaučukovníka"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/amazons/rare_tree_plantation/init.lua:82
 msgid "planting ironwood tree"
 msgstr "sadenie leopardieho stromu"
@@ -1711,6 +1805,8 @@ msgstr "Prieskumnícka chatrč"
 #: ../../../../data/tribes/buildings/productionsites/empire/scouts_house/init.lua:63
 #: ../../../../data/tribes/buildings/productionsites/frisians/scouts_house/init.lua:58
 #: ../../../../data/tribes/buildings/productionsites/frisians/scouts_house/init.lua:70
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:59
 msgid "scouting"
 msgstr "preskúmavanie"
 
@@ -1720,8 +1816,7 @@ msgctxt "amazons_building"
 msgid "Shipyard"
 msgstr "Lodenica"
 
-#. TRANSLATORS: Completed/Skipped/Did not start constructing a ship because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start constructing a ship because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/shipyard/init.lua:66
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/shipyard/init.lua:83
 #: ../../../../data/tribes/buildings/productionsites/barbarians/shipyard/init.lua:80
@@ -1745,8 +1840,7 @@ msgstr "Kamenárstvo"
 msgid "making a shovel"
 msgstr "vyrábanie lopaty"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a felling ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a felling ax because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:99
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:118
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:75
@@ -1758,6 +1852,7 @@ msgstr "vyrábanie drevorubačskej sekery"
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:173
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:196
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:179
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:61
 msgid "making a pick"
 msgstr "vyrábanie krompáča"
 
@@ -1766,8 +1861,7 @@ msgstr "vyrábanie krompáča"
 msgid "making a machete"
 msgstr "vyrábanie mačety"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making kitchen tools because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making kitchen tools because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:135
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:183
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:166
@@ -1781,6 +1875,7 @@ msgstr "vyrábanie kuchynského náradia"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:157
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:140
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:154
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:73
 msgid "making a hammer"
 msgstr "vyrábanie kladiva"
 
@@ -1795,8 +1890,7 @@ msgstr "vyrábanie dláta"
 msgid "making needles"
 msgstr "vyrábanie ihiel"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a stone bowl because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a stone bowl because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:183
 msgid "making a stone bowl"
 msgstr "vyrábanie kamennej misy"
@@ -1806,20 +1900,17 @@ msgstr "vyrábanie kamennej misy"
 msgid "making firestones"
 msgstr "vyrábanie pazúrikov"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a wooden spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a wooden spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:207
 msgid "making a wooden spear"
 msgstr "vyrábanie drevenej kopije"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a stone-tipped spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a stone-tipped spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:219
 msgid "making a stone-tipped spear"
 msgstr "vyrábanie kopije s kamenným hrotom"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hardened spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hardened spear because ...
 #: ../../../../data/tribes/buildings/productionsites/amazons/stone_workshop/init.lua:231
 msgid "making a hardened spear"
 msgstr "vyrábanie vystuženej kopije"
@@ -1840,6 +1931,7 @@ msgstr "ťaženie žuly"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:60
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:80
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:66
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:52
 msgid "No Rocks"
 msgstr "Došli skaly"
 
@@ -1848,14 +1940,13 @@ msgstr "Došli skaly"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:61
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:81
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:53
 msgid "Out of Rocks"
 msgstr "Došli skaly"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/stonecutters_hut/init.lua:50
 msgctxt "amazons_building"
-msgid ""
-"The stonecutter working at this stonecutter’s hut can’t find any rocks in "
-"her work area."
+msgid "The stonecutter working at this stonecutter’s hut can’t find any rocks in her work area."
 msgstr "Kamenárka pracujúca v tejto chatrči nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1882,6 +1973,8 @@ msgstr "ťaženie"
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:104
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:75
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:54
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:65
 msgid "mining granite"
 msgstr "ťaženie žuly"
 
@@ -1902,9 +1995,7 @@ msgstr "Hlavná žila kameňa bola vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/stonemine/init.lua:94
 msgctxt "amazons_building"
-msgid ""
-"This stone mine’s main vein is exhausted. Expect strongly diminished returns"
-" on investment. You should consider dismantling or destroying it."
+msgid "This stone mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto kamennej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1930,6 +2021,7 @@ msgstr "Chatrč nosičky vody"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/well/init.lua:67
 #: ../../../../data/tribes/buildings/productionsites/empire/well/init.lua:62
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:64
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:56
 msgid "No Water"
 msgstr "Došla voda"
 
@@ -1938,14 +2030,13 @@ msgstr "Došla voda"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/well/init.lua:68
 #: ../../../../data/tribes/buildings/productionsites/empire/well/init.lua:63
 #: ../../../../data/tribes/buildings/productionsites/frisians/well/init.lua:65
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:57
 msgid "Out of Water"
 msgstr "Došla voda"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/water_gatherers_hut/init.lua:57
 msgctxt "amazons_building"
-msgid ""
-"The carrier working at this water gatherer’s hut can’t find any water in its"
-" vicinity."
+msgid "The carrier working at this water gatherer’s hut can’t find any water in its vicinity."
 msgstr "Nosička pracujúca pri tejto chatrči nedokáže nájsť žiadnu vodu v jej blízkosti."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -1992,10 +2083,7 @@ msgstr "Došli stromy"
 
 #: ../../../../data/tribes/buildings/productionsites/amazons/woodcutters_hut/init.lua:67
 msgctxt "amazons_building"
-msgid ""
-"The woodcutter working at this woodcutter’s hut can’t find any trees in her "
-"work area. You should consider dismantling or destroying the building or "
-"building a jungle preserver’s hut."
+msgid "The woodcutter working at this woodcutter’s hut can’t find any trees in her work area. You should consider dismantling or destroying the building or building a jungle preserver’s hut."
 msgstr "Drevorubačka pracujúca z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Porozmýšľajte nad rozobratím alebo zničením budovy, prípadne postavením chatrče strážkyne džungle."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2004,14 +2092,12 @@ msgctxt "atlanteans_building"
 msgid "Armor Smithy"
 msgstr "Vyhňa na zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a steel shield because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a steel shield because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/armorsmithy/init.lua:223
 msgid "forging a steel shield"
 msgstr "kutie oceľového štítu"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced shield
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced shield because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/armorsmithy/init.lua:235
 msgid "forging an advanced shield"
 msgstr "kutie vylepšeného štítu"
@@ -2051,17 +2137,14 @@ msgstr "Čiernokoreňová farma"
 msgid "planting blackroot"
 msgstr "sadenie čierneho koreňa"
 
-#. TRANSLATORS: Completed/Skipped/Did not start harvesting blackroot because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting blackroot because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/blackroot_farm/init.lua:72
 msgid "harvesting blackroot"
 msgstr "zbieranie čierneho koreňa"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/blackroot_farm/init.lua:86
 msgctxt "atlanteans_building"
-msgid ""
-"The blackroot farmer working at this blackroot farm has no cleared soil to "
-"plant his seeds."
+msgid "The blackroot farmer working at this blackroot farm has no cleared soil to plant his seeds."
 msgstr "Pestovateľ čierneho koreňa pracujúci na tejto čiernokoreňovej farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2128,9 +2211,7 @@ msgstr "Hlavná uhoľná žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/coalmine/init.lua:97
 msgctxt "atlanteans_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2155,9 +2236,7 @@ msgstr "Hlavná kryštálová žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/crystalmine/init.lua:160
 msgctxt "atlanteans_building"
-msgid ""
-"This crystal mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. You should consider dismantling or destroying it."
+msgid "This crystal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto kryštálovej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2178,8 +2257,7 @@ msgstr "zberanie kukurice"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/farm/init.lua:90
 msgctxt "atlanteans_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2199,6 +2277,7 @@ msgstr "Rybnikársky dom"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:65
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:56
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:69
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:54
 msgid "No Fish"
 msgstr "Došli ryby"
 
@@ -2207,16 +2286,13 @@ msgstr "Došli ryby"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:66
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:57
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:70
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:55
 msgid "Out of Fish"
 msgstr "Došli ryby"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishbreeders_house/init.lua:57
 msgctxt "atlanteans_building"
-msgid ""
-"The fish breeder working out of this fish breeder’s house can’t find any "
-"water where he can breed fish in his work area. Remember that you can only "
-"regenerate your fish resources if there ever were some fish in the vicinity "
-"in the first place."
+msgid "The fish breeder working out of this fish breeder’s house can’t find any water where he can breed fish in his work area. Remember that you can only regenerate your fish resources if there ever were some fish in the vicinity in the first place."
 msgstr "Rybnikár pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne miesto vody, kde by mohol chovať ryby. Pamätajte, že svoje rybie zdroje môžete obnoviť iba vtedy, ak sa v okolí niekedy nejaké ryby nachádzali."
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishbreeders_house/init.lua:61
@@ -2235,15 +2311,13 @@ msgstr "Rybársky dom"
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:43
 #: ../../../../data/tribes/buildings/productionsites/frisians/aqua_farm/init.lua:86
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:56
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:45
 msgid "fishing"
 msgstr "chytanie rýb"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/fishers_house/init.lua:58
 msgctxt "atlanteans_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area. Remember that you can increase the number of existing fish by "
-"building a fish breeder’s house."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area. Remember that you can increase the number of existing fish by building a fish breeder’s house."
 msgstr "Rybár pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne ryby. Nezabúdajte, že počet rýb sa dá zvýšiť postavením rybnikárskeho domu."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2271,9 +2345,7 @@ msgstr "Zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/goldmine/init.lua:86
 msgctxt "atlanteans_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2295,10 +2367,12 @@ msgid "Hunter’s House"
 msgstr "Lovecký dom"
 
 #. TRANSLATORS: Completed/Skipped/Did not start hunting because ...
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/hunters_house/init.lua:39
 #: ../../../../data/tribes/buildings/productionsites/barbarians/hunters_hut/init.lua:57
 #: ../../../../data/tribes/buildings/productionsites/empire/hunters_house/init.lua:42
 #: ../../../../data/tribes/buildings/productionsites/frisians/hunters_house/init.lua:55
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:76
 msgid "hunting"
 msgstr "lovenie"
 
@@ -2320,9 +2394,7 @@ msgstr "Došla divá zver"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/hunters_house/init.lua:56
 msgctxt "atlanteans_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Lovec pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadnu divú zver."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2373,9 +2445,7 @@ msgstr "Hlavná železná žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/ironmine/init.lua:89
 msgctxt "atlanteans_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2405,14 +2475,13 @@ msgstr "Kameňolom"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:47
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:55
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:53
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:43
 msgid "quarrying granite"
 msgstr "lámanie žuly"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/quarry/init.lua:51
 msgctxt "atlanteans_building"
-msgid ""
-"The stonecutter working at this quarry can’t find any rocks in his work "
-"area."
+msgid "The stonecutter working at this quarry can’t find any rocks in his work area."
 msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2488,8 +2557,7 @@ msgctxt "atlanteans_building"
 msgid "Toolsmithy"
 msgstr "Vyhňa na nástroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a bread paddle because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a bread paddle because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:69
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:105
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:101
@@ -2497,8 +2565,7 @@ msgstr "Vyhňa na nástroje"
 msgid "making a bread paddle"
 msgstr "vyrábanie pekárskej lopaty"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a pair of buckets
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a pair of buckets because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:82
 msgid "making a pair of buckets"
 msgstr "vyrábanie páru vedier"
@@ -2511,8 +2578,7 @@ msgstr "vyrábanie páru vedier"
 msgid "making fire tongs"
 msgstr "vyrábanie klieští na uhlie"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a fishing net because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a fishing net because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:108
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:142
 msgid "making a fishing net"
@@ -2523,14 +2589,12 @@ msgstr "vyrábanie rybárskej siete"
 msgid "making a hook pole"
 msgstr "vyrábanie tyče s hákom"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hunting bow because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hunting bow because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:147
 msgid "making a hunting bow"
 msgstr "vyrábanie loveckého luku"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making milking tongs because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making milking tongs because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/toolsmithy/init.lua:160
 msgid "making milking tongs"
 msgstr "vyrábanie dojacích klieští"
@@ -2555,32 +2619,27 @@ msgctxt "atlanteans_building"
 msgid "Weapon Smithy"
 msgstr "Vyhňa na zbrane"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a light trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a light trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:66
 msgid "forging a light trident"
 msgstr "kutie ľahkého trojzubca"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a long trident because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a long trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:81
 msgid "forging a long trident"
 msgstr "kutie dlhého trojzubca"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a steel trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a steel trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:96
 msgid "forging a steel trident"
 msgstr "kutie oceľového trojzubca"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a double trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a double trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:111
 msgid "forging a double trident"
 msgstr "kutie dvojitého trojzubca"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy double trident
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy double trident because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaponsmithy/init.lua:126
 msgid "forging a heavy double trident"
 msgstr "kutie ťažkého dvojitého trojzubca"
@@ -2591,8 +2650,7 @@ msgctxt "atlanteans_building"
 msgid "Weaving Mill"
 msgstr "Tkáčovňa"
 
-#. TRANSLATORS: Completed/Skipped/Did not start weaving spidercloth because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start weaving spidercloth because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaving_mill/init.lua:63
 msgid "weaving spidercloth"
 msgstr "tkanie pavúčej látky"
@@ -2602,8 +2660,7 @@ msgstr "tkanie pavúčej látky"
 msgid "tailoring a tabard"
 msgstr "šitie kabátca"
 
-#. TRANSLATORS: Completed/Skipped/Did not start tailoring a golden tabard
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start tailoring a golden tabard because ...
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/weaving_mill/init.lua:89
 msgid "tailoring a golden tabard"
 msgstr "šitie zlatého kabátca"
@@ -2627,10 +2684,7 @@ msgstr "Drevorubačský dom"
 
 #: ../../../../data/tribes/buildings/productionsites/atlanteans/woodcutters_house/init.lua:52
 msgctxt "atlanteans_building"
-msgid ""
-"The woodcutter working at this woodcutter’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The woodcutter working at this woodcutter’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Drevorubač pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Porozmýšľajte nad rozobratím alebo zničením budovy, prípadne postavením horárne."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2706,8 +2760,7 @@ msgctxt "barbarians_building"
 msgid "Brewery"
 msgstr "Pivovar"
 
-#. TRANSLATORS: Completed/Skipped/Did not start brewing strong beer because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start brewing strong beer because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/brewery/init.lua:38
 msgid "brewing strong beer"
 msgstr "varenie silného piva"
@@ -2739,9 +2792,7 @@ msgstr "Uhoľná baňa"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine/init.lua:107
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2758,10 +2809,7 @@ msgstr "Hlbočizná uhoľná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/coalmine_deeper/init.lua:89
 msgctxt "barbarians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2773,19 +2821,20 @@ msgstr "Farma"
 #. TRANSLATORS: Completed/Skipped/Did not start planting wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:82
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:55
 msgid "planting wheat"
 msgstr "sadenie pšenice"
 
 #. TRANSLATORS: Completed/Skipped/Did not start harvesting wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:94
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:64
 msgid "harvesting wheat"
 msgstr "zberanie pšenice"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/farm/init.lua:109
 msgctxt "barbarians_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2802,9 +2851,7 @@ msgstr "Rybárska chatrč"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/fishers_hut/init.lua:67
 msgctxt "barbarians_building"
-msgid ""
-"The fisher working out of this fisher’s hut can’t find any fish in his work "
-"area."
+msgid "The fisher working out of this fisher’s hut can’t find any fish in his work area."
 msgstr "Rybár pracujúci z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne ryby."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2822,9 +2869,7 @@ msgstr "Zlatá baňa"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2841,10 +2886,7 @@ msgstr "Hlbočizná zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/goldmine_deeper/init.lua:88
 msgctxt "barbarians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2856,21 +2898,20 @@ msgstr "Žulová baňa"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:92
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:122
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:93
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:83
 msgid "No Granite"
 msgstr "Došla žula"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:93
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:123
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:94
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:84
 msgid "Main Granite Vein Exhausted"
 msgstr "Hlavná žulová žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/granitemine/init.lua:95
 msgctxt "barbarians_building"
-msgid ""
-"This granite mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. This mine can’t be enhanced any further, so you "
-"should consider dismantling or destroying it."
+msgid "This granite mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto žulovej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2905,10 +2946,7 @@ msgstr "Lovecká chatrč"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/barbarians/hunters_hut/init.lua:74
 msgctxt "barbarians_building"
-msgid ""
-"The hunter working out of this hunter’s hut can’t find any game in his work "
-"area. Remember that you can build a gamekeeper’s hut to release more game "
-"into the wild."
+msgid "The hunter working out of this hunter’s hut can’t find any game in his work area. Remember that you can build a gamekeeper’s hut to release more game into the wild."
 msgstr "Lovec pracujúci z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadnu divú zver. Nezabúdajte, že ak chcete vypúšťať zver do divočiny, môžete postaviť hájnickú chatrč."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2926,9 +2964,7 @@ msgstr "Železnorudná baňa"
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine/init.lua:90
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine_deep/init.lua:99
 msgctxt "barbarians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2945,10 +2981,7 @@ msgstr "Hlbočizná železnorudná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/ironmine_deeper/init.lua:89
 msgctxt "barbarians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2970,10 +3003,7 @@ msgstr "Drevorubačská chatrč"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/lumberjacks_hut/init.lua:64
 msgctxt "barbarians_building"
-msgid ""
-"The lumberjack working at this lumberjack’s hut can’t find any trees in his "
-"work area. You should consider dismantling or destroying the building or "
-"building a ranger’s hut."
+msgid "The lumberjack working at this lumberjack’s hut can’t find any trees in his work area. You should consider dismantling or destroying the building or building a ranger’s hut."
 msgstr "Drevorubač pracujúci z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Zvážte, či by nebolo vhodné budovu rozobrať alebo zničiť, prípadne postaviť lesnícku chatrč."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -2982,15 +3012,14 @@ msgctxt "barbarians_building"
 msgid "Metal Workshop"
 msgstr "Kovodielňa"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a fishing rod because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a fishing rod because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:144
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:127
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:85
 msgid "making a fishing rod"
 msgstr "vyrábanie udice"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a hunting spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a hunting spear because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/metal_workshop/init.lua:170
 #: ../../../../data/tribes/buildings/productionsites/empire/toolsmithy/init.lua:153
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:166
@@ -3019,8 +3048,7 @@ msgstr "Kameňolom"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/quarry/init.lua:62
 msgctxt "barbarians_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3049,9 +3077,7 @@ msgstr "zbieranie trstiny"
 
 #: ../../../../data/tribes/buildings/productionsites/barbarians/reed_yard/init.lua:83
 msgctxt "barbarians_building"
-msgid ""
-"The gardener working at this reed yard has no cleared soil to plant his "
-"seeds."
+msgid "The gardener working at this reed yard has no cleared soil to plant his seeds."
 msgstr "Záhradník pracujúci v tejto trstinovej záhrade nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3084,20 +3110,17 @@ msgctxt "barbarians_building"
 msgid "War Mill"
 msgstr "Vojenský závod"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a bronze ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a bronze ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:116
 msgid "forging a bronze ax"
 msgstr "kutie bronzovej sekery"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a battle ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a battle ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:131
 msgid "forging a battle ax"
 msgstr "kutie bojovej sekery"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a warrior’s ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a warrior’s ax because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/warmill/init.lua:146
 msgid "forging a warrior’s ax"
 msgstr "kutie bojovníckej sekery"
@@ -3111,6 +3134,7 @@ msgstr "Tkáčovňa"
 #. TRANSLATORS: Completed/Skipped/Did not start weaving because ...
 #: ../../../../data/tribes/buildings/productionsites/barbarians/weaving_mill/init.lua:52
 #: ../../../../data/tribes/buildings/productionsites/empire/weaving_mill/init.lua:63
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:60
 msgid "weaving"
 msgstr "tkanie"
 
@@ -3142,20 +3166,17 @@ msgctxt "empire_building"
 msgid "Armor Smithy"
 msgstr "Vyhňa na zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:95
 msgid "forging a suit of armor"
 msgstr "kutie súpravy zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of chain armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of chain armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:107
 msgid "forging a suit of chain armor"
 msgstr "kutie súpravy krúžkovej zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of gilded armor
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a suit of gilded armor because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/armorsmithy/init.lua:119
 msgid "forging a suit of gilded armor"
 msgstr "kutie súpravy pozlátenej zbroje"
@@ -3204,9 +3225,7 @@ msgstr "Uhoľná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/coalmine/init.lua:108
 msgctxt "empire_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3217,10 +3236,7 @@ msgstr "Hlbinná uhoľná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/coalmine_deep/init.lua:88
 msgctxt "empire_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3243,8 +3259,7 @@ msgstr "Farma"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/farm/init.lua:92
 msgctxt "empire_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3261,9 +3276,7 @@ msgstr "Rybársky dom"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/fishers_house/init.lua:58
 msgctxt "empire_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area."
 msgstr "Rybár pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne ryby."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3280,9 +3293,7 @@ msgstr "Zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine/init.lua:107
 msgctxt "empire_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3293,10 +3304,7 @@ msgstr "Hlbinná zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/goldmine_deep/init.lua:86
 msgctxt "empire_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3308,9 +3316,7 @@ msgstr "Lovecký dom"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/empire/hunters_house/init.lua:59
 msgctxt "empire_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Lovec pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadnu divú zver."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3327,9 +3333,7 @@ msgstr "Železnorudná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/ironmine/init.lua:108
 msgctxt "empire_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3340,10 +3344,7 @@ msgstr "Hlbinná železnorudná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/ironmine_deep/init.lua:87
 msgctxt "empire_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3354,10 +3355,7 @@ msgstr "Drevorubačský dom"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/lumberjacks_house/init.lua:55
 msgctxt "empire_building"
-msgid ""
-"The lumberjack working at this lumberjack’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The lumberjack working at this lumberjack’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Drevorubač pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Zvážte, či by nebolo vhodné budovu rozobrať alebo zničiť, prípadne postaviť horáreň."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3386,10 +3384,7 @@ msgstr "Hlavná mramorová žila vyčerpaná"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/marblemine/init.lua:151
 msgctxt "empire_building"
-msgid ""
-"This marble mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. You should consider enhancing, dismantling or "
-"destroying it."
+msgid "This marble mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto mramorovej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3400,10 +3395,7 @@ msgstr "Hlbinná mramorová baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/marblemine_deep/init.lua:96
 msgctxt "empire_building"
-msgid ""
-"This marble mine’s main vein is exhausted. Expect strongly diminished "
-"returns on investment. This mine can’t be enhanced any further, so you "
-"should consider dismantling or destroying it."
+msgid "This marble mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto mramorovej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3414,6 +3406,7 @@ msgstr "Mlyn"
 
 #. TRANSLATORS: Completed/Skipped/Did not start grinding wheat because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/mill/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:70
 msgid "grinding wheat"
 msgstr "mletie pšenice"
 
@@ -3441,8 +3434,7 @@ msgstr "lámanie mramoru"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/quarry/init.lua:82
 msgctxt "empire_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3486,8 +3478,7 @@ msgctxt "empire_building"
 msgid "Stonemason’s House"
 msgstr "Kamenársky dom"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sculpting a marble column
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sculpting a marble column because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/stonemasons_house/init.lua:57
 msgid "sculpting a marble column"
 msgstr "kresanie mramorového stĺpa"
@@ -3516,23 +3507,21 @@ msgctxt "empire_building"
 msgid "Vineyard"
 msgstr "Vinohrad"
 
-#. TRANSLATORS: Completed/Skipped/Did not start planting grapevines because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start planting grapevines because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:58
 msgid "planting grapevines"
 msgstr "sadenie viničov"
 
-#. TRANSLATORS: Completed/Skipped/Did not start harvesting grapevines because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting grapevines because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:78
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:67
 msgid "harvesting grapes"
 msgstr "oberanie hrozna"
 
 #: ../../../../data/tribes/buildings/productionsites/empire/vineyard/init.lua:92
 msgctxt "empire_building"
-msgid ""
-"The vine farmer working at this vineyard has no cleared soil to plant his "
-"grapevines."
+msgid "The vine farmer working at this vineyard has no cleared soil to plant his grapevines."
 msgstr "Vinohradník pracujúci v tomto vinohrade nemá k dispozícii čistú pôdu, na ktorej by mohol sadiť vinič."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3541,8 +3530,7 @@ msgctxt "empire_building"
 msgid "Weapon Smithy"
 msgstr "Vyhňa na zbrane"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a wooden spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a wooden spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:84
 msgid "forging a wooden spear"
 msgstr "kutie drevenej kopije"
@@ -3552,20 +3540,17 @@ msgstr "kutie drevenej kopije"
 msgid "forging a spear"
 msgstr "kutie kopije"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced spear
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging an advanced spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:114
 msgid "forging an advanced spear"
 msgstr "kutie vylepšenej kopije"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a heavy spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:129
 msgid "forging a heavy spear"
 msgstr "kutie ťažkej kopije"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a war spear because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a war spear because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/weaponsmithy/init.lua:144
 msgid "forging a war spear"
 msgstr "kutie vojenskej kopije"
@@ -3595,6 +3580,7 @@ msgstr "Vinársky závod"
 
 #. TRANSLATORS: Completed/Skipped/Did not start making wine because ...
 #: ../../../../data/tribes/buildings/productionsites/empire/winery/init.lua:59
+#: ../../../../data/tribes/buildings/productionsites/hebrews/winery/init.lua:50
 msgid "making wine"
 msgstr "vyrábanie vína"
 
@@ -3615,11 +3601,7 @@ msgstr "Došli nádrže s rybami"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/aqua_farm/init.lua:110
 msgctxt "frisians_building"
-msgid ""
-"The fisher working at this aqua farm can’t find any fish ponds in his work "
-"area. Please make sure there is a working clay pit nearby and the aqua farm "
-"is supplied with all needed wares, or consider dismantling or destroying "
-"this building."
+msgid "The fisher working at this aqua farm can’t find any fish ponds in his work area. Please make sure there is a working clay pit nearby and the aqua farm is supplied with all needed wares, or consider dismantling or destroying this building."
 msgstr "Rybár pracujúci na tejto vodnej farme nedokáže vo svojej pracovnej oblasti nájsť žiadne nádrže s rybami. Prosím uistite sa, že v okolí sa nachádza funkčná jama na hlinu a vodná farma je zásobená všetkým potrebným, prípadne uvažujte nad rozobratím alebo zničením tejto budovy."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3628,20 +3610,17 @@ msgctxt "frisians_building"
 msgid "Large Armor Smithy"
 msgstr "Veľká vyhňa na zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a broadsword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a broadsword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:67
 msgid "forging a broadsword"
 msgstr "kutie širokého meča"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a double-edged sword
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a double-edged sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:82
 msgid "forging a double-edged sword"
 msgstr "kutie dvojsečného meča"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a golden helmet
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a golden helmet because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_large/init.lua:97
 msgid "forging a golden helmet"
 msgstr "kutie zlatej helmy"
@@ -3652,14 +3631,12 @@ msgctxt "frisians_building"
 msgid "Small Armor Smithy"
 msgstr "Malá vyhňa na zbroje"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a short sword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a short sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_small/init.lua:96
 msgid "forging a short sword"
 msgstr "kutie krátkeho meča"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a long sword because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a long sword because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/armor_smithy_small/init.lua:111
 msgid "forging a long sword"
 msgstr "kutie dlhého meča"
@@ -3698,10 +3675,7 @@ msgstr "Došli kvety"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/beekeepers_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The beekeeper working at this beekeeper’s house can’t find any flowering "
-"fields or bushes in his work area. You should consider building another farm"
-" or berry farm nearby, or dismantling or destroying this building."
+msgid "The beekeeper working at this beekeeper’s house can’t find any flowering fields or bushes in his work area. You should consider building another farm or berry farm nearby, or dismantling or destroying this building."
 msgstr "Včelár pracujúci v tomto včelárskom dome nedokáže vo svojej pracovnej oblasti nájsť žiadne kvetové polia alebo kríky. Porozmýšľajte nad postavením ďalšej farmy alebo bobuľovej farmy, prípadne nad rozobratím alebo zničením tejto budovy."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3721,8 +3695,7 @@ msgctxt "frisians_building"
 msgid "Blacksmithy"
 msgstr "Kováčstvo"
 
-#. TRANSLATORS: Completed/Skipped/Did not start forging a felling ax because
-#. ...
+#. TRANSLATORS: Completed/Skipped/Did not start forging a felling ax because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/blacksmithy/init.lua:118
 msgid "forging a felling ax"
 msgstr "kutie drevorubačskej sekery"
@@ -3755,8 +3728,7 @@ msgctxt "frisians_building"
 msgid "Charcoal Burner’s House"
 msgstr "Uhliarov dom"
 
-#. TRANSLATORS: Completed/Skipped/Did not start making a charcoal stack
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start making a charcoal stack because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/charcoal_burners_house/init.lua:73
 msgid "making a charcoal stack"
 msgstr "kopenie hromady dreveného uhlia"
@@ -3772,11 +3744,7 @@ msgstr "Došli hlinené nádrže"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/charcoal_burners_house/init.lua:110
 msgctxt "frisians_building"
-msgid ""
-"The charcoal burner working at this charcoal burner’s house can’t find any "
-"clay ponds in his work area. Please make sure there is a working clay pit "
-"nearby and the charcoal burner’s house is supplied with all needed wares, or"
-" consider dismantling or destroying this building."
+msgid "The charcoal burner working at this charcoal burner’s house can’t find any clay ponds in his work area. Please make sure there is a working clay pit nearby and the charcoal burner’s house is supplied with all needed wares, or consider dismantling or destroying this building."
 msgstr "Uhliar pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť hlinené nádrže. Prosím uistite sa, že v okolí sa nachádza funkčná jama na hlinu a uhliareň je zásobená všetkým potrebným, prípadne uvažujte nad rozobratím alebo zničením tejto budovy."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3793,24 +3761,24 @@ msgstr "Jama na hlinu"
 
 #. TRANSLATORS: Completed/Skipped/Did not start making clay because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:67
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:49
 msgid "making clay"
 msgstr "vyrábanie hliny"
 
 #. TRANSLATORS: Short for "No Level Ground" for clay pits
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:86
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:66
 msgid "No Ground"
 msgstr "Došla pôda"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:87
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:67
 msgid "No Level Ground"
 msgstr "Došiel rovný terén"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/clay_pit/init.lua:88
 msgctxt "frisians_building"
-msgid ""
-"The clay digger working at this clay pit can’t find any level ground in his "
-"work area. Consider dismantling this clay pit and rebuilding it somewhere "
-"else."
+msgid "The clay digger working at this clay pit can’t find any level ground in his work area. Consider dismantling this clay pit and rebuilding it somewhere else."
 msgstr "Hlinokopáč pracujúci v tejto jame na hlinu nedokáže vo svojej pracovnej oblasti nájsť žiadny rovný terén. Zvážte rozobratie tejto jamy na hlinu a jej postavenie niekde inde."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3821,9 +3789,7 @@ msgstr "Uhoľná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/coalmine/init.lua:122
 msgctxt "frisians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3834,10 +3800,7 @@ msgstr "Hlbinná uhoľná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/coalmine_deep/init.lua:95
 msgctxt "frisians_building"
-msgid ""
-"This coal mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This coal mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3861,10 +3824,7 @@ msgstr "Došli kríky"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/collectors_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The fruit collector working at this fruit collector’s house can’t find any "
-"berry bushes in his work area. You should consider building another berry "
-"farm, or dismantling or destroying this building."
+msgid "The fruit collector working at this fruit collector’s house can’t find any berry bushes in his work area. You should consider building another berry farm, or dismantling or destroying this building."
 msgstr "Zberateľ ovocia pracujúci v tomto dome nedokáže vo svojej pracovnej oblasti nájsť žiadne bobuľové kríky. Porozmýšľajte nad postavením ďalšej bobuľovej farmy, prípadne nad rozobratím alebo zničením tejto budovy."
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/dikers_house/init.lua:7
@@ -3906,8 +3866,7 @@ msgstr "zbieranie jačmeňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/farm/init.lua:111
 msgctxt "frisians_building"
-msgid ""
-"The farmer working at this farm has no cleared soil to plant his seeds."
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
 msgstr "Farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3924,9 +3883,7 @@ msgstr "Rybársky dom"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/fishers_house/init.lua:71
 msgctxt "frisians_building"
-msgid ""
-"The fisher working out of this fisher’s house can’t find any fish in his "
-"work area."
+msgid "The fisher working out of this fisher’s house can’t find any fish in his work area."
 msgstr "Rybár pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadne ryby."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3949,9 +3906,7 @@ msgstr "Zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine/init.lua:107
 msgctxt "frisians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3962,10 +3917,7 @@ msgstr "Hlbinná zlatá baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/goldmine_deep/init.lua:93
 msgctxt "frisians_building"
-msgid ""
-"This gold mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This gold mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -3989,9 +3941,7 @@ msgstr "Lovecký dom"
 #. TRANSLATORS: "game" means animals that you can hunt
 #: ../../../../data/tribes/buildings/productionsites/frisians/hunters_house/init.lua:81
 msgctxt "frisians_building"
-msgid ""
-"The hunter working out of this hunter’s house can’t find any game in his "
-"work area."
+msgid "The hunter working out of this hunter’s house can’t find any game in his work area."
 msgstr "Lovec pracujúci z tohto domu nedokáže vo svojej pracovnej oblasti nájsť žiadnu divú zver."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4002,9 +3952,7 @@ msgstr "Železnorudná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/ironmine/init.lua:107
 msgctxt "frisians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4015,10 +3963,7 @@ msgstr "Hlbinná železnorudná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/ironmine_deep/init.lua:95
 msgctxt "frisians_building"
-msgid ""
-"This iron mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This iron mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4041,8 +3986,7 @@ msgstr "Kameňolom"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/quarry/init.lua:68
 msgctxt "frisians_building"
-msgid ""
-"The stonemason working at this quarry can’t find any rocks in his work area."
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4063,8 +4007,7 @@ msgctxt "frisians_building"
 msgid "recycling iron"
 msgstr "recyklovanie železa"
 
-#. TRANSLATORS: Completed/Skipped/Did not start recycling iron and gold
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start recycling iron and gold because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/recycling_center/init.lua:118
 msgctxt "frisians_building"
 msgid "recycling iron and gold"
@@ -4078,9 +4021,7 @@ msgstr "Trstinová záhrada"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/reed_farm/init.lua:102
 msgctxt "frisians_building"
-msgid ""
-"The reed farmer working at this reed farm has no cleared soil to plant his "
-"seeds."
+msgid "The reed farmer working at this reed farm has no cleared soil to plant his seeds."
 msgstr "Trstinový farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4110,9 +4051,7 @@ msgstr "Kamenná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine/init.lua:125
 msgctxt "frisians_building"
-msgid ""
-"This rock mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. You should consider enhancing, dismantling or destroying it."
+msgid "This rock mine’s main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
 msgstr "Hlavná žila tejto kamennej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4123,10 +4062,7 @@ msgstr "Hlbinná kamenná baňa"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/rockmine_deep/init.lua:96
 msgctxt "frisians_building"
-msgid ""
-"This rock mine’s main vein is exhausted. Expect strongly diminished returns "
-"on investment. This mine can’t be enhanced any further, so you should "
-"consider dismantling or destroying it."
+msgid "This rock mine’s main vein is exhausted. Expect strongly diminished returns on investment. This mine can’t be enhanced any further, so you should consider dismantling or destroying it."
 msgstr "Hlavná žila tejto kamennej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
@@ -4164,14 +4100,12 @@ msgctxt "frisians_building"
 msgid "Tailor’s Shop"
 msgstr "Krajčírstvo"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sewing studded fur garment
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sewing studded fur garment because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:64
 msgid "sewing studded fur garment"
 msgstr "šitie ozdobného kožušinového odevu"
 
-#. TRANSLATORS: Completed/Skipped/Did not start sewing golden fur garment
-#. because ...
+#. TRANSLATORS: Completed/Skipped/Did not start sewing golden fur garment because ...
 #: ../../../../data/tribes/buildings/productionsites/frisians/tailors_shop/init.lua:76
 msgid "sewing golden fur garment"
 msgstr "šitie zlatého kožušinového odevu"
@@ -4182,8 +4116,7 @@ msgctxt "frisians_building"
 msgid "Tavern"
 msgstr "Krčma"
 
-#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration
-#. because ... (can produce more efficient when supply is good)
+#. TRANSLATORS: Completed/Skipped/Did not start preparing only one ration because ... (can produce more efficient when supply is good)
 #: ../../../../data/tribes/buildings/productionsites/frisians/tavern/init.lua:97
 msgid "preparing only one ration"
 msgstr "pripravovanie jedného prídelu"
@@ -4223,11 +4156,540 @@ msgstr "Drevorubačský dom"
 
 #: ../../../../data/tribes/buildings/productionsites/frisians/woodcutters_house/init.lua:68
 msgctxt "frisians_building"
-msgid ""
-"The woodcutter working at this woodcutter’s house can’t find any trees in "
-"his work area. You should consider dismantling or destroying the building or"
-" building a forester’s house."
+msgid "The woodcutter working at this woodcutter’s house can’t find any trees in his work area. You should consider dismantling or destroying the building or building a forester’s house."
 msgstr "Drevorubač pracujúci z tohto drevorubačského domu nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Porozmýšľajte nad rozobratím alebo zničením budovy, prípadne postavením horárne."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/bakery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Bakery"
+msgstr "Pekáreň"
+
+#. TRANSLATORS: Completed/Skipped/Did not start baking bread because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/bakery/init.lua:55
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "baking bread"
+msgstr "pečenie chleba"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Branch Collector's Hut"
+msgstr "Dom zberateľa ovocia"
+
+#. TRANSLATORS: Completed/Skipped/Did not start collecting branches because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:42
+#, fuzzy
+msgid "collecting branches"
+msgstr "zber uhlia"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:56
+#, fuzzy
+msgid "No Trees to Collect Branches"
+msgstr "Nie sú stromy na rezanie lián"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/branch_collectors_hut/init.lua:57
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The branch collector working at this site can't find any tree in his work area. You should consider dismantling or destroying the building or planting trees nearby."
+msgstr "Rezačka lián pracujúca z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne stromy. Porozmýšľajte nad rozobratím alebo zničením budovy, prípadne postavením chatrče strážkyne džungle."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/brick_kiln/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Brick Kiln"
+msgstr "Tehliarska pec"
+
+#. TRANSLATORS: Completed/Skipped/Did not start firing bricks because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/brick_kiln/init.lua:49
+#, fuzzy
+msgid "firing bricks"
+msgstr "pálenie tehiel"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:8
+msgctxt "hebrews_building"
+msgid "Butchery"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start butchering sheep because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/butchery/init.lua:57
+#, fuzzy
+msgid "butchering sheep"
+msgstr "chovanie oviec"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_furnace/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clay Furnace"
+msgstr "Pec"
+
+#. TRANSLATORS: Completed/Skipped/Did not start smelting copper because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_furnace/init.lua:51
+#: ../../../../data/tribes/buildings/productionsites/hebrews/smelting_works/init.lua:51
+#, fuzzy
+msgid "smelting copper"
+msgstr "tavenie zlata"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clay Pit"
+msgstr "Jama na hlinu"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clay_pit/init.lua:68
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The clay digger working at this clay pit can't find any level ground in his work area. Consider dismantling this clay pit and rebuilding it somewhere else."
+msgstr "Hlinokopáč pracujúci v tejto jame na hlinu nedokáže vo svojej pracovnej oblasti nájsť žiadny rovný terén. Zvážte rozobratie tejto jamy na hlinu a jej postavenie niekde inde."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Clearing Tent"
+msgstr "chovanie sobov"
+
+#. TRANSLATORS: Completed/Skipped/Did not start clearing trees because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:45
+#, fuzzy
+msgid "clearing trees"
+msgstr "sadenie stromov"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:55
+#, fuzzy
+msgid "No Trees to Clear"
+msgstr "Nie sú stromy na rezanie lián"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/clearing_tent/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The worker at the clearing tent can't find any trees in his work area."
+msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Copper Mine"
+msgstr "Uhoľná baňa"
+
+#. TRANSLATORS: Completed/Skipped/Did not start mining copper because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:55
+#, fuzzy
+msgid "mining copper"
+msgstr "ťaženie uhlia"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:68
+#, fuzzy
+msgid "No Copper"
+msgstr "Došlo uhlie"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:69
+#, fuzzy
+msgid "Main Copper Vein Exhausted"
+msgstr "Hlavná uhoľná žila vyčerpaná"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/coppermine/init.lua:71
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This copper mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
+msgstr "Hlavná žila tejto uhoľnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/donkeyfarm/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Donkey Farm"
+msgstr "Oslia farma"
+
+#. TRANSLATORS: Completed/Skipped/Did not start rearing donkeys because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/donkeyfarm/init.lua:51
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "rearing donkeys"
+msgstr "chovanie oslov"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Dressmakery"
+msgstr "Krajčírstvo"
+
+#. TRANSLATORS: Completed/Skipped/Did not start sewing a tallit katan because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:76
+#, fuzzy
+msgid "sewing a tallit katan"
+msgstr "šitie tuniky"
+
+#. TRANSLATORS: Completed/Skipped/Did not start sewing a tallit because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/dressmakery/init.lua:88
+#, fuzzy
+msgid "sewing a tallit"
+msgstr "šitie tuniky"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Farm"
+msgstr "Farma"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/farm/init.lua:76
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The farmer working at this farm has no cleared soil to plant his seeds."
+msgstr "Farmár pracujúci na tejto farme nemá k dispozícii čistú pôdu, na ktorej by mohol začať sadiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Fisher’s Hut"
+msgstr "Rybárska chatrč"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The fisher working out of this fisher’s hut can’t find any fish in his work area."
+msgstr "Rybár pracujúci z tejto chatrče nedokáže vo svojej pracovnej oblasti nájsť žiadne ryby."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Gold Beater's Workshop"
+msgstr "Kamenárstvo"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making gold leaf because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:66
+#, fuzzy
+msgid "making gold leaf"
+msgstr "ťaženie zlata"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making a menorah because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/gold_beater/init.lua:78
+#, fuzzy
+msgid "making a menorah"
+msgstr "vyrábanie kladiva"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Gold Mine"
+msgstr "Zlatá baňa"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine/init.lua:85
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This gold mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."
+msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu vylepšiť, rozobrať alebo zničiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Deep Gold Mine"
+msgstr "Hlbinná zlatá baňa"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/goldmine_deep/init.lua:75
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This deep gold mine's main vein is exhausted. Expect strongly diminished returns on investment. This mine can't be enhanced any further, so you should consider dismantling or destroying it."
+msgstr "Hlavná žila tejto zlatej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Baňu už nemožno ďalej vylepšovať, takže by ste ju mali rozobrať alebo zničiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Granite Mine"
+msgstr "Žulová baňa"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/granitemine/init.lua:86
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "This granite mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."
+msgstr "Hlavná žila tejto železnorudnej bane je vyčerpaná. Očakávajte preto prudko zníženú návratnosť investície. Zvážte, či by nebolo vhodné baňu rozobrať alebo zničiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/initiation_site/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Initiation Site"
+msgstr "Iniciačný tábor"
+
+#. TRANSLATORS: Completed/Skipped/Did not start recruiting soldier because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/initiation_site/init.lua:61
+#: ../../../../data/tribes/buildings/productionsites/hebrews/machane/init.lua:56
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "recruiting soldier"
+msgstr "verbovanie vojačky"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/machane/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Machane"
+msgstr "Mačeta"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Mill"
+msgstr "Mlyn"
+
+#. TRANSLATORS: Completed/Skipped/Did not start grinding olives because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/mill/init.lua:82
+#, fuzzy
+msgid "grinding olives"
+msgstr "mletie kukurice"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:8
+msgctxt "hebrews_building"
+msgid "Olive Plant"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start planting olive trees because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:59
+#, fuzzy
+msgid "planting olive trees"
+msgstr "sadenie stromov"
+
+#. TRANSLATORS: Completed/Skipped/Did not start harvesting olives because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:68
+#, fuzzy
+msgid "harvesting olives"
+msgstr "zberanie balzy"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/oliveplant/init.lua:79
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The worker at this olive plantation has no cleared soil to plant his olive trees."
+msgstr "Pestovateľka pracujúca na tejto maniokovej plantáži nemá k dispozícii čistú pôdu, na ktorej by mohla začať sadiť."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Quarry"
+msgstr "Kameňolom"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:54
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The stonemason working at this quarry can’t find any rocks in his work area."
+msgstr "Kamenár pracujúci v tomto kameňolome nedokáže vo svojej pracovnej oblasti nájsť žiadne skaly."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Scout’s House"
+msgstr "Prieskumnícky dom"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Shepherds Fire"
+msgstr "Pastier"
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:64
+#, fuzzy
+msgid "releasing sheep"
+msgstr "chovanie oviec"
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/shepherds/init.lua:86
+#, fuzzy
+msgid "sheering"
+msgstr "zberanie"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/smelting_works/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Smelting Works"
+msgstr "Taviareň"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Sofer's Workshop"
+msgstr "Kamenárstvo"
+
+#. TRANSLATORS: Completed/Skipped/Did not start making tefilin because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/sofers_workshop/init.lua:59
+#, fuzzy
+msgid "making tefilin"
+msgstr "vyrábanie vína"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/solomons_harbour/init.lua:8
+msgctxt "hebrews_building"
+msgid "Solomon's Harbour"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start trading because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/solomons_harbour/init.lua:52
+msgid "trading"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/spinning_mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Spinning Mill"
+msgstr "Pradiareň zlata"
+
+#. TRANSLATORS: Completed/Skipped/Did not start spinning because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/spinning_mill/init.lua:49
+#, fuzzy
+msgid "spinning"
+msgstr "pradenie zlata"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/threshing_floor/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Threshing Floor"
+msgstr "zberanie kukurice"
+
+#. TRANSLATORS: Completed/Skipped/Did not start threshing wheat because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/threshing_floor/init.lua:49
+#, fuzzy
+msgid "threshing wheat"
+msgstr "zberanie pšenice"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Vineyard"
+msgstr "Vinohrad"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/vineyard/init.lua:78
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The vine farmer working at this vineyard has no cleared soil to plant his grapevines."
+msgstr "Vinohradník pracujúci v tomto vinohrade nemá k dispozícii čistú pôdu, na ktorej by mohol sadiť vinič."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Weapon Smithy"
+msgstr "Vyhňa na zbrane"
+
+#. TRANSLATORS: Completed/Skipped/Did not start forging a slingshot because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:61
+#, fuzzy
+msgid "forging a slingshot"
+msgstr "kutie dlhého meča"
+
+#. TRANSLATORS: Completed/Skipped/Did not start forging a dagger because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaponsmithy/init.lua:76
+#, fuzzy
+msgid "forging a dagger"
+msgstr "kutie kopije"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Weaving Mill"
+msgstr "Tkáčovňa"
+
+#. TRANSLATORS: Completed/Skipped/Did not start felting because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/weaving_mill/init.lua:72
+#, fuzzy
+msgid "felting"
+msgstr "tavenie zlata"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Well"
+msgstr "Studňa"
+
+#: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:58
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "The carrier working at this well can’t find any water in his well."
+msgstr "Nosič pracujúci v tejto studni nedokáže vo svojej pracovnej oblasti nájsť žiadnu vodu."
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/winery/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Winery"
+msgstr "Vinársky závod"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/workshop/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Workshop"
+msgstr "Výrobňa sekier"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:8
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:8
+msgctxt "hebrews_building"
+msgid "Yeshiva"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start working because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:50
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "working"
+msgstr "pracovanie"
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Talmid because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:59
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "educating Talmid"
+msgstr "vyrábanie uhlia"
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Talmid Chacham because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:69
+msgctxt "hebrews_building"
+msgid "educating Talmid Chacham"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start educating Rebbe because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/yeshiva/init.lua:79
+msgctxt "hebrews_building"
+msgid "educating Rebbe"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/productionsites/hebrews/zizijot_makers_hut/init.lua:8
+msgctxt "hebrews_building"
+msgid "Zizijot Makers Hut"
+msgstr ""
+
+#. TRANSLATORS: Completed/Skipped/Did not start making zizit because ...
+#: ../../../../data/tribes/buildings/productionsites/hebrews/zizijot_makers_hut/init.lua:44
+#, fuzzy
+msgid "making zizit"
+msgstr "vyrábanie vína"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/trainingsites/amazons/training_glade/init.lua:8
@@ -4247,6 +4709,8 @@ msgstr "Výcviková čistina"
 #: ../../../../data/tribes/buildings/trainingsites/empire/trainingcamp/init.lua:69
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_arena/init.lua:86
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_camp/init.lua:85
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:56
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:52
 msgid "sleeping"
 msgstr "pozastavenie"
 
@@ -4305,8 +4769,7 @@ msgctxt "amazons_building"
 msgid "No soldier to train!"
 msgstr "Žiadna vojačka nepotrebuje výcvik!"
 
-#. TRANSLATORS: Amazon training site tooltip when none of the present soldiers
-#. match the current training program
+#. TRANSLATORS: Amazon training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/amazons/training_glade/init.lua:208
 #: ../../../../data/tribes/buildings/trainingsites/amazons/warriors_gathering/init.lua:115
 msgctxt "amazons_building"
@@ -4361,16 +4824,14 @@ msgctxt "atlanteans_building"
 msgid "upgrading soldier attack from level 3 to level 4"
 msgstr "vylepšenie útoku vojaka z úrovne 3 na úroveň 4"
 
-#. TRANSLATORS: Atlantean training site tooltip when it has no soldiers
-#. assigned
+#. TRANSLATORS: Atlantean training site tooltip when it has no soldiers assigned
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/dungeon/init.lua:290
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/labyrinth/init.lua:142
 msgctxt "atlanteans_building"
 msgid "No soldier to train!"
 msgstr "Žiaden vojak nepotrebuje výcvik!"
 
-#. TRANSLATORS: Atlantean training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Atlantean training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/dungeon/init.lua:292
 #: ../../../../data/tribes/buildings/trainingsites/atlanteans/labyrinth/init.lua:144
 msgctxt "atlanteans_building"
@@ -4431,16 +4892,14 @@ msgctxt "barbarians_building"
 msgid "upgrading soldier evade from level 1 to level 2"
 msgstr "vylepšenie uhýbania vojaka z úrovne 1 na úroveň 2"
 
-#. TRANSLATORS: Barbarian training site tooltip when it has no soldiers
-#. assigned
+#. TRANSLATORS: Barbarian training site tooltip when it has no soldiers assigned
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/battlearena/init.lua:124
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/trainingcamp/init.lua:204
 msgctxt "barbarians_building"
 msgid "No soldier to train!"
 msgstr "Žiaden vojak nepotrebuje výcvik!"
 
-#. TRANSLATORS: Barbarian training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Barbarian training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/battlearena/init.lua:126
 #: ../../../../data/tribes/buildings/trainingsites/barbarians/trainingcamp/init.lua:206
 msgctxt "barbarians_building"
@@ -4522,8 +4981,7 @@ msgctxt "empire_building"
 msgid "No soldier to train!"
 msgstr "Žiaden vojak nepotrebuje výcvik!"
 
-#. TRANSLATORS: Empire training site tooltip when none of the present soldiers
-#. match the current training program
+#. TRANSLATORS: Empire training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/empire/arena/init.lua:113
 #: ../../../../data/tribes/buildings/trainingsites/empire/colosseum/init.lua:86
 #: ../../../../data/tribes/buildings/trainingsites/empire/trainingcamp/init.lua:195
@@ -4640,8 +5098,7 @@ msgctxt "frisians_building"
 msgid "No soldier to train!"
 msgstr "Žiaden vojak nepotrebuje výcvik!"
 
-#. TRANSLATORS: Frisian training site tooltip when none of the present
-#. soldiers match the current training program
+#. TRANSLATORS: Frisian training site tooltip when none of the present soldiers match the current training program
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_arena/init.lua:186
 #: ../../../../data/tribes/buildings/trainingsites/frisians/training_camp/init.lua:183
 msgctxt "frisians_building"
@@ -4683,6 +5140,81 @@ msgstr "vylepšenie zdravia vojaka z úrovne 0 na úroveň 1"
 msgctxt "frisians_building"
 msgid "upgrading soldier defense from level 0 to level 1"
 msgstr "vylepšenie obrany vojaka z úrovne 0 na úroveň 1"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Training Camp"
+msgstr "Výcvikový tábor"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:63
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier attack from level 0 to level 1"
+msgstr "vylepšenie útoku vojačky z úrovne 0 na úroveň 1"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:76
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier attack from level 1 to level 2"
+msgstr "vylepšenie útoku vojačky z úrovne 1 na úroveň 2"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:89
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier health from level 0 to level 1"
+msgstr "vylepšenie zdravia vojačky z úrovne 0 na úroveň 1"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:101
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier health from level 1 to level 2"
+msgstr "vylepšenie zdravia vojačky z úrovne 1 na úroveň 2"
+
+#. TRANSLATORS: Completed/Skipped/Did not start upgrading soldier evade because ...
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:113
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:60
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 0 to level 1"
+msgstr "vylepšenie uhýbania vojačky z úrovne 0 na úroveň 1"
+
+#. TRANSLATORS: Completed/Skipped/Did not start upgrading soldier evade because ...
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:126
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:74
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 1 to level 2"
+msgstr "vylepšenie uhýbania vojačky z úrovne 1 na úroveň 2"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:139
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 2 to level 3"
+msgstr "vylepšenie uhýbania vojačky z úrovne 2 na úroveň 3"
+
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:152
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "upgrading soldier evade from level 3 to level 4"
+msgstr "vylepšenie uhýbania vojačky z úrovne 2 na úroveň 3"
+
+#. TRANSLATORS: Hebrew training site tooltip when it has no soldiers assigned
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:171
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:93
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "No soldier to train!"
+msgstr "Žiadna vojačka nepotrebuje výcvik!"
+
+#. TRANSLATORS: Hebrew training site tooltip when none of the present soldiers match the current training program
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/trainingcamp/init.lua:173
+#: ../../../../data/tribes/buildings/trainingsites/hebrews/yeshiva/init.lua:95
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "No soldier found for this training level!"
+msgstr "Nenašla sa vojačka pre túto úroveň výcviku!"
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/warehouses/amazons/headquarters/init.lua:8
@@ -4778,6 +5310,27 @@ msgstr "Prístav"
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/warehouses/frisians/warehouse/init.lua:8
 msgctxt "frisians_building"
+msgid "Warehouse"
+msgstr "Sklad"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/headquarters/init.lua:8
+#: ../../../../data/tribes/buildings/warehouses/hebrews/headquarters_tent/init.lua:8
+msgctxt "hebrews_building"
+msgid "Tabernacle"
+msgstr ""
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/port/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
+msgid "Port"
+msgstr "Prístav"
+
+#. TRANSLATORS: This is a building name used in lists of buildings
+#: ../../../../data/tribes/buildings/warehouses/hebrews/warehouse/init.lua:8
+#, fuzzy
+msgctxt "hebrews_building"
 msgid "Warehouse"
 msgstr "Sklad"
 
@@ -5104,6 +5657,27 @@ msgid "Grapevine (tiny)"
 msgstr "Vinič (maličký)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/medium/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (medium)"
+msgstr "Borievky (stredné)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/ripe/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (ripe)"
+msgstr "Borievky (zrelé)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
+#: ../../../../data/tribes/immovables/olivetree/small/init.lua:8
+#, fuzzy
+msgctxt "immovable"
+msgid "Olive Tree (small)"
+msgstr "Borievky (malé)"
+
+#. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/pond/burning/init.lua:8
 msgctxt "immovable"
 msgid "Burning Charcoal Stack"
@@ -5163,6 +5737,7 @@ msgstr "Trstinové pole (maličké)"
 #: ../../../../data/tribes/immovables/resi/barbarians/gold_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/gold_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/gold_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/gold_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Gold"
 msgstr "Trochu zlata"
@@ -5173,6 +5748,7 @@ msgstr "Trochu zlata"
 #: ../../../../data/tribes/immovables/resi/barbarians/gold_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/gold_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/gold_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/gold_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Gold"
 msgstr "Veľa zlata"
@@ -5183,6 +5759,7 @@ msgstr "Veľa zlata"
 #: ../../../../data/tribes/immovables/resi/barbarians/none/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/none/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/none/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/none/init.lua:8
 msgctxt "resource_indicator"
 msgid "No Resources"
 msgstr "Žiadne zdroje"
@@ -5204,6 +5781,7 @@ msgstr "Veľa kremeňa"
 #: ../../../../data/tribes/immovables/resi/barbarians/coal_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/coal_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/coal_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/coal_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Coal"
 msgstr "Trochu uhlia"
@@ -5213,6 +5791,7 @@ msgstr "Trochu uhlia"
 #: ../../../../data/tribes/immovables/resi/barbarians/coal_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/coal_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/coal_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/coal_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Coal"
 msgstr "Veľa uhlia"
@@ -5222,6 +5801,7 @@ msgstr "Veľa uhlia"
 #: ../../../../data/tribes/immovables/resi/barbarians/iron_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/iron_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/iron_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/iron_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Iron"
 msgstr "Trochu železa"
@@ -5231,6 +5811,7 @@ msgstr "Trochu železa"
 #: ../../../../data/tribes/immovables/resi/barbarians/iron_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/iron_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/iron_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/iron_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Iron"
 msgstr "Veľa železa"
@@ -5252,6 +5833,7 @@ msgstr "Veľa kryštálov"
 #: ../../../../data/tribes/immovables/resi/barbarians/water/init.lua:8
 #: ../../../../data/tribes/immovables/resi/empire/water/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/water/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/water/init.lua:8
 msgctxt "resource_indicator"
 msgid "Water"
 msgstr "Voda"
@@ -5259,6 +5841,7 @@ msgstr "Voda"
 #. TRANSLATORS: This is a resource name used in lists of resources
 #: ../../../../data/tribes/immovables/resi/barbarians/stones_1/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/stones_1/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/stones_1/init.lua:8
 msgctxt "resource_indicator"
 msgid "Some Granite"
 msgstr "Trochu žuly"
@@ -5266,6 +5849,7 @@ msgstr "Trochu žuly"
 #. TRANSLATORS: This is a resource name used in lists of resources
 #: ../../../../data/tribes/immovables/resi/barbarians/stones_2/init.lua:8
 #: ../../../../data/tribes/immovables/resi/frisians/stones_2/init.lua:8
+#: ../../../../data/tribes/immovables/resi/hebrews/stones_2/init.lua:8
 msgctxt "resource_indicator"
 msgid "A Lot of Granite"
 msgstr "Veľa žuly"
@@ -5490,12 +6074,13 @@ msgstr "Obyvatelia Amazonskej džungle."
 #. TRANSLATORS: This is the name of a starting condition
 #. descname = _("Discovery"),
 #. TRANSLATORS: This is the tooltip for the "Discovery" starting condition
-#. tooltip = _("Start the game with three ships on the ocean and only a
-#. handful of supplies"),
+#. tooltip = _("Start the game with three ships on the ocean and only a handful of supplies"),
 #. map_tags = {"seafaring"},
 #. incompatible_wc = {"scripting/win_conditions/hq_hunter.lua"},
 #. uses_map_starting_position = false,
+#.
 #. func = function(player, shared_in_start)
+#.
 #. local map = wl.Game().map
 #. local sf = map.player_slots[player.number].starting_field
 #. if shared_in_start then
@@ -5503,6 +6088,7 @@ msgstr "Obyvatelia Amazonskej džungle."
 #. else
 #. player:allow_workers("all")
 #. end
+#.
 #. launch_expeditions(player, {
 #. {
 #. log = 4,
@@ -5535,6 +6121,7 @@ msgstr "Obyvatelia Amazonskej džungle."
 #. })
 #. end
 #. }
+#.
 #. pop_textdomain()
 #. return init
 #. =======================================================================
@@ -5546,6 +6133,7 @@ msgstr "Obyvatelia Amazonskej džungle."
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/discovery.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/discovery.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/discovery.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/discovery.lua:11
 msgid "Discovery"
 msgstr "Objavenie"
 
@@ -5555,8 +6143,8 @@ msgstr "Objavenie"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/discovery.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/discovery.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/discovery.lua:13
-msgid ""
-"Start the game with three ships on the ocean and only a handful of supplies"
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/discovery.lua:13
+msgid "Start the game with three ships on the ocean and only a handful of supplies"
 msgstr "Začať hru s troma loďami na mori a iba s trochou zásob"
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5565,16 +6153,17 @@ msgstr "Začať hru s troma loďami na mori a iba s trochou zásob"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/fortified_village.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/fortified_village.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/fortified_village.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/fortified_village.lua:11
 msgid "Fortified Village"
 msgstr "Opevnená dedina"
 
-#. TRANSLATORS: This is the tooltip for the "Fortified Village" starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Fortified Village" starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/fortified_village.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/fortified_village.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/fortified_village.lua:13
 msgid "Start the game with a fortified military installation"
 msgstr "Začať hru s opevneným vojenským zariadením"
 
@@ -5584,6 +6173,7 @@ msgstr "Začať hru s opevneným vojenským zariadením"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/headquarters.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/headquarters.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/headquarters.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/headquarters.lua:11
 msgid "Headquarters"
 msgstr "Ústredie"
 
@@ -5593,6 +6183,7 @@ msgstr "Ústredie"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/headquarters.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/headquarters.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/headquarters.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/headquarters.lua:13
 msgid "Start the game with your headquarters only"
 msgstr "Začať hru len s ústredím"
 
@@ -5602,6 +6193,7 @@ msgstr "Začať hru len s ústredím"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/new_world.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/new_world.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/new_world.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/new_world.lua:11
 msgid "New World"
 msgstr "Nový svet"
 
@@ -5611,6 +6203,7 @@ msgstr "Nový svet"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/new_world.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/new_world.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/new_world.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/new_world.lua:13
 msgid "Start the game with seven ships full of wares on the ocean"
 msgstr "Začať hru so siedmymi loďami plnými nákladu plávajúcimi na mori"
 
@@ -5620,19 +6213,17 @@ msgstr "Začať hru so siedmymi loďami plnými nákladu plávajúcimi na mori"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:11
 msgid "Poor Hamlet"
 msgstr "Úbohý Hamlet"
 
-#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:13
-msgid ""
-"Start the game with just a warehouse and the bare minimum for bootstrapping "
-"an economy. Warning: the AI can’t successfully start from this."
+msgid "Start the game with just a warehouse and the bare minimum for bootstrapping an economy. Warning: the AI can’t successfully start from this."
 msgstr "Začať hru iba so skladom a úplným minimom pre rozbehnutie ekonomiky. Upozornenie: AI sa nebude vedieť úspešne rozvinúť."
 
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:46
@@ -5640,13 +6231,12 @@ msgstr "Začať hru iba so skladom a úplným minimom pre rozbehnutie ekonomiky.
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:47
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:48
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:49
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:40
 msgid "Be careful"
 msgstr "Buď opatrný"
 
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/poor_hamlet.lua:46
-msgid ""
-"You only have exactly the wares for each tool you will need to start your "
-"economy. Make sure no unneeded tool is created."
+msgid "You only have exactly the wares for each tool you will need to start your economy. Make sure no unneeded tool is created."
 msgstr "Máte suroviny na zhotovenie len toľkých nástrojov, koľko je ich potrebných na naštartovanie vašej ekonomiky. Uistite sa, že žiadne zbytočné nátroje nebudú zhotovené."
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5655,6 +6245,7 @@ msgstr "Máte suroviny na zhotovenie len toľkých nástrojov, koľko je ich pot
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/struggling_outpost.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/struggling_outpost.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/struggling_outpost.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/struggling_outpost.lua:11
 msgid "Struggling Outpost"
 msgstr "Vojenská základňa pod tlakom"
 
@@ -5664,10 +6255,7 @@ msgstr "Vojenská základňa pod tlakom"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/struggling_outpost.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/struggling_outpost.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/struggling_outpost.lua:13
-msgid ""
-"Start the game with just your headquarters and very few wares for "
-"bootstrapping an economy. Warning: the AI can’t successfully start from "
-"this."
+msgid "Start the game with just your headquarters and very few wares for bootstrapping an economy. Warning: the AI can’t successfully start from this."
 msgstr "Začať hru iba s ústredím a máličkom zdrojov pre rozbehnutie ekonomiky. Upozornenie: AI sa nebude vedieť úspešne rozvinúť."
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5676,19 +6264,18 @@ msgstr "Začať hru iba s ústredím a máličkom zdrojov pre rozbehnutie ekonom
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/trading_outpost.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/trading_outpost.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/trading_outpost.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/trading_outpost.lua:11
 msgid "Trading Outpost"
 msgstr "Obchodné stanovište"
 
-#. TRANSLATORS: This is the tooltip for the "Trading Outpost" starting
-#. condition
+#. TRANSLATORS: This is the tooltip for the "Trading Outpost" starting condition
 #: ../../../../data/tribes/initialization/amazons/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/trading_outpost.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/trading_outpost.lua:13
-msgid ""
-"If this player runs low on important wares, they will be replenished for "
-"free"
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/trading_outpost.lua:13
+msgid "If this player runs low on important wares, they will be replenished for free"
 msgstr "Ak tomuto hráčovi dochádzajú dôležité výrobky, doplnia sa zadarmo"
 
 #. TRANSLATORS: This is the name of a starting condition
@@ -5697,6 +6284,7 @@ msgstr "Ak tomuto hráčovi dochádzajú dôležité výrobky, doplnia sa zadarm
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/village.lua:11
 #: ../../../../data/tribes/initialization/empire/starting_conditions/village.lua:11
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/village.lua:11
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/village.lua:11
 msgid "Village"
 msgstr "Dedina"
 
@@ -5706,6 +6294,7 @@ msgstr "Dedina"
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/village.lua:13
 #: ../../../../data/tribes/initialization/empire/starting_conditions/village.lua:13
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/village.lua:13
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/village.lua:13
 msgid "Start the game with a peaceful village"
 msgstr "Začať hru s mierumilovnou dedinou"
 
@@ -5715,18 +6304,14 @@ msgid "Atlanteans"
 msgstr "Atlantíďania"
 
 #: ../../../../data/tribes/initialization/atlanteans/init.lua:14
-msgid ""
-"This tribe is known from the oldest tales. The sons and daughters of "
-"Atlantis."
+msgid "This tribe is known from the oldest tales. The sons and daughters of Atlantis."
 msgstr "Tento kmeň je známy z najstarších povestí. Synovia a dcéry Atlantídy."
 
 #: ../../../../data/tribes/initialization/atlanteans/starting_conditions/poor_hamlet.lua:49
 #: ../../../../data/tribes/initialization/barbarians/starting_conditions/poor_hamlet.lua:47
 #: ../../../../data/tribes/initialization/empire/starting_conditions/poor_hamlet.lua:48
 #: ../../../../data/tribes/initialization/frisians/starting_conditions/poor_hamlet.lua:49
-msgid ""
-"You have only one iron for each tool you will need to start your economy. "
-"Make sure no unneeded tool is created."
+msgid "You have only one iron for each tool you will need to start your economy. Make sure no unneeded tool is created."
 msgstr "Pre každý nástroj, ktorý potrebujete pre rozbeh ekonomiky, máte iba jedno železo. Uistite sa, že žiadne zbytočné nátroje nebudú zhotovené."
 
 #. TRANSLATORS: This is a tribe name
@@ -5735,6 +6320,7 @@ msgid "Barbarians"
 msgstr "Barbari"
 
 #: ../../../../data/tribes/initialization/barbarians/init.lua:13
+#: ../../../../data/tribes/initialization/hebrews/init.lua:13
 msgid "The mighty tribes of the east-lands."
 msgstr "Mocné kmene východných zemí."
 
@@ -5755,6 +6341,28 @@ msgstr "Frízania"
 #: ../../../../data/tribes/initialization/frisians/init.lua:13
 msgid "The inhabitants of the rough North Sea shore."
 msgstr "Obyvatelia drsných severomorských brehov."
+
+#. TRANSLATORS: This is a tribe name
+#: ../../../../data/tribes/initialization/hebrews/init.lua:12
+msgid "Hebrews"
+msgstr ""
+
+#. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting condition
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:13
+#, fuzzy
+msgid "Start the game with just a warehouse and the bare minimum for bootstrapping an economy. Warning: the AI can't successfully start from this."
+msgstr "Začať hru iba so skladom a úplným minimom pre rozbehnutie ekonomiky. Upozornenie: AI sa nebude vedieť úspešne rozvinúť."
+
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:40
+#, fuzzy
+msgid "You have very few resources to start your economy. Make sure no unneeded tool is created."
+msgstr "Pre každý nástroj, ktorý potrebujete pre rozbeh ekonomiky, máte iba jedno železo. Uistite sa, že žiadne zbytočné nátroje nebudú zhotovené."
+
+#. TRANSLATORS: This is the tooltip for the "Hardcore" starting condition
+#: ../../../../data/tribes/initialization/hebrews/starting_conditions/struggling_outpost.lua:13
+#, fuzzy
+msgid "Start the game with just your headquarters and very few wares for bootstrapping an economy. Warning: the AI can't successfully start from this."
+msgstr "Začať hru iba s ústredím a máličkom zdrojov pre rozbehnutie ekonomiky. Upozornenie: AI sa nebude vedieť úspešne rozvinúť."
 
 #: ../../../../data/tribes/scripting/help/init.lua:85
 msgid "Tribal Encyclopedia"
@@ -8033,15 +8641,13 @@ msgctxt "shipname"
 msgid "Amrum"
 msgstr ""
 
-#. TRANSLATORS: This Frisian ship is named after a no longer existing island
-#. in Northern Frisia
+#. TRANSLATORS: This Frisian ship is named after a no longer existing island in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:50
 msgctxt "shipname"
 msgid "Alt-Nordstrand"
 msgstr ""
 
-#. TRANSLATORS: This Frisian ship is named after a peninsula in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a peninsula in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:52
 msgctxt "shipname"
 msgid "Eiderstedt"
@@ -8107,8 +8713,7 @@ msgctxt "shipname"
 msgid "Langeneß"
 msgstr ""
 
-#. TRANSLATORS: This Frisian ship is named after a water body in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a water body in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:74
 msgctxt "shipname"
 msgid "Norderaue"
@@ -8150,15 +8755,13 @@ msgctxt "shipname"
 msgid "Pellworm"
 msgstr ""
 
-#. TRANSLATORS: This Frisian ship is named after a no longer existing island
-#. in Northern Frisia
+#. TRANSLATORS: This Frisian ship is named after a no longer existing island in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:88
 msgctxt "shipname"
 msgid "Strand"
 msgstr ""
 
-#. TRANSLATORS: This Frisian ship is named after a water body in Northern
-#. Frisia
+#. TRANSLATORS: This Frisian ship is named after a water body in Northern Frisia
 #: ../../../../data/tribes/ships/frisians/init.lua:90
 msgctxt "shipname"
 msgid "Süderaue"
@@ -8327,6 +8930,12 @@ msgid "Swift Boots"
 msgstr "Svižné topánky"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/branch/init.lua:8
+msgctxt "ware"
+msgid "Branch"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/bread_amazons/init.lua:8
 msgctxt "ware"
 msgid "Bread"
@@ -8355,6 +8964,12 @@ msgstr "Chlieb"
 msgctxt "frisians_ware"
 msgid "Bread"
 msgstr "Chlieb"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/bread_hebrews/init.lua:8
+msgctxt "hebrews_ware"
+msgid "Unleavened Bread"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/bread_paddle/init.lua:8
@@ -8417,6 +9032,18 @@ msgid "Cocoa Beans"
 msgstr "Kakaové bôby"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/copper/init.lua:8
+msgctxt "ware"
+msgid "Copper"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/copper_ore/init.lua:8
+msgctxt "ware"
+msgid "Copper Ore"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/corn/init.lua:8
 msgctxt "ware"
 msgid "Corn"
@@ -8427,6 +9054,13 @@ msgstr "Kukurica"
 msgctxt "ware"
 msgid "Cornmeal"
 msgstr "Kukuričná múka"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/dagger/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Dagger"
+msgstr "Chliev"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/diamond/init.lua:8
@@ -8523,6 +9157,13 @@ msgstr "Zlato"
 msgctxt "ware"
 msgid "Gold Dust"
 msgstr "Zlatý prach"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/gold_leaf/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Gold Leaf"
+msgstr "Zlatá ruda"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/gold_ore/init.lua:8
@@ -8644,8 +9285,7 @@ msgctxt "ware"
 msgid "Kitchen Tools"
 msgstr "Kuchynské náradie"
 
-#. TRANSLATORS: This is a ware name used in lists of wares. Used to make
-#. ropes.
+#. TRANSLATORS: This is a ware name used in lists of wares. Used to make ropes.
 #: ../../../../data/tribes/wares/liana/init.lua:8
 msgctxt "ware"
 msgid "Liana"
@@ -8694,6 +9334,12 @@ msgid "Meat"
 msgstr "Mäso"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/menorah/init.lua:8
+msgctxt "ware"
+msgid "Menorah"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/milking_tongs/init.lua:8
 msgctxt "ware"
 msgid "Milking Tongs"
@@ -8704,6 +9350,18 @@ msgstr "Kliešte na dojenie"
 msgctxt "ware"
 msgid "Needles"
 msgstr "Ihly"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/olive_oil/init.lua:8
+msgctxt "ware"
+msgid "Olive Oil"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/olives/init.lua:8
+msgctxt "ware"
+msgid "Olives"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/pick/init.lua:8
@@ -8735,8 +9393,7 @@ msgctxt "ware"
 msgid "Ration"
 msgstr "Prídel"
 
-#. TRANSLATORS: This is a ware name used in lists of wares. Used for thatching
-#. roofs and as a fiber for weaving cloth, fishing nets etc.
+#. TRANSLATORS: This is a ware name used in lists of wares. Used for thatching roofs and as a fiber for weaving cloth, fishing nets etc.
 #: ../../../../data/tribes/wares/reed/init.lua:8
 msgctxt "ware"
 msgid "Reed"
@@ -8779,6 +9436,13 @@ msgid "Scythe"
 msgstr "Kosa"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/sheep/init.lua:8
+#, fuzzy
+msgctxt "ware"
+msgid "Sheep"
+msgstr "Ovčia farma"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/shield_advanced/init.lua:8
 msgctxt "ware"
 msgid "Advanced Shield"
@@ -8795,6 +9459,12 @@ msgstr "Oceľový štít"
 msgctxt "ware"
 msgid "Shovel"
 msgstr "Lopata"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/slingshot/init.lua:8
+msgctxt "ware"
+msgid "Slingshot"
+msgstr ""
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/smoked_fish/init.lua:8
@@ -8911,6 +9581,24 @@ msgid "Golden Tabard"
 msgstr "Zlatý kabátec"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tallit/init.lua:8
+msgctxt "ware"
+msgid "Tallit"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tallit_katan/init.lua:8
+msgctxt "ware"
+msgid "Tallit Katan"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/tefilin/init.lua:8
+msgctxt "ware"
+msgid "Tefilin"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/trident_double/init.lua:8
 msgctxt "ware"
 msgid "Double Trident"
@@ -8971,6 +9659,12 @@ msgid "Wheat"
 msgstr "Pšenica"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/wheat_grains/init.lua:8
+msgctxt "ware"
+msgid "Wheat Grains"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/wine/init.lua:8
 msgctxt "ware"
 msgid "Wine"
@@ -8981,6 +9675,18 @@ msgstr "Víno"
 msgctxt "ware"
 msgid "Wool"
 msgstr "Vlna"
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/yarn/init.lua:8
+msgctxt "ware"
+msgid "Yarn"
+msgstr ""
+
+#. TRANSLATORS: This is a ware name used in lists of wares
+#: ../../../../data/tribes/wares/zizit/init.lua:8
+msgctxt "ware"
+msgid "Zizit"
+msgstr ""
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/amazons/builder/init.lua:8
@@ -9143,10 +9849,12 @@ msgstr "Majsterka drevorubačka"
 #. animation_directory = dirname,
 #. icon = dirname .. "menu.png",
 #. vision_range = 2,
+#.
 #. buildcost = {
 #. empire_carrier = 1,
 #. fishing_rod = 1
 #. },
+#.
 #. programs = {
 #. fish = {
 #. "findspace=size:any radius:7 resource:resource_fish",
@@ -9159,11 +9867,13 @@ msgstr "Majsterka drevorubačka"
 #. "return"
 #. }
 #. },
+#.
 #. animations = {
 #. idle = {
 #. hotspot = { 7, 38 },
 #. },
 #. },
+#.
 #. spritesheets = {
 #. fishing = {
 #. fps = 10,
@@ -9191,6 +9901,7 @@ msgstr "Majsterka drevorubačka"
 #. },
 #. },
 #. }
+#.
 #. pop_textdomain()
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/atlanteans/armorsmith/init.lua:104
@@ -10001,3 +10712,110 @@ msgstr "Cvičiteľ"
 msgctxt "frisians_worker"
 msgid "Woodcutter"
 msgstr "Drevorubač"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/branch_collector/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Branch Collector"
+msgstr "Zberateľ ovocia"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/builder/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Builder"
+msgstr "Stavbárka"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/carrier/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Sabal"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/donkey/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Donkey"
+msgstr "Osol"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/farmer/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Farmer"
+msgstr "Farmár"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/ferry/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Malach"
+msgstr "Malachit"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/fisher/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Fisher"
+msgstr "Rybár"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/geologist/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Rebbe"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/miner/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Miner"
+msgstr "Baník"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/recruit/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Recruit"
+msgstr "Verbovanec"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/scout/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Scout"
+msgstr "Prieskumníčka"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/shepherd/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Shepherd"
+msgstr "Pastier"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/soldier/init.lua:20
+msgctxt "hebrews_worker"
+msgid "Gibbor"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/stonemason/init.lua:8
+#, fuzzy
+msgctxt "hebrews_worker"
+msgid "Stonemason"
+msgstr "Kamenár"
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/talmid/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Talmid"
+msgstr ""
+
+#. TRANSLATORS: This is a worker name used in lists of workers
+#: ../../../../data/tribes/workers/hebrews/talmid_chacham/init.lua:8
+msgctxt "hebrews_worker"
+msgid "Talmid Chacham"
+msgstr ""

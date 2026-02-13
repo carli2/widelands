@@ -1315,6 +1315,19 @@ wl.Descriptions():new_tribe {
          }
       },
       {
+         name = "hebrews_goldmine_deep",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Deep Gold Mine
+            lore = pgettext("hebrews_building", "'A land whose stones are iron, and out of whose hills you can dig copper.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Deep Gold Mine
+            lore_author = pgettext("hebrews_building", "Book of Deuteronomy"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Deep Gold Mine
+            purpose = pgettext("hebrews_building", "Digs gold ore out of the ground in mountain terrain. This mine reaches the deepest veins."),
+            -- TRANSLATORS: Performance helptext for a Hebrew production site: Deep Gold Mine
+            performance = pgettext("hebrews_building", "If the food supply is steady, this mine can produce gold ore in %s on average."):bformat(format_seconds(22))
+         }
+      },
+      {
          name = "hebrews_granitemine",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Hebrew production site: Granite Mine
@@ -1517,6 +1530,10 @@ wl.Descriptions():new_tribe {
    ship = "barbarians_ship", -- TODO: replace with hebrews_ship once own ship exists
    ferry = "hebrews_ferry",
    port = "hebrews_port",
+
+   resource_name_overrides = {
+      resource_iron = pgettext("hebrews_resource", "Copper"),
+   },
 
    fastplace = {
       warehouse = "hebrews_warehouse",

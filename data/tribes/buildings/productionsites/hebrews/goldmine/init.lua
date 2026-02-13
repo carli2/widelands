@@ -21,6 +21,20 @@ wl.Descriptions():new_productionsite_type {
       cloth = 2,
    },
 
+   enhancement = {
+      name = "hebrews_goldmine_deep",
+      enhancement_cost = {
+         granite = 4,
+         branch = 4,
+         cloth = 2,
+      },
+      enhancement_return_on_dismantle = {
+         granite = 2,
+         branch = 2,
+         cloth = 1,
+      }
+   },
+
    animation_directory = dirname,
    animations = {
       idle = {
@@ -35,7 +49,10 @@ wl.Descriptions():new_productionsite_type {
    },
 
    aihints = {
-      prohibited_till = 1200
+      basic_amount = 1,
+      prohibited_till = 1200,
+      very_weak_ai_limit = 1,
+      weak_ai_limit = 2,
    },
 
    working_positions = {
@@ -65,7 +82,7 @@ wl.Descriptions():new_productionsite_type {
       title = _("No Gold"),
       heading = _("Main Gold Vein Exhausted"),
       message =
-         pgettext("hebrews_building", "This gold mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider dismantling or destroying it."),
+         pgettext("hebrews_building", "This gold mine's main vein is exhausted. Expect strongly diminished returns on investment. You should consider enhancing, dismantling or destroying it."),
    },
 }
 

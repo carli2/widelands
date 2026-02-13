@@ -25,7 +25,12 @@ wl.Descriptions():new_militarysite_type {
       },
    },
 
-   aihints = {},
+   aihints = {
+      expansion = true,
+      fighting = true,
+      mountain_conqueror = true,
+      prohibited_till = 1400
+   },
 
    max_soldiers = 12,
    heal_per_second = 220,
