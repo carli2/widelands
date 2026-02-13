@@ -15,7 +15,8 @@ wl.Descriptions():new_productionsite_type {
       branch = 1,
    },
    return_on_dismantle = {
-      granite = 1
+      clay = 1,
+      granite = 1,
    },
 
    animation_directory = dirname,
@@ -35,11 +36,17 @@ wl.Descriptions():new_productionsite_type {
       hebrews_scout = 1
    },
 
+   inputs = {
+      { name = "bread_hebrews", amount = 2 },
+      { name = "wine", amount = 2 },
+   },
+
    programs = {
       main = {
          -- TRANSLATORS: Completed/Skipped/Did not start scouting because ...
          descname = _("scouting"),
          actions = {
+            "consume=bread_hebrews wine",
             "sleep=duration:30s",
             "callworker=scout"
          }
@@ -47,6 +54,7 @@ wl.Descriptions():new_productionsite_type {
       targeted_scouting = {
          descname = _("scouting"),
          actions = {
+            "consume=bread_hebrews wine",
             "callworker=targeted_scouting"
          }
       },

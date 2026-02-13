@@ -5,13 +5,13 @@ local dirname = path.dirname(__file__)
 wl.Descriptions():new_worker_type {
    name = "hebrews_geologist",
    -- TRANSLATORS: This is a worker name used in lists of workers
-   descname = pgettext("hebrews_worker", "Geologist"),
+   descname = pgettext("hebrews_worker", "Rebbe"),
    animation_directory = dirname,
    icon = dirname .. "menu.png",
    vision_range = 2,
 
    buildcost = {
-      hebrews_rebbe = 1,
+      hebrews_talmid_chacham = 1,
       hammer = 1
    },
 

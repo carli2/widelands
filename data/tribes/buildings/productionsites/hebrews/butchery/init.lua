@@ -35,7 +35,8 @@ wl.Descriptions():new_productionsite_type {
    },
 
    working_positions = {
-      hebrews_talmid = 1
+      hebrews_talmid = 1,
+      hebrews_geologist = 1
    },
 
    inputs = {

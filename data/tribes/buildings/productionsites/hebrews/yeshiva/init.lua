@@ -30,7 +30,7 @@ wl.Descriptions():new_productionsite_type {
    },
 
    working_positions = {
-      hebrews_rebbe = 1
+      hebrews_geologist = 1
    },
 
    inputs = {
@@ -77,10 +77,10 @@ wl.Descriptions():new_productionsite_type {
          -- TRANSLATORS: Completed/Skipped/Did not start educating Rebbe because ...
          descname = pgettext("hebrews_building", "educating Rebbe"),
          actions = {
-            "return=skipped unless economy needs hebrews_rebbe",
+            "return=skipped unless economy needs hebrews_geologist",
             "consume=tallit hebrews_talmid_chacham",
             "sleep=duration:15s",
-            "recruit=hebrews_rebbe"
+            "recruit=hebrews_geologist"
          }
       },
    }

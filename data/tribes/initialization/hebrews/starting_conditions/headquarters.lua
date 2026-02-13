@@ -39,6 +39,7 @@ init = {
          -- Textile
          sheep2 = 5,
          wool = 5,
+         cloth = 10,
          -- Tools
          pick = 5,
          hammer = 8,
@@ -53,15 +54,14 @@ init = {
          hebrews_donkey = 5,
          hebrews_builder = 5,
          hebrews_stonemason = 1,
-         hebrews_geologist = 1,
+         hebrews_geologist = 5,
          hebrews_fisher = 3,
          hebrews_farmer = 2,
          hebrews_shepherd = 1,
          hebrews_miner = 2,
          hebrews_scout = 1,
-         hebrews_rebbe = 3,
-         hebrews_talmid = 3,
-         hebrews_talmid_chacham = 1,
+         hebrews_talmid = 30,
+         hebrews_talmid_chacham = 4,
       },
       soldiers = {
          [{0,0,0,0}] = 45,

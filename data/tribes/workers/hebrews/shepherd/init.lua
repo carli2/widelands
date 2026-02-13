@@ -11,7 +11,8 @@ wl.Descriptions():new_worker_type {
    vision_range = 2,
 
    buildcost = {
-      hebrews_carrier = 1
+      hebrews_carrier = 1,
+      branch = 1,
    },
 
    programs = {

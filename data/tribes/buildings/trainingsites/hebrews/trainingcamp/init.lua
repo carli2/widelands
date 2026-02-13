@@ -16,8 +16,8 @@ wl.Descriptions():new_trainingsite_type {
       branch = 4,
    },
    return_on_dismantle = {
+      clay = 3,
       granite = 3,
-      clay = 2,
    },
 
    animation_directory = dirname,

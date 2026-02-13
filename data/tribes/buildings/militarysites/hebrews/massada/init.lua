@@ -15,7 +15,7 @@ wl.Descriptions():new_militarysite_type {
    },
    return_on_dismantle = {
       clay = 3,
-      granite = 10,
+      granite = 5,
    },
 
    animation_directory = dirname,

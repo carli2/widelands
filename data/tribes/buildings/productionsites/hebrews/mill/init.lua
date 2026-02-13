@@ -15,6 +15,7 @@ wl.Descriptions():new_productionsite_type {
       branch = 2,
    },
    return_on_dismantle = {
+      clay = 1,
       granite = 2,
    },
 
@@ -24,6 +25,13 @@ wl.Descriptions():new_productionsite_type {
          frames = 1,
          columns = 1,
          rows = 1,
+         hotspot = { 54, 76 },
+      },
+      working = {
+         fps = 10,
+         frames = 20,
+         columns = 5,
+         rows = 4,
          hotspot = { 54, 76 },
       },
    },
@@ -61,8 +69,8 @@ wl.Descriptions():new_productionsite_type {
             "return=skipped unless economy needs flour",
             "consume=wheat_grains",
             "sleep=duration:5s",
+            "animate=working duration:30s",
             "playsound=sound/mill/mill_turning priority:90% allow_multiple",
-            "sleep=duration:30s",
             "produce=flour"
          }
       },
@@ -73,8 +81,8 @@ wl.Descriptions():new_productionsite_type {
             "return=skipped unless economy needs olive_oil",
             "consume=olives:2",
             "sleep=duration:5s",
+            "animate=working duration:30s",
             "playsound=sound/mill/mill_turning priority:90% allow_multiple",
-            "sleep=duration:30s",
             "produce=olive_oil"
          }
       },

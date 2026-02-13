@@ -15,6 +15,7 @@ wl.Descriptions():new_productionsite_type {
       branch = 2,
    },
    return_on_dismantle = {
+      clay = 2,
       granite = 1,
    },
 
@@ -40,6 +41,7 @@ wl.Descriptions():new_productionsite_type {
       { name = "fur", amount = 8 },
       { name = "granite", amount = 8 },
       { name = "copper", amount = 8 },
+      { name = "yarn", amount = 8 },
    },
 
    programs = {
@@ -57,7 +59,7 @@ wl.Descriptions():new_productionsite_type {
          actions = {
             -- time: 20.4 + 21 + 9 + 3.6 = 54 sec
             "return=skipped unless economy needs slingshot",
-            "consume=fur granite",
+            "consume=granite yarn:2",
             "sleep=duration:20s400ms",
             "playsound=sound/smiths/smith priority:50% allow_multiple",
             "sleep=duration:21s",

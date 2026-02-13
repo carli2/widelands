@@ -112,7 +112,7 @@ wl.Descriptions():new_tribe {
             preciousness = 14,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew ware: Log
-               purpose = pgettext("hebrews_ware", "Logs are a vital building material for the Hebrews. Since they cannot produce wood themselves, they must acquire it through trade at the market.")
+               purpose = pgettext("hebrews_ware", "Logs are a vital building material for the Hebrews. They can obtain wood by clearing trees at a clearing tent or by trading menorahs at Solomon's Harbour.")
             }
          },
          {
@@ -427,7 +427,7 @@ wl.Descriptions():new_tribe {
             preciousness = 4,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew ware: Tefilin
-               purpose = pgettext("hebrews_ware", "Tefilin are small leather boxes containing Torah scrolls, produced in the workshop from fur and gold leaf. They are used to train soldiers.")
+               purpose = pgettext("hebrews_ware", "Tefilin are small leather boxes containing Torah scrolls, crafted in the Sofer's Workshop from wood, fur and gold leaf. They are used to train soldiers.")
             }
          },
          {
@@ -535,8 +535,8 @@ wl.Descriptions():new_tribe {
          {
             name = "hebrews_geologist",
             helptexts = {
-               -- TRANSLATORS: Helptext for a Hebrew worker: Geologist
-               purpose = pgettext("hebrews_worker", "Discovers resources for mining.")
+               -- TRANSLATORS: Helptext for a Hebrew worker: Rebbe (displayed as geologist in-engine)
+               purpose = pgettext("hebrews_worker", "A Torah scholar and teacher. Rebbes discover resources for mining, lead the Yeshiva, and educate the next generation of scholars.")
             }
          },
          {
@@ -587,23 +587,25 @@ wl.Descriptions():new_tribe {
                purpose = pgettext("hebrews_worker", "A wise student who has completed advanced studies. Talmidei Chachamim work in the gold beater's workshop and other skilled positions. They are educated in the Yeshiva.")
             }
          },
-         {
-            name = "hebrews_rebbe",
-            helptexts = {
-               -- TRANSLATORS: Helptext for a Hebrew worker: Rebbe
-               purpose = pgettext("hebrews_worker", "A Torah scholar and teacher. Rebbes lead the Yeshiva and serve as geologists. They are educated in the Yeshiva from Talmidei Chachamim.")
-            }
-         },
       },
       {
          -- Military
+         {
+            name = "hebrews_recruit",
+            default_target_quantity = 10,
+            preciousness = 3,
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Hebrew worker: Recruit
+               purpose = pgettext("hebrews_worker", "Recruits are produced at the Machane from Talmidim. They are then equipped and initiated as soldiers at the Initiation Site.")
+            }
+         },
          {
             name = "hebrews_soldier",
             default_target_quantity = 30,
             preciousness = 5,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew worker: Soldier
-               purpose = pgettext("hebrews_worker", "Soldiers defend your territory and conquer new land. They are trained in the Machane and gain experience in the training camp.")
+               purpose = pgettext("hebrews_worker", "Soldiers defend your territory and conquer new land. Recruits are trained into soldiers at the Initiation Site and gain experience in the training camp.")
             }
          },
       }
@@ -1014,6 +1016,28 @@ wl.Descriptions():new_tribe {
          }
       },
       {
+         name = "hebrews_brick_kiln",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Brick Kiln
+            lore = pgettext("hebrews_building", "'Come, let us make bricks and burn them thoroughly.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Brick Kiln
+            lore_author = pgettext("hebrews_building", "Book of Genesis"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Brick Kiln
+            purpose = pgettext("hebrews_building", "Burns clay and branches into bricks, which are used as granite for construction.")
+         }
+      },
+      {
+         name = "hebrews_clearing_tent",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Clearing Tent
+            lore = pgettext("hebrews_building", "'Clear the way for the people; build up the highway, remove the stones.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Clearing Tent
+            lore_author = pgettext("hebrews_building", "Book of Isaiah"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Clearing Tent
+            purpose = pgettext("hebrews_building", "Clears trees to obtain logs. This allows the Hebrews to remove trees that block construction.")
+         }
+      },
+      {
          name = "hebrews_spinning_mill",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Hebrew production site: Spinning Mill
@@ -1147,7 +1171,18 @@ wl.Descriptions():new_tribe {
             -- TRANSLATORS: Lore author helptext for a Hebrew production site: Workshop
             lore_author = pgettext("hebrews_building", "Book of Isaiah"),
             -- TRANSLATORS: Purpose helptext for a Hebrew production site: Workshop
-            purpose = pgettext("hebrews_building", "Crafts tools such as picks, hammers and fishing rods. Also produces tefilin from fur and gold leaf.")
+            purpose = pgettext("hebrews_building", "Crafts basic tools such as picks, hammers and fishing rods from branches and granite.")
+         }
+      },
+      {
+         name = "hebrews_sofers_workshop",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Sofer's Workshop
+            lore = pgettext("hebrews_building", "'And thou shalt write them upon the door-posts of thy house and upon thy gates.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Sofer's Workshop
+            lore_author = pgettext("hebrews_building", "Book of Deuteronomy"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Sofer's Workshop
+            purpose = pgettext("hebrews_building", "A sacred workshop where a Sofer (scribe) crafts tefilin from wood, fur and gold leaf. Tefilin are used to train soldiers in the training camp.")
          }
       },
       {
@@ -1182,7 +1217,7 @@ wl.Descriptions():new_tribe {
             -- TRANSLATORS: Lore author helptext for a Hebrew production site: Machane
             lore_author = pgettext("hebrews_building", "Book of Joshua"),
             -- TRANSLATORS: Purpose helptext for a Hebrew production site: Machane
-            purpose = pgettext("hebrews_building", "Turns carriers into soldiers ready for battle.")
+            purpose = pgettext("hebrews_building", "Turns Talmidim into military recruits by equipping them with slingshots. Recruits are then sent to the Initiation Site to become soldiers.")
          }
       },
 
@@ -1235,6 +1270,20 @@ wl.Descriptions():new_tribe {
             lore_author = pgettext("hebrews_building", "First Book of Kings"),
             -- TRANSLATORS: Purpose helptext for a Hebrew building: Market
             purpose = pgettext("hebrews_building", "Enables trade with other players. The Hebrews rely on the market to trade gold for the wood they cannot produce.")
+         }
+      },
+
+      {
+         name = "hebrews_solomons_harbour",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Solomon's Harbour
+            lore = pgettext("hebrews_building", "'King Solomon built a fleet of ships at Ezion-Geber, on the shore of the Red Sea.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Solomon's Harbour
+            lore_author = pgettext("hebrews_building", "First Book of Kings"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Solomon's Harbour
+            purpose = pgettext("hebrews_building", "Trades sacred menorahs with foreign merchants in exchange for lumber. This is the only way for the Hebrews to obtain wood."),
+            -- TRANSLATORS: Performance helptext for a Hebrew production site: Solomon's Harbour
+            performance = pgettext("hebrews_building", "If all needed wares are delivered in time, this building can produce two logs in %s on average."):bformat(format_minutes_seconds(1, 15))
          }
       },
 

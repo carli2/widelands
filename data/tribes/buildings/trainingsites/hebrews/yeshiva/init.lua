@@ -11,9 +11,13 @@ wl.Descriptions():new_trainingsite_type {
 
    buildcost = {
       log = 2,
+      cloth = 4,
+      granite = 2,
    },
    return_on_dismantle = {
       log = 1,
+      cloth = 1,
+      granite = 1,
    },
 
    animation_directory = dirname,

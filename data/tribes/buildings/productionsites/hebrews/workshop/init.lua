@@ -41,9 +41,8 @@ wl.Descriptions():new_productionsite_type {
    },
 
    inputs = {
-      { name = "log", amount = 8 },
+      { name = "branch", amount = 8 },
       { name = "granite", amount = 8 },
-      { name = "fur", amount = 4 },
    },
 
    programs = {
@@ -54,7 +53,6 @@ wl.Descriptions():new_productionsite_type {
             "call=produce_pick",
             "call=produce_hammer",
             "call=produce_fishing_rod",
-            "call=produce_tefilin",
          }
       },
       produce_pick = {
@@ -62,7 +60,7 @@ wl.Descriptions():new_productionsite_type {
          descname = _("making a pick"),
          actions = {
             "return=skipped unless economy needs pick",
-            "consume=log granite",
+            "consume=branch granite",
             "sleep=duration:20s",
             "playsound=sound/smiths/smith priority:50% allow_multiple",
             "animate=working duration:25s",
@@ -74,7 +72,7 @@ wl.Descriptions():new_productionsite_type {
          descname = _("making a hammer"),
          actions = {
             "return=skipped unless economy needs hammer",
-            "consume=log granite",
+            "consume=branch granite",
             "sleep=duration:20s",
             "playsound=sound/smiths/smith priority:50% allow_multiple",
             "animate=working duration:25s",
@@ -86,23 +84,11 @@ wl.Descriptions():new_productionsite_type {
          descname = _("making a fishing rod"),
          actions = {
             "return=skipped unless economy needs fishing_rod",
-            "consume=log",
+            "consume=branch",
             "sleep=duration:15s",
             "playsound=sound/smiths/smith priority:50% allow_multiple",
             "animate=working duration:20s",
             "produce=fishing_rod"
-         }
-      },
-      produce_tefilin = {
-         -- TRANSLATORS: Completed/Skipped/Did not start making tefilin because ...
-         descname = _("making tefilin"),
-         actions = {
-            "return=skipped unless economy needs tefilin",
-            "consume=log fur",
-            "sleep=duration:25s",
-            "playsound=sound/smiths/smith priority:50% allow_multiple",
-            "animate=working duration:30s",
-            "produce=tefilin"
          }
       },
    },

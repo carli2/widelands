@@ -14,7 +14,8 @@ wl.Descriptions():new_productionsite_type {
       granite = 2
    },
    return_on_dismantle = {
-      granite = 2,
+      clay = 1,
+      granite = 1,
    },
 
    animation_directory = dirname,

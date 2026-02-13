@@ -38,7 +38,7 @@ wl.Descriptions():new_worker_type {
          "return"
       },
       plant_olives = {
-         "findspace=size:any radius:1",
+         "findspace=size:any radius:4",
          "walk=coords",
          "animate=idle duration:5s",
          "plant=attrib:seed_olives",
@@ -46,12 +46,23 @@ wl.Descriptions():new_worker_type {
          "return"
       },
       harvest_olives = {
-         "findobject=attrib:ripe_olives radius:1",
+         "findobject=attrib:ripe_olives radius:4",
          "walk=object",
          "animate=idle duration:8s",
          "callobject=harvest",
          "animate=idle duration:2s",
          "createware=olives",
+         "return"
+      },
+      clear = {
+         "findobject=attrib:tree radius:6",
+         "walk=object",
+         "playsound=sound/woodcutting/woodcutting priority:100% allow_multiple",
+         "animate=idle duration:15s",
+         "playsound=sound/woodcutting/tree_falling priority:100%",
+         "callobject=fall",
+         "animate=idle duration:2s",
+         "createware=log",
          "return"
       }
    },

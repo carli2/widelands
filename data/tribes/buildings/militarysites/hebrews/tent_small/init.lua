@@ -10,11 +10,11 @@ wl.Descriptions():new_militarysite_type {
    size = "small",
 
    buildcost = {
-      clay = 1,
-      branch = 1,
+      cloth = 2,
+      branch = 2,
    },
    return_on_dismantle = {
-      clay = 1
+      cloth = 2,
    },
 
    animation_directory = dirname,

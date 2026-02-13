@@ -15,7 +15,8 @@ wl.Descriptions():new_productionsite_type {
       branch = 2,
    },
    return_on_dismantle = {
-      granite = 2
+      clay = 2,
+      granite = 1,
    },
 
    animation_directory = dirname,
@@ -37,11 +38,21 @@ wl.Descriptions():new_productionsite_type {
    },
 
    inputs = {
-      { name = "yarn", amount = 12 }
+      { name = "yarn", amount = 12 },
+      { name = "fur", amount = 8 },
    },
 
    programs = {
       main = {
+         -- TRANSLATORS: Completed/Skipped/Did not start working because ...
+         descname = _("working"),
+         actions = {
+            "call=weave_yarn",
+            "call=felt_fur",
+            "return=skipped"
+         }
+      },
+      weave_yarn = {
          -- TRANSLATORS: Completed/Skipped/Did not start weaving because ...
          descname = _("weaving"),
          actions = {
@@ -49,8 +60,19 @@ wl.Descriptions():new_productionsite_type {
             "consume=yarn:6",
             "sleep=duration:20s",
             "playsound=sound/mill/weaving priority:90%",
-            "sleep=duration:15s", -- Unsure of balancing CW
-            "sleep=duration:5s",
+            "sleep=duration:20s",
+            "produce=cloth"
+         }
+      },
+      felt_fur = {
+         -- TRANSLATORS: Completed/Skipped/Did not start felting because ...
+         descname = _("felting"),
+         actions = {
+            "return=skipped unless economy needs cloth",
+            "consume=fur:4",
+            "sleep=duration:20s",
+            "playsound=sound/mill/weaving priority:90%",
+            "sleep=duration:20s",
             "produce=cloth"
          }
       },

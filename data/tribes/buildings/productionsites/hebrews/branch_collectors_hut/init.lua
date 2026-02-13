@@ -10,11 +10,10 @@ wl.Descriptions():new_productionsite_type {
    size = "small",
 
    buildcost = {
-      clay = 3,
-      branch = 1,
+      clay = 4,
    },
    return_on_dismantle = {
-      clay = 1
+      clay = 1,
    },
 
    animation_directory = dirname,

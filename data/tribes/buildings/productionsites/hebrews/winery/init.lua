@@ -15,6 +15,7 @@ wl.Descriptions():new_productionsite_type {
       branch = 2,
    },
    return_on_dismantle = {
+      clay = 1,
       granite = 1,
    },
 

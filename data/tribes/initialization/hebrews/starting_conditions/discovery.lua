@@ -43,11 +43,10 @@ init = {
       {
          copper_ore = 2,
          hebrews_soldier = 1,
-         hebrews_geologist = 1,
+         hebrews_geologist = 3,
          hebrews_talmid_chacham = 1,
          hebrews_talmid = 1,
          hebrews_fisher = 1,
-         hebrews_rebbe = 2,
       },
    })
 end

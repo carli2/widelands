@@ -10,12 +10,15 @@ wl.Descriptions():new_productionsite_type {
    size = "mine",
 
    buildcost = {
-      clay = 4,
-      granite = 2
+      clay = 6,
+      granite = 4,
+      cloth = 2,
+      branch = 2,
    },
    return_on_dismantle = {
       clay = 2,
-      granite = 1
+      granite = 2,
+      cloth = 2,
    },
 
    animation_directory = dirname,

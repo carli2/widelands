@@ -48,10 +48,9 @@ init = {
          hebrews_talmid_chacham = 1,
       },
       {
-         hebrews_geologist = 1,
+         hebrews_geologist = 3,
          copper_ore = 4,
          hebrews_talmid_chacham = 1,
-         hebrews_rebbe = 2,
       },
       {
          branch = 8,

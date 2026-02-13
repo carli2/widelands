@@ -41,7 +41,7 @@ wl.Descriptions():new_productionsite_type {
    },
 
    working_positions = {
-      hebrews_donkey = 1
+      hebrews_geologist = 1
    },
 
    inputs = {
