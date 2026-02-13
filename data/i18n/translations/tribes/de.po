@@ -5769,6 +5769,15 @@ msgstr "Friesen"
 msgid "The inhabitants of the rough North Sea shore."
 msgstr "Die Einwohner der rauen Nordseeküste."
 
+#. TRANSLATORS: This is a tribe name
+#: ../../../../data/tribes/initialization/hebrews/init.lua:12
+msgid "Hebrews"
+msgstr "Hebräer"
+
+#: ../../../../data/tribes/initialization/hebrews/init.lua:13
+msgid "The mighty tribes of the east-lands."
+msgstr "Die mächtigen Stämme des Ostlandes."
+
 #: ../../../../data/tribes/scripting/help/init.lua:85
 msgid "Tribal Encyclopedia"
 msgstr "Stammeslexikon"

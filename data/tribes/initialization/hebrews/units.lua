@@ -95,6 +95,19 @@ wl.Descriptions():new_tribe {
       {
          -- Building Materials
          {
+            name = "branch",
+            default_target_quantity = 20,
+            preciousness = 10,
+            helptexts = {
+               purpose = {
+                  -- TRANSLATORS: Helptext for a Hebrew ware: Branch, part 1
+                  pgettext("hebrews_ware", "Branches are collected from the ground near trees by the branch collector."),
+                  -- TRANSLATORS: Helptext for a Hebrew ware: Branch, part 2
+                  pgettext("hebrews_ware", "They are the primary building material alongside clay and granite, and are also used as fuel for smelting copper.")
+               }
+            }
+         },
+         {
             name = "log",
             preciousness = 14,
             helptexts = {
@@ -244,19 +257,6 @@ wl.Descriptions():new_tribe {
       },
       {
          -- Mining and Smelting
-         {
-            name = "branch",
-            default_target_quantity = 20,
-            preciousness = 8,
-            helptexts = {
-               purpose = {
-                  -- TRANSLATORS: Helptext for a Hebrew ware: Branch, part 1
-                  pgettext("hebrews_ware", "Branches are collected from the ground near trees by the branch collector."),
-                  -- TRANSLATORS: Helptext for a Hebrew ware: Branch, part 2
-                  pgettext("hebrews_ware", "They are used to fuel the clay furnace for smelting copper.")
-               }
-            }
-         },
          {
             name = "copper_ore",
             default_target_quantity = 15,
@@ -805,6 +805,27 @@ wl.Descriptions():new_tribe {
          }
       },
       {
+         name = "olivetree_small",
+         helptexts = {
+            -- TRANSLATORS: Helptext for a Hebrew immovable: Olive Tree
+            purpose = _("This olive tree has just been planted.")
+         }
+      },
+      {
+         name = "olivetree_medium",
+         helptexts = {
+            -- TRANSLATORS: Helptext for a Hebrew immovable: Olive Tree
+            purpose = _("This olive tree is growing.")
+         }
+      },
+      {
+         name = "olivetree_ripe",
+         helptexts = {
+            -- TRANSLATORS: Helptext for a Hebrew immovable: Olive Tree
+            purpose = _("This olive tree is ready for harvesting.")
+         }
+      },
+      {
          name = "pond_dry",
          helptexts = {
             -- TRANSLATORS: Helptext for a Hebrew immovable: Dry Pond
@@ -921,6 +942,19 @@ wl.Descriptions():new_tribe {
 
       -- Small Production Sites
       {
+         name = "hebrews_branch_collectors_hut",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Branch Collector's Hut
+            lore = pgettext("hebrews_building", "'For there is hope for a tree, if it be cut down, that it will sprout again, and that its shoots will not cease.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Branch Collector's Hut
+            lore_author = pgettext("hebrews_building", "Book of Job"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Branch Collector's Hut
+            purpose = pgettext("hebrews_building", "Collects fallen branches from trees in the vicinity. The trees are not harmed."),
+            -- TRANSLATORS: Note helptext for a Hebrew production site: Branch Collector's Hut
+            note = pgettext("hebrews_building", "Branches are the primary building material and fuel. The branch collector needs trees nearby.")
+         }
+      },
+      {
          name = "hebrews_fishers_hut",
          helptexts = {
             -- TRANSLATORS: Lore helptext for a Hebrew production site: Fisher's Hut
@@ -977,19 +1011,6 @@ wl.Descriptions():new_tribe {
             lore_author = pgettext("hebrews_building", "Book of Jeremiah"),
             -- TRANSLATORS: Purpose helptext for a Hebrew production site: Clay Pit
             purpose = pgettext("hebrews_building", "Digs clay out of the ground.")
-         }
-      },
-      {
-         name = "hebrews_branch_collectors_hut",
-         helptexts = {
-            -- TRANSLATORS: Lore helptext for a Hebrew production site: Branch Collector's Hut
-            lore = pgettext("hebrews_building", "'For there is hope for a tree, if it be cut down, that it will sprout again, and that its shoots will not cease.'"),
-            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Branch Collector's Hut
-            lore_author = pgettext("hebrews_building", "Book of Job"),
-            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Branch Collector's Hut
-            purpose = pgettext("hebrews_building", "Collects fallen branches from trees in the vicinity. The trees are not harmed."),
-            -- TRANSLATORS: Note helptext for a Hebrew production site: Branch Collector's Hut
-            note = pgettext("hebrews_building", "Branches are used to fuel the clay furnace for smelting copper. The branch collector needs trees nearby.")
          }
       },
       {
