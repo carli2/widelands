@@ -4323,13 +4323,11 @@ msgstr "Der Bauer hat keinen gerodeten Boden, um seine Saat auszubringen."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:8
-#, fuzzy
 msgctxt "hebrews_building"
 msgid "Fisher’s Hut"
 msgstr "Fischerhütte"
 
 #: ../../../../data/tribes/buildings/productionsites/hebrews/fishers_hut/init.lua:56
-#, fuzzy
 msgctxt "hebrews_building"
 msgid "The fisher working out of this fisher’s hut can’t find any fish in his work area."
 msgstr "Der Fischer in dieser Fischerhütte kann keine Fische in seinem Arbeitsbereich finden."
@@ -4441,14 +4439,12 @@ msgid "Quarry"
 msgstr "Steinbruch"
 
 #: ../../../../data/tribes/buildings/productionsites/hebrews/quarry/init.lua:54
-#, fuzzy
 msgctxt "hebrews_building"
 msgid "The stonemason working at this quarry can’t find any rocks in his work area."
 msgstr "Der Steinmetz in diesem Steinbruch kann keine Felsen in seinem Arbeitsbereich finden."
 
 #. TRANSLATORS: This is a building name used in lists of buildings
 #: ../../../../data/tribes/buildings/productionsites/hebrews/scouts_house/init.lua:8
-#, fuzzy
 msgctxt "hebrews_building"
 msgid "Scout’s House"
 msgstr "Kundschafterhaus"
@@ -4564,7 +4560,6 @@ msgid "Well"
 msgstr "Brunnen"
 
 #: ../../../../data/tribes/buildings/productionsites/hebrews/well/init.lua:58
-#, fuzzy
 msgctxt "hebrews_building"
 msgid "The carrier working at this well can’t find any water in his well."
 msgstr "Der Träger an diesem Brunnen kann kein Wasser mehr finden."
@@ -5577,24 +5572,21 @@ msgstr "Weinreben (jung)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/olivetree/medium/init.lua:8
-#, fuzzy
 msgctxt "immovable"
 msgid "Olive Tree (medium)"
-msgstr "Wacholder (mittel)"
+msgstr "Olivenbaum (mittel)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/olivetree/ripe/init.lua:8
-#, fuzzy
 msgctxt "immovable"
 msgid "Olive Tree (ripe)"
-msgstr "Wacholder (reif)"
+msgstr "Olivenbaum (reif)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/olivetree/small/init.lua:8
-#, fuzzy
 msgctxt "immovable"
 msgid "Olive Tree (small)"
-msgstr "Wacholder (klein)"
+msgstr "Olivenbaum (klein)"
 
 #. TRANSLATORS: This is an immovable name used in lists of immovables
 #: ../../../../data/tribes/immovables/pond/burning/init.lua:8
@@ -6268,18 +6260,15 @@ msgstr "Hebräer"
 
 #. TRANSLATORS: This is the tooltip for the "Poor Hamlet" (minimum) starting condition
 #: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:13
-#, fuzzy
 msgid "Start the game with just a warehouse and the bare minimum for bootstrapping an economy. Warning: the AI can't successfully start from this."
 msgstr "Am Anfang des Spieles steht nur ein Lagerhaus und das absolute Minimum für den Aufbau einer Wirtschaft bereit. Warnung: Die KI kann damit nicht erfolgreich starten."
 
 #: ../../../../data/tribes/initialization/hebrews/starting_conditions/poor_hamlet.lua:40
-#, fuzzy
 msgid "You have very few resources to start your economy. Make sure no unneeded tool is created."
 msgstr "Du hast nur ein Eisen für jedes Werkzeug, das du für den Start deiner Wirtschaft brauchst. Stelle sicher, dass kein unnötiges Werkzeug hergestellt wird."
 
 #. TRANSLATORS: This is the tooltip for the "Hardcore" starting condition
 #: ../../../../data/tribes/initialization/hebrews/starting_conditions/struggling_outpost.lua:13
-#, fuzzy
 msgid "Start the game with just your headquarters and very few wares for bootstrapping an economy. Warning: the AI can't successfully start from this."
 msgstr "Am Anfang des Spieles stehen nur ein Hauptquartier und sehr wenige Waren für den Aufbau einer Wirtschaft bereit. Warnung: Die KI kann damit nicht erfolgreich starten."
 
@@ -8888,7 +8877,7 @@ msgstr "Brot"
 #: ../../../../data/tribes/wares/bread_hebrews/init.lua:8
 msgctxt "hebrews_ware"
 msgid "Unleavened Bread"
-msgstr ""
+msgstr "Ungesäuertes Brot"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/bread_paddle/init.lua:8
@@ -8952,17 +8941,15 @@ msgstr "Kakaobohnen"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/copper/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Copper"
-msgstr "Kein Kupfer"
+msgstr "Kupfer"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/copper_ore/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Copper Ore"
-msgstr "Kupfermine"
+msgstr "Kupfererz"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/corn/init.lua:8
@@ -8978,10 +8965,9 @@ msgstr "Maismehl"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/dagger/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Dagger"
-msgstr "Schweinezucht"
+msgstr "Dolch"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/diamond/init.lua:8
@@ -9081,10 +9067,9 @@ msgstr "Goldstaub"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/gold_leaf/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Gold Leaf"
-msgstr "Golderz"
+msgstr "Blattgold"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/gold_ore/init.lua:8
@@ -9274,16 +9259,15 @@ msgstr "Nadeln"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/olive_oil/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Olive Oil"
-msgstr "Olivenpflanzung"
+msgstr "Olivenöl"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/olives/init.lua:8
 msgctxt "ware"
 msgid "Olives"
-msgstr ""
+msgstr "Oliven"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/pick/init.lua:8
@@ -9359,10 +9343,9 @@ msgstr "Sense"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/sheep/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Sheep"
-msgstr "Schäferei"
+msgstr "Schaf"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/shield_advanced/init.lua:8
@@ -9506,20 +9489,19 @@ msgstr "Goldener Wappenrock"
 #: ../../../../data/tribes/wares/tallit/init.lua:8
 msgctxt "ware"
 msgid "Tallit"
-msgstr ""
+msgstr "Tallit"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/tallit_katan/init.lua:8
-#, fuzzy
 msgctxt "ware"
 msgid "Tallit Katan"
-msgstr "Das Nähen eines Tallit Katan"
+msgstr "Tallit Katan"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/tefilin/init.lua:8
 msgctxt "ware"
 msgid "Tefilin"
-msgstr ""
+msgstr "Tefilin"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/trident_double/init.lua:8
@@ -9585,7 +9567,7 @@ msgstr "Weizen"
 #: ../../../../data/tribes/wares/wheat_grains/init.lua:8
 msgctxt "ware"
 msgid "Wheat Grains"
-msgstr ""
+msgstr "Weizenkörner"
 
 #. TRANSLATORS: This is a ware name used in lists of wares
 #: ../../../../data/tribes/wares/wine/init.lua:8
@@ -10639,14 +10621,12 @@ msgstr "Holzfäller"
 # Hebrew tribe translations
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/branch_collector/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Branch Collector"
-msgstr "Astsammlerhütte"
+msgstr "Astsammler"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/builder/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Builder"
 msgstr "Bauarbeiterin"
@@ -10655,32 +10635,28 @@ msgstr "Bauarbeiterin"
 #: ../../../../data/tribes/workers/hebrews/carrier/init.lua:8
 msgctxt "hebrews_worker"
 msgid "Sabal"
-msgstr ""
+msgstr "Sabal"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/donkey/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Donkey"
 msgstr "Esel"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/farmer/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Farmer"
 msgstr "Bauer"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/ferry/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Malach"
-msgstr "Malachit"
+msgstr "Malach"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/fisher/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Fisher"
 msgstr "Fischer"
@@ -10689,32 +10665,28 @@ msgstr "Fischer"
 #: ../../../../data/tribes/workers/hebrews/geologist/init.lua:8
 msgctxt "hebrews_worker"
 msgid "Rebbe"
-msgstr ""
+msgstr "Rebbe"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/miner/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Miner"
 msgstr "Bergmann"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/recruit/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Recruit"
 msgstr "Rekrut"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/scout/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Scout"
-msgstr "Kundschafterin"
+msgstr "Kundschafter"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/shepherd/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Shepherd"
 msgstr "Schäfer"
@@ -10723,11 +10695,10 @@ msgstr "Schäfer"
 #: ../../../../data/tribes/workers/hebrews/soldier/init.lua:20
 msgctxt "hebrews_worker"
 msgid "Gibbor"
-msgstr ""
+msgstr "Gibbor"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/stonemason/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Stonemason"
 msgstr "Steinmetz"
@@ -10736,14 +10707,13 @@ msgstr "Steinmetz"
 #: ../../../../data/tribes/workers/hebrews/talmid/init.lua:8
 msgctxt "hebrews_worker"
 msgid "Talmid"
-msgstr ""
+msgstr "Talmid"
 
 #. TRANSLATORS: This is a worker name used in lists of workers
 #: ../../../../data/tribes/workers/hebrews/talmid_chacham/init.lua:8
-#, fuzzy
 msgctxt "hebrews_worker"
 msgid "Talmid Chacham"
-msgstr "Das Ausbilden eines Talmid Chacham"
+msgstr "Talmid Chacham"
 
 #~ msgctxt "hebrews_building"
 #~ msgid "Fisher's Hut"

@@ -1,7 +1,7 @@
 descriptions = wl.Descriptions() -- TODO(matthiakl): only for savegame compatibility with 1.0, do not use.
 
 -- Remaining TODOs:
--- seafaring (ship, shipyard, ferry_yard)
+-- seafaring (ship, shipconstruction, ferry_yard) -- shipyard and shipwright done
 -- prophet's hut (mountain-only building, extended vision)
 -- additional military sites (barrier, tower)
 -- fisher works with net instead of rod
@@ -41,15 +41,11 @@ wl.Descriptions():new_tribe {
 
    collectors_points_table = {
       { ware = "gold_leaf", points = 3},
-      { ware = "menorah", points = 5},
+      { ware = "menorah", points = 8},
+      { ware = "log", points = 5},
       { ware = "slingshot", points = 2},
-      { ware = "dagger", points = 3},
-      { ware = "tefilin", points = 4},
-      { ware = "tallit_katan", points = 3},
-      { ware = "tallit", points = 5},
-      { ware = "zizit", points = 1},
-      { ware = "log", points = 4},
-      { ware = "copper_ore", points = 2},
+      { ware = "dagger", points = 5},
+      { ware = "tefilin", points = 6},
    },
 
    -- Image file paths for this tribe's road and waterway textures
@@ -546,6 +542,13 @@ wl.Descriptions():new_tribe {
                purpose = pgettext("hebrews_worker", "Explores unknown territory.")
             }
          },
+         {
+            name = "hebrews_shipwright",
+            helptexts = {
+               -- TRANSLATORS: Helptext for a Hebrew worker: Shipwright
+               purpose = pgettext("hebrews_worker", "Works at the shipyard and constructs new ships.")
+            }
+         },
       },
       {
          -- Food and Farming
@@ -741,7 +744,13 @@ wl.Descriptions():new_tribe {
             purpose = _("There is water in the ground here that can be pulled up by a well.")
          }
       },
-      -- TODO: hebrews_shipconstruction (seafaring not yet implemented)
+      {
+         name = "hebrews_shipconstruction",
+         helptexts = {
+            -- TRANSLATORS: Helptext for a Hebrew immovable: Ship Under Construction
+            purpose = pgettext("hebrews_immovable", "A ship is being constructed at this site.")
+         }
+      },
       -- Non-Hebrew immovables used by the woodcutter
       {
          name = "deadtree7",
@@ -1414,7 +1423,18 @@ wl.Descriptions():new_tribe {
          }
       },
 
-      -- TODO: Seafaring/Ferry Sites (ship, shipyard, ferry_yard) not yet implemented
+      -- Seafaring
+      {
+         name = "hebrews_shipyard",
+         helptexts = {
+            -- TRANSLATORS: Lore helptext for a Hebrew production site: Shipyard
+            lore = pgettext("hebrews_building", "'For King Solomon had a fleet of ships of Tarshish at sea with the fleet of Hiram.'"),
+            -- TRANSLATORS: Lore author helptext for a Hebrew production site: Shipyard
+            lore_author = pgettext("hebrews_building", "First Book of Kings"),
+            -- TRANSLATORS: Purpose helptext for a Hebrew production site: Shipyard
+            purpose = pgettext("hebrews_building", "Constructs ships for overseas exploration and trade.")
+         }
+      },
 
       -- Partially Finished Buildings - these are the same 2 buildings for all tribes
       {
@@ -1527,7 +1547,7 @@ wl.Descriptions():new_tribe {
    geologist = "hebrews_geologist",
    scouts_house = "hebrews_scouts_hut",
    soldier = "hebrews_soldier",
-   ship = "barbarians_ship", -- TODO: replace with hebrews_ship once own ship exists
+   ship = "hebrews_ship",
    ferry = "hebrews_ferry",
    port = "hebrews_port",
 
@@ -1538,6 +1558,7 @@ wl.Descriptions():new_tribe {
    fastplace = {
       warehouse = "hebrews_warehouse",
       port = "hebrews_port",
+      shipyard = "hebrews_shipyard",
       training_small = "hebrews_trainingcamp",
       training_large = "hebrews_trainingcamp",
       military_small_primary = "hebrews_tent_small",

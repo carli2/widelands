@@ -59,6 +59,8 @@ wl.Descriptions():new_productionsite_type {
          actions = {
             "call=talmid",
             "call=talmid_chacham",
+            "call=talmid",
+            "call=talmid_chacham",
             "call=rebbe",
          }
       },
@@ -68,7 +70,7 @@ wl.Descriptions():new_productionsite_type {
          actions = {
             "return=skipped unless economy needs hebrews_talmid",
             "consume=zizit tallit_katan hebrews_carrier",
-            "sleep=duration:15s",
+            "sleep=duration:45s",
             "recruit=hebrews_talmid"
          }
       },
@@ -78,7 +80,7 @@ wl.Descriptions():new_productionsite_type {
          actions = {
             "return=skipped unless economy needs hebrews_talmid_chacham",
             "consume=tefilin hebrews_talmid",
-            "sleep=duration:15s",
+            "sleep=duration:45s",
             "recruit=hebrews_talmid_chacham"
          }
       },
@@ -88,7 +90,7 @@ wl.Descriptions():new_productionsite_type {
          actions = {
             "return=skipped unless economy needs hebrews_geologist",
             "consume=tallit hebrews_talmid_chacham",
-            "sleep=duration:15s",
+            "sleep=duration:60s",
             "recruit=hebrews_geologist"
          }
       },

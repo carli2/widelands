@@ -15812,21 +15812,18 @@ msgstr "Alter hebräischer Schwur"
 
 #. TRANSLATORS: Lore helptext for a Hebrew building: Construction Site
 #: ../../../../data/tribes/initialization/hebrews/units.lua:1424
-#, fuzzy
 msgctxt "building"
 msgid "'Don't swear at the builder who is short of building materials.'"
-msgstr "„Verfluche nicht den Bauarbeiter, dem das Baumaterial fehlt.“"
+msgstr "„Verfluche nicht den Bauarbeiter, dem das Baumaterial fehlt.""
 
 #. TRANSLATORS: Lore helptext for a Hebrew building: Dismantle Site
 #: ../../../../data/tribes/initialization/hebrews/units.lua:1435
-#, fuzzy
 msgctxt "building"
 msgid "'New paths will appear when you are willing to tear down the old.'"
-msgstr "„Neue Wege entstehen, wenn man bereit ist, Altvertrautes abzureißen.“"
+msgstr "„Neue Wege entstehen, wenn man bereit ist, Altvertrautes abzureißen.""
 
 #. TRANSLATORS: Purpose helptext for a Hebrew building: Dismantle Site
 #: ../../../../data/tribes/initialization/hebrews/units.lua:1439
-#, fuzzy
 msgctxt "building"
 msgid "A building is being dismantled at this dismantle site, returning some of the resources that were used during this building's construction to your tribe's stores."
 msgstr "An dieser Stelle wird ein Gebäude abgerissen. Einige der Rohstoffe, die für den Bau des Gebäudes benutzt wurden, werden dabei zurückgewonnen."
