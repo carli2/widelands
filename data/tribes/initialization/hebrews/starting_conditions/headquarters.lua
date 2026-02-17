@@ -39,6 +39,7 @@ init = {
          -- Textile
          sheep2 = 5,
          wool = 5,
+         yarn = 10,
          cloth = 10,
          -- Tools
          pick = 5,

@@ -39,6 +39,7 @@ init = {
             meat = 6,
             sheep2 = 5,
             wool = 5,
+            yarn = 10,
             cloth = 10,
          },
          workers = {
