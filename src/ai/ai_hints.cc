@@ -289,10 +289,10 @@ int16_t BuildingHints::get_ai_limit(const AiType ai_type) const {
 	case AiType::kWeak:
 		return weak_ai_limit_;
 	case AiType::kNormal:
+	case AiType::kPlanner:
 		return normal_ai_limit_;
-	default:
-		NEVER_HERE();
 	}
+	NEVER_HERE();
 }
 
 /// Returns the preciousness of the ware, or kInvalidWare if the tribe doesn't use the ware.

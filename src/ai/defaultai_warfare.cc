@@ -1206,7 +1206,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo, cons
 		return BuildingNecessity::kForbidden;
 	}
 
-	bo.primary_priority = 0;
+	bo.add_new_building_score = 0;
 
 	const uint32_t msites_total = msites_built() + msites_in_constr();
 	const uint16_t scores[3] = {
@@ -1520,7 +1520,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo, cons
 	final_score += management_data.get_military_number_at(100) / 5;
 
 	if (final_score > 0) {
-		bo.primary_priority = final_score * std::abs(management_data.get_military_number_at(79) / 2);
+		bo.add_new_building_score = final_score * std::abs(management_data.get_military_number_at(79) / 2);
 		return BuildingNecessity::kAllowed;
 	}
 	return BuildingNecessity::kForbidden;

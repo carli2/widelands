@@ -19,6 +19,7 @@
 #include "ai/computer_player.h"
 
 #include "ai/defaultai.h"
+#include "ai/planner_ai.h"
 
 namespace AI {
 
@@ -58,7 +59,10 @@ const ComputerPlayer::ImplementationVector& ComputerPlayer::get_implementations(
 
 	if (impls.empty()) {
 		impls.push_back(&DefaultAI::normal_impl);
+		impls.push_back(&PlannerAI::normal_impl);
+		impls.push_back(&PlannerAI::hard_impl);
 		impls.push_back(&DefaultAI::weak_impl);
+		impls.push_back(&PlannerAI::easy_impl);
 		impls.push_back(&DefaultAI::very_weak_impl);
 		impls.push_back(&EmptyAI::implementation);
 	}

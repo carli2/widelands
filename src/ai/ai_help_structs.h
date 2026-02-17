@@ -433,6 +433,12 @@ struct BuildableField {
 	// fast. This stores the time of the last check.
 	Time last_resources_check_time;
 	int32_t military_score_{0};
+	// Per-spot PI integral for military building placement.
+	// Accumulates over ticks when the spot has positive military_score_.
+	// Decays when the spot becomes less valuable (building finished nearby,
+	// land already conquered). This prevents building on ALL border spots
+	// simultaneously — only spots with sustained demand get built.
+	int32_t military_integral_{0};
 	bool inland{false};
 	uint16_t local_soldier_capacity{0U};
 	bool is_militarysite{false};
@@ -497,7 +503,7 @@ struct BuildingObserver {
 
 	BuildingNecessity new_building;
 	uint32_t new_building_overdue;
-	int32_t primary_priority;
+	int32_t add_new_building_score;
 
 	bool expansion_type;      // military building used that can be used to control area
 	bool fighting_type;       // military building built near enemies
@@ -563,6 +569,7 @@ struct ProductionSiteObserver {
 	bool upgrade_pending = false;
 	Time dismantle_pending_since = Time();
 	BuildingObserver* bo = nullptr;
+	int32_t dismantle_score{0};  // Leaky integrator for dismantling decision
 };
 
 struct MilitarySiteObserver {
@@ -571,6 +578,11 @@ struct MilitarySiteObserver {
 	uint16_t understaffed;
 	Time last_change;  // to prevent switching the occupancy policy too fast
 	Time built_time;
+	// Per-site dismantle integral: accumulates when the site is inland,
+	// underused, or redundant. Decays when it gains strategic value
+	// (enemy approaches, expansion pressure rises). Only dismantle
+	// when the integral crosses a threshold — prevents hasty decisions.
+	int32_t dismantle_integral{0};
 };
 
 struct TrainingSiteObserver {
@@ -633,6 +645,12 @@ struct EnemySiteObserver {
 	uint32_t attack_counter = 0U;
 	uint16_t enemy_military_presence_in_region = 0U;
 	uint16_t enemy_military_sites_in_region = 0U;
+	// Per-target attack integral: accumulates when attacking this target
+	// would be profitable (positive net score). Decays when not profitable.
+	// Only attack when the integral crosses a threshold — this models
+	// "the AI has been considering this attack for a while" rather than
+	// impulse-attacking every positive-score target immediately.
+	int32_t attack_integral{0};
 };
 
 // as all mines have 3 levels, AI does not know total count of mines per mined material

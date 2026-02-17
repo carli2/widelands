@@ -27,7 +27,7 @@
 #include "scripting/lua_table.h"
 
 namespace AI {
-enum class AiType : uint8_t { kVeryWeak, kWeak, kNormal };
+enum class AiType : uint8_t { kVeryWeak, kWeak, kNormal, kPlanner };
 
 /// This struct is used to read out the data given in [aihints] section of a
 /// buildings conf file. It is used to tell the computer player about the

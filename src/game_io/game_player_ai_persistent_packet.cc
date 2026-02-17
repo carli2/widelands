@@ -27,7 +27,7 @@
 
 namespace Widelands {
 
-constexpr uint16_t kCurrentPacketVersion = 5;
+constexpr uint16_t kCurrentPacketVersion = 7;
 
 void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoader* /* mol */) {
 	try {
@@ -36,7 +36,7 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 		FileRead fr;
 		fr.open(fs, "binary/player_ai");
 		uint16_t const packet_version = fr.unsigned_16();
-		if (packet_version == kCurrentPacketVersion) {
+		if (packet_version >= 5 && packet_version <= kCurrentPacketVersion) {
 			iterate_players_existing(p, nr_players, game, player) try {
 				// Make sure that all containers are reset properly etc.
 				player->ai_data_.initialize();
@@ -112,6 +112,39 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 				assert(player->ai_data_.remaining_basic_buildings.size() <
 				       player->tribe().buildings().size());
 
+				// PlannerAI PI state (version 6+)
+				// Robust: reads whatever size was saved, PlannerAI uses
+				// min(saved_size, current_size) so new/removed wares/buildings
+				// just get zero-initialized integrals.
+				if (packet_version >= 6) {
+					player->ai_data_.pi_tick_count = fr.unsigned_16();
+
+					size_t n = fr.unsigned_32();
+					player->ai_data_.ware_pressure_integrals.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.ware_pressure_integrals[i] = fr.signed_32();
+					}
+
+					n = fr.unsigned_32();
+					player->ai_data_.building_pressure_integrals.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.building_pressure_integrals[i] = fr.signed_32();
+					}
+
+					n = fr.unsigned_32();
+					player->ai_data_.expansion_integrals.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.expansion_integrals[i] = fr.signed_32();
+					}
+				}
+				if (packet_version >= 7) {
+					size_t n = fr.unsigned_32();
+					player->ai_data_.building_prevention_integrals.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.building_prevention_integrals[i] = fr.signed_32();
+					}
+				}
+
 			} catch (const WException& e) {
 				throw GameDataError("player %u: %s", p, e.what());
 			}
@@ -182,6 +215,30 @@ void GamePlayerAiPersistentPacket::write(FileSystem& fs,
 			const std::string bld_name = game.descriptions().get_building_descr(bb.first)->name();
 			fw.string(bld_name);
 			fw.unsigned_32(bb.second);
+		}
+
+		// PlannerAI PI state (version 6+)
+		fw.unsigned_16(player->ai_data_.pi_tick_count);
+
+		fw.unsigned_32(player->ai_data_.ware_pressure_integrals.size());
+		for (int32_t v : player->ai_data_.ware_pressure_integrals) {
+			fw.signed_32(v);
+		}
+
+		fw.unsigned_32(player->ai_data_.building_pressure_integrals.size());
+		for (int32_t v : player->ai_data_.building_pressure_integrals) {
+			fw.signed_32(v);
+		}
+
+		fw.unsigned_32(player->ai_data_.expansion_integrals.size());
+		for (int32_t v : player->ai_data_.expansion_integrals) {
+			fw.signed_32(v);
+		}
+
+		// Building prevention integrals (version 7+)
+		fw.unsigned_32(player->ai_data_.building_prevention_integrals.size());
+		for (int32_t v : player->ai_data_.building_prevention_integrals) {
+			fw.signed_32(v);
 		}
 	}
 

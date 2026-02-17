@@ -201,6 +201,13 @@ public:
 		std::vector<int8_t> neuron_functs{std::vector<int8_t>(kNeuronPoolSize, 0)};
 		std::vector<uint32_t> f_neurons{std::vector<uint32_t>(kFNeuronPoolSize, 0)};
 		std::unordered_map<Widelands::DescriptionIndex, uint32_t> remaining_basic_buildings;
+
+		// PlannerAI PI state (persisted for save/load continuity)
+		uint16_t pi_tick_count{0};
+		std::vector<int32_t> ware_pressure_integrals;
+		std::vector<int32_t> building_pressure_integrals;
+		std::vector<int32_t> building_prevention_integrals;
+		std::vector<int32_t> expansion_integrals;
 	};
 
 	[[nodiscard]] AiPersistentState* get_mutable_ai_persistent_state() {

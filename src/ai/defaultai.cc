@@ -703,7 +703,7 @@ void DefaultAI::late_initialization() {
 		bo.unoccupied_count = 0;
 		bo.unconnected_count = 0;
 		bo.new_building_overdue = 0;
-		bo.primary_priority = 0;
+		bo.add_new_building_score = 0;
 		if (bld.is_buildable()) {
 			bo.set_is(BuildingAttribute::kBuildable);
 		}
@@ -2612,7 +2612,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 						continue;
 					}
 
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 
 					// keep wells more distant
 					if (number_of_same_nearby > 2) {
@@ -2629,7 +2629,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 
 				} else if (bo.is(BuildingAttribute::kLumberjack)) {
 
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 
 					if (bo.new_building == BuildingNecessity::kForced) {
 						prio += 5 * std::abs(management_data.get_military_number_at(17));
@@ -2692,7 +2692,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					}
 
 					// Overdue priority here
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 
 					prio += number_of_supporters_nearby * 5;
 
@@ -2709,7 +2709,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					}
 
 					// Overdue priority here
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 					prio -= number_of_same_nearby * 20;
 					prio += number_of_supporters_nearby * 20;
 
@@ -2724,7 +2724,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 						assert(bo.cnt_target > 0);
 					}
 
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 
 					if (bo.is(BuildingAttribute::kRanger)) {
 
@@ -2858,7 +2858,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					}
 
 				} else if (bo.is(BuildingAttribute::kRecruitment)) {
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 					prio -= bf->unowned_land_nearby * 2;
 					prio -= static_cast<int>((bf->enemy_nearby)) * 100;
 					prio -=
@@ -2884,7 +2884,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					        2;
 
 					// Overdue priority here
-					prio += bo.primary_priority;
+					prio += bo.add_new_building_score;
 
 					// we check separatelly buildings with no inputs and some inputs
 					if (bo.inputs.empty()) {
@@ -2985,7 +2985,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 			}  // production sites done
 			else if (bo.type == BuildingObserver::Type::kMilitarysite) {
 
-				prio += bo.primary_priority;
+				prio += bo.add_new_building_score;
 
 				// Two possibilities why to construct militarysite here
 				if (!bf->defense_msite_allowed &&
@@ -3039,7 +3039,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					}
 				}
 
-				prio += bo.primary_priority;
+				prio += bo.add_new_building_score;
 				prio += wh_distance_malus;  // Here it increases priority, more distant is better
 
 				prio += bf->own_non_military_nearby * 3;
@@ -3059,9 +3059,9 @@ bool DefaultAI::construct_building(const Time& gametime) {
 			} else if (bo.type == BuildingObserver::Type::kTrainingsite) {
 
 				// Even if a site is forced it has kNeeded necessity now
-				assert(bo.primary_priority > 0 && bo.new_building == BuildingNecessity::kNeeded);
+				assert(bo.add_new_building_score > 0 && bo.new_building == BuildingNecessity::kNeeded);
 
-				prio += bo.primary_priority;
+				prio += bo.add_new_building_score;
 
 				prio -= wh_distance_malus;
 
@@ -3228,7 +3228,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					}
 
 					if (bo.type == BuildingObserver::Type::kMilitarysite) {
-						prio = bo.primary_priority;
+						prio = bo.add_new_building_score;
 						if (bo.mountain_conqueror) {
 							prio += mf->same_mine_fields_nearby;
 						}
@@ -3238,7 +3238,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 						}
 					} else {
 						// applying max needed
-						prio += bo.primary_priority;
+						prio += bo.add_new_building_score;
 					}
 
 					// Continue if field is blocked at the moment
@@ -3250,7 +3250,7 @@ bool DefaultAI::construct_building(const Time& gametime) {
 					prio += mf->preferred ? 1 : 0;
 
 					if (bo.type != BuildingObserver::Type::kMilitarysite) {
-						prio += bo.primary_priority;
+						prio += bo.add_new_building_score;
 					}
 
 					if (prio > proposed_priority) {
@@ -5342,7 +5342,7 @@ bool DefaultAI::check_mines_(const Time& gametime) {
 }
 
 BuildingNecessity DefaultAI::check_warehouse_necessity(BuildingObserver& bo, const Time& gametime) {
-	bo.primary_priority = 0;
+	bo.add_new_building_score = 0;
 
 	// First there are situation when we cannot built the warehouse/port
 	// a) This is port and map is not seafaring one
@@ -5419,13 +5419,13 @@ BuildingNecessity DefaultAI::check_warehouse_necessity(BuildingObserver& bo, con
 	}
 
 	// So now we know the warehouse here is needed.
-	bo.primary_priority = 1 + (needed_count - numof_warehouses_) *
+	bo.add_new_building_score = 1 + (needed_count - numof_warehouses_) *
 	                             std::abs(management_data.get_military_number_at(22) / 10);
 	++bo.new_building_overdue;
-	bo.primary_priority +=
+	bo.add_new_building_score +=
 	   bo.new_building_overdue * std::abs(management_data.get_military_number_at(16));
 	if (bo.is(BuildingAttribute::kPort) && spots_ < kSpotsTooLittle) {
-		bo.primary_priority += std::abs(management_data.get_military_number_at(152)) * 10;
+		bo.add_new_building_score += std::abs(management_data.get_military_number_at(152)) * 10;
 	}
 	return BuildingNecessity::kAllowed;
 }
@@ -5439,7 +5439,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
                                                       const PerfEvaluation purpose,
                                                       const Time& gametime) {
 	const bool map_allows_seafaring = game().map().allows_seafaring();
-	bo.primary_priority = 0;
+	bo.add_new_building_score = 0;
 
 	static BasicEconomyBuildingStatus site_needed_for_economy = BasicEconomyBuildingStatus::kNone;
 	site_needed_for_economy = BasicEconomyBuildingStatus::kNone;
@@ -5483,23 +5483,23 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 		}
 
 		// It seems we might need it after all
-		bo.primary_priority = -30;
+		bo.add_new_building_score = -30;
 		if (bo.build_material_shortage) {
-			bo.primary_priority -= std::abs(management_data.get_military_number_at(72));
+			bo.add_new_building_score -= std::abs(management_data.get_military_number_at(72));
 		}
 
 		if (bo.forced_after > gametime && bo.total_count() == 0) {
-			bo.primary_priority += 50 + std::abs(management_data.get_military_number_at(112) / 5);
+			bo.add_new_building_score += 50 + std::abs(management_data.get_military_number_at(112) / 5);
 		}
 
 		// If we are close to enemy (was seen in last 15 minutes)
 		if (player_statistics.any_enemy_seen_lately(gametime)) {
-			bo.primary_priority += std::abs(management_data.get_military_number_at(57) / 2);
+			bo.add_new_building_score += std::abs(management_data.get_military_number_at(57) / 2);
 		}
 
 		// Do we own some minefields for each critical mine
 		if (!mine_fields_stat.has_critical_ore_fields()) {
-			bo.primary_priority -= std::abs(management_data.get_military_number_at(156));
+			bo.add_new_building_score -= std::abs(management_data.get_military_number_at(156));
 		}
 
 		// We build one trainig site per X military sites
@@ -5513,21 +5513,21 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			current_proportion = bo.total_count() * 100 / (ts_finished_count_ + ts_in_const_count_);
 		}
 
-		bo.primary_priority += (target - ts_finished_count_ - ts_in_const_count_) *
+		bo.add_new_building_score += (target - ts_finished_count_ - ts_in_const_count_) *
 		                       std::abs(management_data.get_military_number_at(114) * 2);
-		bo.primary_priority += (static_cast<int32_t>(militarysites.size() + productionsites.size()) -
+		bo.add_new_building_score += (static_cast<int32_t>(militarysites.size() + productionsites.size()) -
 		                        target * std::abs(management_data.get_military_number_at(78) / 4)) *
 		                       3;
 
 		// Special bonus for very first site of type
 		if (bo.total_count() == 0) {
-			bo.primary_priority += std::abs(management_data.get_military_number_at(56)) +
+			bo.add_new_building_score += std::abs(management_data.get_military_number_at(56)) +
 			                       bo.max_trainingsites_proportion - current_proportion;
 		} else if (bo.max_trainingsites_proportion < current_proportion) {
-			bo.primary_priority -= std::abs(management_data.get_military_number_at(128) * 3);
+			bo.add_new_building_score -= std::abs(management_data.get_military_number_at(128) * 3);
 		}
 
-		if (bo.primary_priority > 0) {
+		if (bo.add_new_building_score > 0) {
 			return BuildingNecessity::kNeeded;
 		}
 		return BuildingNecessity::kNotNeeded;
@@ -5548,7 +5548,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 		if (static_cast<uint32_t>(roads.size()) < min_roads_count * (1 + bo.total_count())) {
 			return BuildingNecessity::kForbidden;
 		}
-		bo.primary_priority +=
+		bo.add_new_building_score +=
 		   (static_cast<int32_t>(roads.size()) - min_roads_count * (1 + bo.total_count())) *
 		   (2 + std::abs(management_data.get_military_number_at(143)) / 5);
 		return BuildingNecessity::kNeeded;
@@ -5779,7 +5779,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			if (bo.max_needed_preciousness <= 0) {
 				bo.max_needed_preciousness = 1;
 			}
-			bo.primary_priority =
+			bo.add_new_building_score =
 			   1 + tmp_score * std::abs(management_data.get_military_number_at(137) / 20);
 			return BuildingNecessity::kNeeded;
 		}
@@ -5794,13 +5794,13 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			// for case the wood is not needed yet, to avoid inconsistency later on
 			bo.max_needed_preciousness = bo.max_preciousness;
 
-			bo.primary_priority = 0;
+			bo.add_new_building_score = 0;
 
 			if (bo.total_count() < bo.cnt_target) {
-				bo.primary_priority += 10 * std::abs(management_data.get_military_number_at(34));
+				bo.add_new_building_score += 10 * std::abs(management_data.get_military_number_at(34));
 			}
 			if (get_stocklevel(bo, gametime) < 10) {
-				bo.primary_priority += std::abs(management_data.get_military_number_at(118));
+				bo.add_new_building_score += std::abs(management_data.get_military_number_at(118));
 			}
 			if (bo.total_count() < bo.cnt_target) {
 				return BuildingNecessity::kNeeded;
@@ -5968,7 +5968,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			// Rangers have been processed above
 			assert(!bo.is(BuildingAttribute::kRanger));
 
-			bo.primary_priority = 0;
+			bo.add_new_building_score = 0;
 
 			if (!basic_economy_established) {
 				bo.cnt_target = bo.basic_amount;
@@ -5991,7 +5991,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			    bo.cnt_under_construction + bo.unoccupied_count < 2) {
 				++bo.cnt_target;  // increase target
 				// here we increase primary priority if stock gets low to get higher prio on each field
-				bo.primary_priority += management_data.neuron_pool[41].get_result_safe(
+				bo.add_new_building_score += management_data.neuron_pool[41].get_result_safe(
 				   (stocklevel_threshhold / 2 - current_stocklevel) / 2, kAbsValue);
 			}
 			if (bo.total_count() > bo.cnt_target + 1) {
@@ -6007,16 +6007,16 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			      bo.last_building_built + Duration(10 * 60 * 100) < gametime))) {
 
 				if (persistent_data->remaining_basic_buildings.count(bo.id) != 0u) {
-					bo.primary_priority += std::abs(management_data.get_military_number_at(60) * 10);
+					bo.add_new_building_score += std::abs(management_data.get_military_number_at(60) * 10);
 				}
 
 				if (bo.total_count() < bo.cnt_target) {
 					if (basic_economy_established) {
-						bo.primary_priority += std::abs(management_data.get_military_number_at(51) * 6);
+						bo.add_new_building_score += std::abs(management_data.get_military_number_at(51) * 6);
 					} else if (persistent_data->remaining_basic_buildings.count(bo.id) != 0u) {
-						bo.primary_priority += std::abs(management_data.get_military_number_at(146) * 6);
+						bo.add_new_building_score += std::abs(management_data.get_military_number_at(146) * 6);
 					} else {
-						bo.primary_priority +=
+						bo.add_new_building_score +=
 						   -200 + std::abs(management_data.get_military_number_at(147) * 8);
 					}
 				}
@@ -6046,7 +6046,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			return BuildingNecessity::kForbidden;
 		}
 		if (bo.type == BuildingObserver::Type::kMine && bo.mines != Widelands::INVALID_INDEX) {
-			bo.primary_priority = bo.max_needed_preciousness;
+			bo.add_new_building_score = bo.max_needed_preciousness;
 			const uint32_t current_stats_threshold =
 			   85 + std::abs(management_data.get_military_number_at(129)) / 10;
 			if ((mines_per_type[bo.mines].total_count() == 0 &&
@@ -6127,7 +6127,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			if (tmp_score < 0) {
 				return BuildingNecessity::kNeededPending;
 			}
-			bo.primary_priority +=
+			bo.add_new_building_score +=
 			   tmp_score * std::abs(management_data.get_military_number_at(127) / 5);
 			return BuildingNecessity::kNeeded;
 		}
@@ -6411,7 +6411,7 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 
 			if (tmp_score > upper_limit) {
 				// Productionsite is needed
-				bo.primary_priority += (tmp_score - bottom_limit) / 2;
+				bo.add_new_building_score += (tmp_score - bottom_limit) / 2;
 				return BuildingNecessity::kNeeded;
 			}
 			if (tmp_score > bottom_limit) {
@@ -6428,15 +6428,15 @@ BuildingNecessity DefaultAI::check_building_necessity(BuildingObserver& bo,
 			    !map_allows_seafaring) {
 				return BuildingNecessity::kForbidden;
 			}
-			bo.primary_priority = 0;
+			bo.add_new_building_score = 0;
 			if (num_ports > 0) {
-				bo.primary_priority +=
+				bo.add_new_building_score +=
 				   std::abs(management_data.get_military_number_at(150)) * 3 / num_ports;
 			}
 			if (spots_ < kSpotsTooLittle) {
-				bo.primary_priority += std::abs(management_data.get_military_number_at(151) * 3);
+				bo.add_new_building_score += std::abs(management_data.get_military_number_at(151) * 3);
 			}
-			if (bo.primary_priority > 0) {
+			if (bo.add_new_building_score > 0) {
 				return BuildingNecessity::kNeeded;
 			}
 			return BuildingNecessity::kAllowed;
@@ -7803,7 +7803,7 @@ void DefaultAI::print_stats(const Time& gametime) {
 			                     bo.unconnected_count,
 			                  bo.current_stats, bo.cnt_under_construction, bo.unoccupied_count,
 			                  bo.unconnected_count, needeness.c_str(), bo.max_needed_preciousness,
-			                  bo.primary_priority, get_stocklevel(bo, gametime), bo.cnt_target);
+			                  bo.add_new_building_score, get_stocklevel(bo, gametime), bo.cnt_target);
 		}
 	}
 
@@ -8340,32 +8340,32 @@ void DefaultAI::pre_calculating_needness_of_buildings(const Time& gametime) {
 			}
 
 			// Here we consider a time how long a building needed
-			// We calculate primary_priority used later in construct_building(),
+			// We calculate add_new_building_score used later in construct_building(),
 			// it is basically max_needed_preciousness_ plus some 'bonus' for due time
 			// Following scenarios are possible:
-			// a) building is needed or forced: primary_priority grows with time
-			// b) building is allowed: primary_priority = max_needed_preciousness (no time
+			// a) building is needed or forced: add_new_building_score grows with time
+			// b) building is allowed: add_new_building_score = max_needed_preciousness (no time
 			// consideration)
-			// c) all other cases: primary_priority = 0;
+			// c) all other cases: add_new_building_score = 0;
 			if (bo.max_needed_preciousness > 0) {
 				if (bo.new_building == BuildingNecessity::kAllowed) {
-					bo.primary_priority += bo.max_needed_preciousness;
+					bo.add_new_building_score += bo.max_needed_preciousness;
 				} else {
-					bo.primary_priority += bo.primary_priority * bo.new_building_overdue *
+					bo.add_new_building_score += bo.add_new_building_score * bo.new_building_overdue *
 					                       std::abs(management_data.get_military_number_at(120)) / 25;
-					bo.primary_priority += bo.max_needed_preciousness +
+					bo.add_new_building_score += bo.max_needed_preciousness +
 					                       bo.max_needed_preciousness * bo.new_building_overdue *
 					                          std::abs(management_data.get_military_number_at(70)) /
 					                          100 +
 					                       bo.new_building_overdue *
 					                          std::abs(management_data.get_military_number_at(71)) / 10;
 					if (bo.new_building == BuildingNecessity::kForced) {
-						bo.primary_priority += bo.new_building_overdue *
+						bo.add_new_building_score += bo.new_building_overdue *
 						                       std::abs(management_data.get_military_number_at(119)) / 25;
 					}
 				}
 			} else {
-				bo.primary_priority = 0;
+				bo.add_new_building_score = 0;
 			}
 
 		} else if (bo.type == BuildingObserver::Type::kMilitarysite) {
@@ -8379,7 +8379,7 @@ void DefaultAI::pre_calculating_needness_of_buildings(const Time& gametime) {
 			bo.new_building = BuildingNecessity::kNotNeeded;
 		} else {
 			bo.new_building = BuildingNecessity::kAllowed;
-			bo.primary_priority = 0;
+			bo.add_new_building_score = 0;
 		}
 
 		const bool log_needed = (bo.new_building == BuildingNecessity::kAllowed ||
@@ -8392,7 +8392,7 @@ void DefaultAI::pre_calculating_needness_of_buildings(const Time& gametime) {
 			   "AI %2d: %-35s(%2u now) %-11s: max prec: %2d/%2d, primary priority: %4d, overdue: "
 			   "%3u\n",
 			   player_number(), bo.name, bo.total_count(), (log_needed) ? "needed" : "not needed",
-			   bo.max_needed_preciousness, bo.max_preciousness, bo.primary_priority,
+			   bo.max_needed_preciousness, bo.max_preciousness, bo.add_new_building_score,
 			   bo.new_building_overdue);
 		}
 	}
