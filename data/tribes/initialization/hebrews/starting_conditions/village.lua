@@ -41,7 +41,7 @@ init = {
          sheep2 = 5,
          wool = 5,
          yarn = 10,
-         cloth = 10,
+         cloth = 20,
          },
          workers = {
             hebrews_builder = 10,
