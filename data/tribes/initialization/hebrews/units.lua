@@ -105,6 +105,7 @@ wl.Descriptions():new_tribe {
          },
          {
             name = "log",
+            default_target_quantity = 10,
             preciousness = 14,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew ware: Log
