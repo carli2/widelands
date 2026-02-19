@@ -46,9 +46,9 @@ wl.Descriptions():new_productionsite_type {
       { name = "tallit_katan", amount = 4 },
       { name = "tefilin", amount = 4 },
       { name = "tallit", amount = 4 },
-      { name = "hebrews_carrier", amount = 4 },
-      { name = "hebrews_talmid", amount = 4 },
-      { name = "hebrews_talmid_chacham", amount = 4 },
+      { name = "hebrews_carrier", amount = 1 },
+      { name = "hebrews_talmid", amount = 1 },
+      { name = "hebrews_talmid_chacham", amount = 1 },
    },
 
    programs = {
