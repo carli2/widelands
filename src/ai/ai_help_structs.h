@@ -479,6 +479,7 @@ struct MineableField {
 	int32_t mines_nearby{0};
 	// this is to provide that a mine is not built on the edge of mine area
 	int32_t same_mine_fields_nearby{0};
+	int32_t same_type_mines_nearby{0};  // built+construction mines of same resource within radius 4
 };
 
 struct EconomyObserver {

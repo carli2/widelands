@@ -209,6 +209,7 @@ private:
 
 	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
 	std::vector<PIDController> ware_pressure_;
+	std::vector<uint32_t> ware_stock_last_tick_;  // stock snapshot from previous PID tick
 
 	void update_ware_pressures(const Time& gametime);
 

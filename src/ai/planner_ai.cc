@@ -1237,6 +1237,7 @@ void PlannerAI::update_mineable_field(MineableField& field) {
 
 	field.mines_nearby = 0;
 	field.same_mine_fields_nearby = 0;
+	field.same_type_mines_nearby = 0;
 
 	// Check for nearby mines and same-type fields
 	Widelands::MapRegion<Widelands::Area<Widelands::FCoords>> mr(
@@ -1248,6 +1249,16 @@ void PlannerAI::update_mineable_field(MineableField& field) {
 		if ((player_->get_buildcaps(mr.location()) & Widelands::BUILDCAPS_MINE) != 0 &&
 		    mr.location().field->get_resources() == field.coords.field->get_resources()) {
 			++field.same_mine_fields_nearby;
+		}
+		// Count existing mines of same resource type (built or under construction).
+		// Two mines within distance 4 share most of their work area (~75%).
+		if (const Widelands::BaseImmovable* imm = mr.location().field->get_immovable()) {
+			if (upcast(Widelands::Building const, bld, imm)) {
+				if (bld->descr().get_ismine() &&
+				    mr.location().field->get_resources() == field.coords.field->get_resources()) {
+					++field.same_type_mines_nearby;
+				}
+			}
 		}
 	} while (mr.advance(map));
 
@@ -1767,8 +1778,28 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				}
 			}
 		}
+		// Depletion velocity: project stock decline forward by N_ticks.
+		// If stock is falling, the effective stock is lower than actual,
+		// making the PID respond BEFORE the stock reaches zero.
+		//
+		// Example: stock=18, last=20, decline=2, N_ticks=5
+		//   effective_stock = 18 - 2*5 = 8  (predicts stock in 5 ticks)
+		//   vs raw stock=18 which looks comfortable
+		int32_t effective_stock = static_cast<int32_t>(stock);
+		if (w < ware_stock_last_tick_.size() && ware_stock_last_tick_[w] > stock) {
+			const int32_t decline = static_cast<int32_t>(ware_stock_last_tick_[w]) -
+			                        static_cast<int32_t>(stock);
+			effective_stock = std::max<int32_t>(0,
+			   static_cast<int32_t>(stock) - decline * weights_.N_ticks);
+		}
+		// Update snapshot for next tick
+		if (ware_stock_last_tick_.size() <= w) {
+			ware_stock_last_tick_.resize(w + 1, stock);
+		}
+		ware_stock_last_tick_[w] = stock;
+
 		// Unit: [count] = [count] - [count] - [count]
-		wp.error = consumption - static_cast<int32_t>(stock) - production_capacity;
+		wp.error = consumption - effective_stock - production_capacity;
 
 		// CM anticipation: for each CM ware, inject pressure proportional
 		// to how much of it will be consumed by buildings under pressure.
@@ -1796,8 +1827,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				cm_anticipated += static_cast<int32_t>(
 				   static_cast<int64_t>(it->second) * bp_out / kNormalizationBudget);
 			}
-			if (cm_pending_total > 0 &&
-			    stock < static_cast<uint32_t>(cm_pending_total)) {
+			if (cm_pending_total > 0 && effective_stock < cm_pending_total) {
 				wp.error += cm_anticipated;
 			}
 			// Bootstrap floor: if this ware is a CM with pending demand
@@ -4284,17 +4314,28 @@ bool PlannerAI::construct_building(const Time& gametime) {
 	Widelands::Coords economy_coords;
 
 	BuildingObserver* best_military = nullptr;
-	// Minimum threshold for military placement. The integral must
-	// accumulate over several ticks before triggering a build.
-	// This prevents the one-tick spike when a nearby construction
-	// finishes: military_in_constr_nearby drops to 0, one tick of
-	// positive efficiency makes integral > 0, and without a threshold
-	// that's enough to place a redundant building immediately.
-	// avg_wp/4 ≈ 83K (for 30 wares) requires ~2-3 ticks of sustained
-	// positive efficiency before the spot qualifies.
+
+	// Count total military buildings under construction.
+	// Each in-construction building WILL conquer land when finished,
+	// reducing the marginal value of additional buildings.
+	int32_t total_mil_under_construction = 0;
+	for (const BuildingObserver& mbo : buildings_) {
+		if (mbo.type == BuildingObserver::Type::kMilitarysite) {
+			total_mil_under_construction += static_cast<int32_t>(mbo.cnt_under_construction);
+		}
+	}
+
+	// Dynamic threshold: rises with concurrent military constructions.
+	// At 0 under construction: avg_wp/4 (baseline, ~83K for 30 wares).
+	// At 2 under construction: avg_wp/4 * 2 = avg_wp/2 (~166K).
+	// At 6 under construction: avg_wp/4 * 4 = avg_wp (~333K).
+	// This means: the more military buildings being built, the higher
+	// the bar for the next one. A spot must show genuinely unique land
+	// gain to justify building while others are still in progress.
 	const int32_t military_min_threshold =
 	   wares.empty() ? 0 :
-	   kNormalizationBudget / (4 * static_cast<int32_t>(wares.size()));
+	   kNormalizationBudget / (4 * static_cast<int32_t>(wares.size())) *
+	   (1 + total_mil_under_construction / 2);
 	int32_t military_priority = military_min_threshold;
 	Widelands::Coords military_coords;
 
@@ -4779,10 +4820,14 @@ bool PlannerAI::construct_building(const Time& gametime) {
 				// without it, land_value < total_cost → efficiency = 0 always
 				// (e.g., 1.1M / 1.8M = 0 in integer math). With avg_wp:
 				// 1.1M × 333K / 1.8M = 200K → meaningful accumulation.
+				// Diminishing returns: each in-construction military building reduces
+				// the expected marginal land gain. The exact overlap is expensive to
+				// compute per-field; this global scaling approximates it.
 				const int64_t total_cost = material_cost * time_factor;
-				const int32_t efficiency = static_cast<int32_t>(
+				const int32_t raw_efficiency = static_cast<int32_t>(
 				   std::min<int64_t>(static_cast<int64_t>(prio) * 4,
 				      land_value * avg_wp_mil / std::max<int64_t>(1, total_cost)));
+				const int32_t efficiency = raw_efficiency / (1 + total_mil_under_construction);
 
 				// Per-spot integral accumulation (NO proportional term).
 				// Priority = integral ONLY. The spot must accumulate over
@@ -4879,6 +4924,11 @@ bool PlannerAI::construct_building(const Time& gametime) {
 					}
 				} while (mr.advance(map));
 				resource_score /= 10;
+				// Diminishing returns from overlapping mines.
+				// With 0 nearby mines: full score.
+				// With 1 nearby mine: half score (they share ~75% of work area).
+				// With 2: 1/3 (nearly all resources already covered).
+				resource_score /= (1 + mf->same_type_mines_nearby);
 				if (resource_score <= 0) {
 					continue;
 				}
