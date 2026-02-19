@@ -38,7 +38,7 @@ init = {
          copper_ore = 10,
          -- Textile
          sheep2 = 5,
-         wool = 5,
+         wool = 10,
          yarn = 10,
          cloth = 20,
          -- Tools
@@ -58,7 +58,7 @@ init = {
          hebrews_geologist = 5,
          hebrews_fisher = 3,
          hebrews_farmer = 2,
-         hebrews_shepherd = 1,
+         hebrews_shepherd = 3,
          hebrews_miner = 2,
          hebrews_scout = 1,
          hebrews_talmid = 30,

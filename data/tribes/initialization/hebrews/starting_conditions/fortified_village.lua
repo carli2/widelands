@@ -43,7 +43,7 @@ init = {
             fish = 6,
             meat = 6,
             sheep2 = 5,
-            wool = 5,
+            wool = 10,
             yarn = 10,
             cloth = 20,
          },
@@ -57,7 +57,7 @@ init = {
             hebrews_farmer = 1,
             hebrews_fisher = 3,
             hebrews_talmid_chacham = 4,
-            hebrews_shepherd = 1,
+            hebrews_shepherd = 3,
             hebrews_donkey = 20,
          },
          soldiers = {

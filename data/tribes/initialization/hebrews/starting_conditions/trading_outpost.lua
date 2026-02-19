@@ -38,7 +38,7 @@ init = {
             fish = 6,
             meat = 6,
             sheep2 = 5,
-            wool = 5,
+            wool = 10,
             yarn = 10,
             cloth = 20,
          },
@@ -52,7 +52,7 @@ init = {
             hebrews_branch_collector = 3,
             hebrews_stonemason = 2,
             hebrews_fisher = 3,
-            hebrews_shepherd = 1,
+            hebrews_shepherd = 3,
             hebrews_donkey = 15,
          },
          -- Max health: 3, Max attack: 5, Max defense: 0, Max evade: 2
