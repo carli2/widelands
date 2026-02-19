@@ -27,7 +27,7 @@
 
 namespace Widelands {
 
-constexpr uint16_t kCurrentPacketVersion = 7;
+constexpr uint16_t kCurrentPacketVersion = 8;
 
 void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoader* /* mol */) {
 	try {
@@ -144,6 +144,29 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 						player->ai_data_.building_prevention_integrals[i] = fr.signed_32();
 					}
 				}
+				// PID D-term state (version 8+): lastError per controller
+				if (packet_version >= 8) {
+					size_t n = fr.unsigned_32();
+					player->ai_data_.ware_pressure_last_errors.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.ware_pressure_last_errors[i] = fr.signed_32();
+					}
+					n = fr.unsigned_32();
+					player->ai_data_.building_pressure_last_errors.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.building_pressure_last_errors[i] = fr.signed_32();
+					}
+					n = fr.unsigned_32();
+					player->ai_data_.building_prevention_last_errors.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.building_prevention_last_errors[i] = fr.signed_32();
+					}
+					n = fr.unsigned_32();
+					player->ai_data_.expansion_last_errors.resize(n);
+					for (size_t i = 0; i < n; ++i) {
+						player->ai_data_.expansion_last_errors[i] = fr.signed_32();
+					}
+				}
 
 			} catch (const WException& e) {
 				throw GameDataError("player %u: %s", p, e.what());
@@ -238,6 +261,24 @@ void GamePlayerAiPersistentPacket::write(FileSystem& fs,
 		// Building prevention integrals (version 7+)
 		fw.unsigned_32(player->ai_data_.building_prevention_integrals.size());
 		for (int32_t v : player->ai_data_.building_prevention_integrals) {
+			fw.signed_32(v);
+		}
+
+		// PID D-term lastError state (version 8+)
+		fw.unsigned_32(player->ai_data_.ware_pressure_last_errors.size());
+		for (int32_t v : player->ai_data_.ware_pressure_last_errors) {
+			fw.signed_32(v);
+		}
+		fw.unsigned_32(player->ai_data_.building_pressure_last_errors.size());
+		for (int32_t v : player->ai_data_.building_pressure_last_errors) {
+			fw.signed_32(v);
+		}
+		fw.unsigned_32(player->ai_data_.building_prevention_last_errors.size());
+		for (int32_t v : player->ai_data_.building_prevention_last_errors) {
+			fw.signed_32(v);
+		}
+		fw.unsigned_32(player->ai_data_.expansion_last_errors.size());
+		for (int32_t v : player->ai_data_.expansion_last_errors) {
 			fw.signed_32(v);
 		}
 	}

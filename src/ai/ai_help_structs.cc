@@ -1697,4 +1697,40 @@ bool FlagCandidates::has_candidate(const uint32_t coords_hash) const {
 	                   [coords_hash](const auto& item) { return item.coords_hash == coords_hash; });
 }
 
+// =====================================================================
+// AIWeights
+// =====================================================================
+
+void AIWeights::update(int32_t nr_wares,
+                       int32_t economy_size,
+                       int32_t spots,
+                       int32_t trees_territory,
+                       int32_t rocks_territory,
+                       int32_t normalization_budget) {
+	nr_wares = std::max<int32_t>(1, nr_wares);
+	avg_wp = normalization_budget / nr_wares;
+
+	N_ticks = 2;
+	int32_t temp = std::max<int32_t>(1, economy_size);
+	while (N_ticks * N_ticks < temp) {
+		++N_ticks;
+	}
+	N_ticks = std::min<int32_t>(N_ticks, 50);
+	P_weight = 2 * N_ticks;
+
+	const int32_t clearing_density =
+	   (trees_territory + rocks_territory) / (spots + 1);
+	dismantle_offset = avg_wp + clearing_density * avg_wp / nr_wares;
+	unconnected_penalty = avg_wp * 3;
+	resource_exhausted_penalty = avg_wp * 10;
+
+	military_maturity_threshold = nr_wares;
+
+	const int32_t desired = economy_size / 2 + 5;
+	space_scarcity_ratio =
+	   std::max<int32_t>(0, desired - spots) * 1000 / (desired + 1);
+
+	cm_safety_margin = N_ticks;
+}
+
 }  // namespace AI

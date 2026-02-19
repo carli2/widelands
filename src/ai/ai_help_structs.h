@@ -360,6 +360,20 @@ struct ImmovableAttribute {
 	const BuildingAttribute building_attribute;
 };
 
+// Generic resource target derived from worker programs (findobject/callobject).
+// Each entry describes one map object attribute that a building's worker searches for.
+struct ResourceSearchTarget {
+	enum class Kind : uint8_t {
+		kImmovableAttribute,  // findobject=attrib:X (immovable)
+		kBobAttribute,        // findobject=type:bob attrib:X
+	};
+	Kind kind;
+	uint32_t attribute_id;    // raw MapObjectDescr::AttributeIndex
+	bool is_collected;        // true = worker destroys it (callobject/removeobject)
+	uint8_t threshold;        // min count to place (derived from workarea)
+	uint8_t saturation;       // count at which bonus = prio (derived from workarea)
+};
+
 struct BuildableField {
 	explicit BuildableField(const Widelands::FCoords& fc);
 
@@ -397,6 +411,9 @@ struct BuildableField {
 	int16_t distant_water{0};
 	int16_t fish_nearby{-1};
 	int8_t critters_nearby{-1};
+	// Generic resource count by attribute ID (for resource harvesters).
+	// Weighted by proximity: closer resources count more.
+	std::map<uint32_t, uint16_t> resource_count_by_attribute;
 	Widelands::ResourceAmount ground_water{1};  // used by wells
 	uint8_t space_consumers_nearby{0U};
 	uint8_t rangers_nearby{0U};
@@ -531,6 +548,10 @@ struct BuildingObserver {
 	int32_t substitutes_count;
 
 	bool requires_supporters = false;
+	// Generic resource targets derived from worker programs (findobject).
+	// Used for placement scoring: each target contributes a resource bonus.
+	std::vector<ResourceSearchTarget> resource_targets;
+	bool is_resource_harvester{false};
 	// For rangers, fishbreeders. The index is the productionsite's one. We remember both for faster
 	// retrieval
 	std::map<Widelands::DescriptionIndex, const Widelands::ProductionSiteDescr*> supported_producers;
@@ -1069,6 +1090,57 @@ public:
 	}
 	FlagCandidates::Candidate* get_winner(int16_t = 0);
 };
+/// Derived decision weights, recomputed each PID tick from game state.
+/// No simulation training — each weight has an explicit derivation formula.
+///
+/// Unit dictionary (see also planner_ai.cc Dimensional Analysis Contract):
+///   [budget]      Share of kNormalizationBudget (10M). Post-normalization.
+///   [budget/ware]  = kNormalizationBudget / nr_wares. Fair share per ware type.
+///   [count]       Dimensionless integer (buildings, wares, fields).
+///   [ratio]       Dimensionless fraction, often in [0, 1000] permille.
+struct AIWeights {
+	// === Economy structure ===
+	int32_t avg_wp{0};     // [budget/ware] = kNormalizationBudget / nr_wares
+	int32_t N_ticks{2};    // [count] sqrt(economy_size), clamped [2,50]
+	int32_t P_weight{4};   // [count] 2 * N_ticks (PID proportional weight)
+
+	// === Dismantle thresholds (all in [budget/ware] units) ===
+	// Global offset: baseline resistance to dismantling.
+	// = avg_wp + clearing_density × avg_wp / nr_wares [budget/ware]
+	int32_t dismantle_offset{0};
+
+	// Unconnected penalty: dismantle signal for disconnected buildings.
+	// = 3 × avg_wp [budget/ware]
+	int32_t unconnected_penalty{0};
+
+	// Resource-exhausted override: for harvesters with no remaining resources.
+	// = 10 × avg_wp [budget/ware]
+	int32_t resource_exhausted_penalty{0};
+
+	// === Military ===
+	// Economy maturity threshold: minimum economy size before military.
+	// = nr_wares [count]
+	int32_t military_maturity_threshold{0};
+
+	// === Space management ===
+	// Space scarcity amplifier.
+	// = max(0, desired - spots) × 1000 / (desired + 1) [ratio] permille 0..1000
+	int32_t space_scarcity_ratio{0};
+
+	// === Construction ===
+	// CM stock safety margin: ticks of CM consumption to keep in stock.
+	// = N_ticks [count]
+	int32_t cm_safety_margin{0};
+
+	/// Recompute all weights from current game state.
+	void update(int32_t nr_wares,
+	            int32_t economy_size,
+	            int32_t spots,
+	            int32_t trees_territory,
+	            int32_t rocks_territory,
+	            int32_t normalization_budget);
+};
+
 }  // namespace AI
 
 #endif  // end of include guard: WL_AI_AI_HELP_STRUCTS_H

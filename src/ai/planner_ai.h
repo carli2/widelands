@@ -20,6 +20,7 @@
 #define WL_AI_PLANNER_AI_H
 
 #include <memory>
+#include <set>
 
 #include "ai/ai_help_structs.h"
 #include "ai/computer_player.h"
@@ -38,14 +39,17 @@ namespace AI {
 
 /// Planner AI: a pressure-driven computer player.
 ///
-/// Uses three independent PI normalization circles (Power-Iteration):
+/// Uses three independent PID normalization circles (Power-Iteration):
 ///   Circle 1: Ware Pressure   — which ware is most urgently needed?
 ///   Circle 2: Building Pressure — which building type to construct/dismantle?
 ///   Circle 3: Expansion Pressure — where to expand / whom to attack?
 ///
-/// Each circle has its own PI controller per component, one matrix-vector
+/// Each circle has its own PID controller per component, one matrix-vector
 /// product per tick, and normalizes to a 10M-point budget.
-/// The integral term provides memory across ticks for convergence.
+/// P-term: proportional to current error (immediate response).
+/// I-term: accumulates error across ticks (persistent demand memory).
+/// D-term: detects error rate-of-change (anticipatory chain building;
+///   e.g. bakery placed → flour demand spikes → D fires → mill pressure).
 ///
 /// The system is completely tribe-agnostic — it reads building configs at runtime.
 struct PlannerAI : ComputerPlayer {
@@ -156,47 +160,79 @@ private:
 	void gain_building(Widelands::Building&);
 	void lose_building(const Widelands::Building&);
 
-	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
-	struct WarePressure {
-		int32_t error{0};       // E[w]: injected error signal (deficit + demand)
-		int32_t integral{0};    // I[w]: leaky integrator (99/100 damping)
-		int32_t total{0};       // T[w]: normalized PI output (eigenvector component)
+	// ========== PID Controller (shared by all three circles) ==========
+	//
+	// Standard PID controller with accumulation pattern:
+	//   Phase 1: error = 0; error += signal_a; error += signal_b; ...
+	//   Phase 2: tick(P, I, D)
+	//   Phase 3: read outputControl (pre-normalization = [raw_pid])
+	//   Phase 4: normalization → outputControl becomes [budget]
+	//
+	// Unit contract:
+	//   error:         Circle 1: [count] (building/ware imbalance)
+	//                  Circle 2: [budget] (from ware_pressure_.outputControl)
+	//                  Circle 3: [count] (land/territory imbalance)
+	//   ipart:         Same unit as error (accumulated across ticks)
+	//   lastError:     Same unit as error
+	//   outputControl: [raw_pid] after tick() (= P×error + I×ipart + D×Δerror)
+	//                  [budget] after normalization (= raw × 10M / sum)
+	//
+	// Overflow budget (int32_t max = 2,147,483,647):
+	//   Circle 1: error ∈ [-100, +100] (count). ipart after 200 ticks: ~20K.
+	//     P=100 × 100 + 20K + 50 × 50 = 32.5K. Safe.
+	//   Circle 2: error ∈ [0, 10M] (budget). ipart after 50 ticks: ~500M.
+	//     P=100 × 10M + 500M + 50 × 5M = 1.75G. TIGHT but fits int32.
+	//     At N=50 (economy of 2500 buildings): P=100 × 10M = 1G,
+	//     ipart after 50 ticks at 10M = 500M. Sum = 1.55G. Fits.
+	//   Sum for normalization uses int64_t (see update_building_pressures).
+	//
+	// Per think(), at most one tick() per controller instance.
+	// The D-term (derivative) detects rate-of-change in error signals,
+	// enabling anticipatory supply chain building: bakery placed →
+	// flour consumption rises → D-term spikes → mill gets immediate
+	// pressure instead of waiting for integral to accumulate.
+	struct PIDController {
+		int32_t lastError{0};      // previous tick's error (for D-term)
+		int32_t error{0};          // accumulated error signal (reset before each tick)
+		int32_t ipart{0};          // integral accumulator
+		int32_t outputControl{0};  // readable output after tick()
+
+		/// Compute PID output and advance state.
+		/// Call once per think, after all error signals are accumulated.
+		void tick(int32_t p_weight, int32_t i_weight, int32_t d_weight) {
+			outputControl = p_weight * error + i_weight * ipart +
+			   d_weight * (error - lastError);
+			lastError = error;
+			ipart += error;
+		}
 	};
-	std::vector<WarePressure> ware_pressure_;
+
+	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
+	std::vector<PIDController> ware_pressure_;
 
 	void update_ware_pressures(const Time& gametime);
 
 	// ========== Circle 2: Building Pressure (Power-Iteration) ==========
 	//
-	// Dual-PI per building type: PRO (should build) vs CONTRA (should NOT build).
+	// Dual-PID per building type: PRO (should build) vs CONTRA (should NOT build).
 	// PRO = "how much does the economy need this building?"
 	// CONTRA = "why should we NOT build this building right now?"
 	//
-	// Build decision: effective_score = PRO.total - CONTRA.total
+	// Build decision: effective_score = PRO.outputControl - CONTRA.outputControl
 	// Positive → consider building. Highest wins.
 	// Negative → skip. The contra reasons outweigh the demand.
 	//
 	// PRO accumulates: output ware demand, military/expansion need, etc.
 	// CONTRA accumulates: missing input chains, non-renewable CM consumption,
 	//   overcapacity, economy too young for military, etc.
-	struct BuildingPressure {
-		int32_t error{0};       // demand for this building type
-		int32_t integral{0};    // leaky integrator
-		int32_t total{0};       // normalized PI output
-	};
-	std::vector<BuildingPressure> building_pressure_;   // PRO signal
-	std::vector<BuildingPressure> building_prevention_;  // CONTRA signal
+	std::vector<PIDController> building_pressure_;   // PRO signal
+	std::vector<PIDController> building_prevention_;  // CONTRA signal
 
 	void update_building_pressures(const Time& gametime);
 
 	// ========== Circle 3: Expansion Pressure (Power-Iteration) ==========
 	// Vector components: index 0 = unowned land, 1..N = player 1..N
-	struct ExpansionTarget {
-		int32_t error{0};
-		int32_t integral{0};
-		int32_t total{0};       // normalized to kNormalizationBudget
-	};
-	std::vector<ExpansionTarget> expansion_targets_;
+	std::vector<PIDController> expansion_targets_;
 
 	// Bully weights (interface for future UI)
 	std::map<Widelands::PlayerNumber, int32_t> bully_weights_;
@@ -404,10 +440,22 @@ private:
 	int32_t trees_on_territory_{0};
 	int32_t rocks_on_territory_{0};
 
+	// Per-attribute territory-wide resource count (attr_id -> count).
+	// Populated in update_all_buildable_fields() alongside trees/rocks counts.
+	// Used for predictive supporter pressure (depletion anticipation).
+	std::map<uint32_t, int32_t> resource_on_territory_;
+
+	// Derived decision weights, recomputed each PID tick.
+	AIWeights weights_;
+
+	// Set of attribute IDs that any resource harvester building cares about.
+	// Populated once during init, used to filter the field scan.
+	std::set<uint32_t> interesting_resource_attributes_;
+
 	// id of iron as resource to identify iron mines
 	int32_t iron_resource_id{Widelands::INVALID_INDEX};
 
-	// PI tick counter: how many times update_ware_pressures has been called.
+	// PID tick counter: how many times update_ware_pressures has been called.
 	// Ticks 1-10: warmup phase (equal building seed, no game goal injection).
 	// Ticks 11+: normal operation (game goal injection active).
 	uint16_t pi_tick_count_{0};
