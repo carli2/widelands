@@ -578,6 +578,8 @@ wl.Descriptions():new_tribe {
          -- Education (Yeshiva track)
          {
             name = "hebrews_talmid",
+            default_target_quantity = 10,
+            preciousness = 3,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew worker: Talmid
                purpose = pgettext("hebrews_worker", "A student who has begun Torah study. Talmidim work in specialized buildings like the clay furnace. They are educated in the Yeshiva.")
@@ -585,6 +587,8 @@ wl.Descriptions():new_tribe {
          },
          {
             name = "hebrews_talmid_chacham",
+            default_target_quantity = 10,
+            preciousness = 4,
             helptexts = {
                -- TRANSLATORS: Helptext for a Hebrew worker: Talmid Chacham
                purpose = pgettext("hebrews_worker", "A wise student who has completed advanced studies. Talmidei Chachamim work in the gold beater's workshop and other skilled positions. They are educated in the Yeshiva.")

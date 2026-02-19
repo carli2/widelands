@@ -43,7 +43,6 @@ wl.Descriptions():new_productionsite_type {
    },
 
    inputs = {
-      { name = "zizit", amount = 4 },
       { name = "tallit_katan", amount = 4 },
       { name = "tefilin", amount = 4 },
       { name = "tallit", amount = 4 },
@@ -69,7 +68,7 @@ wl.Descriptions():new_productionsite_type {
          descname = pgettext("hebrews_building", "educating Talmid"),
          actions = {
             "return=skipped unless economy needs hebrews_talmid",
-            "consume=zizit tallit_katan hebrews_carrier",
+            "consume=tallit_katan hebrews_carrier",
             "sleep=duration:45s",
             "recruit=hebrews_talmid"
          }

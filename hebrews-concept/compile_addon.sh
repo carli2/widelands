@@ -28,7 +28,8 @@ MIN_WL_VERSION="1.2"
 # Paths (relative to Widelands root)
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WL_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-OUTPUT_DIR="$SCRIPT_DIR/${ADDON_NAME}.wad"
+OUTPUT_DIR="$HOME/.widelands/addons/${ADDON_NAME}.wad"
+FLATPAK_DIR="$HOME/.var/app/org.widelands.Widelands/.widelands/addons/${ADDON_NAME}.wad"
 DATA_DIR="$WL_ROOT/data"
 TRIBES_DIR="$DATA_DIR/tribes"
 
@@ -69,7 +70,7 @@ category=tribes
 requires=
 min_wl_version=1.2
 max_wl_version=
-sync_safe=false
+sync_safe=true
 MANIFEST
 
 # ---------------------------------------------------------------------------
@@ -79,16 +80,23 @@ MANIFEST
 # ---------------------------------------------------------------------------
 
 echo "Copying tribe initialization files..."
-mkdir -p "$OUTPUT_DIR/tribes/initialization/hebrews"
-cp -r "$TRIBES_DIR/initialization/hebrews/"* "$OUTPUT_DIR/tribes/initialization/hebrews/"
+# The engine discovers addon tribes by scanning direct children of
+# addons/<name>/tribes/ for init.lua.  So the tribe init must live at
+# tribes/hebrews/init.lua  (NOT tribes/initialization/hebrews/init.lua).
+mkdir -p "$OUTPUT_DIR/tribes/hebrews"
+cp -r "$TRIBES_DIR/initialization/hebrews/"* "$OUTPUT_DIR/tribes/hebrews/"
 
 # Patch init.lua to use the add-on textdomain instead of "tribes"
 sed -i 's/push_textdomain("tribes")/push_textdomain("hebrews_tribe.wad", true)/' \
-    "$OUTPUT_DIR/tribes/initialization/hebrews/init.lua"
+    "$OUTPUT_DIR/tribes/hebrews/init.lua"
+
+# Add addon field to init.lua (required for addon tribes)
+sed -i 's/name = "hebrews",/name = "hebrews",\n   addon = "hebrews_tribe.wad",/' \
+    "$OUTPUT_DIR/tribes/hebrews/init.lua"
 
 # Patch units.lua to use the add-on textdomain instead of "tribes_encyclopedia"
 sed -i 's/push_textdomain("tribes_encyclopedia")/push_textdomain("hebrews_tribe.wad", true)/' \
-    "$OUTPUT_DIR/tribes/initialization/hebrews/units.lua"
+    "$OUTPUT_DIR/tribes/hebrews/units.lua"
 
 # ---------------------------------------------------------------------------
 # 3. Copy buildings
@@ -260,16 +268,12 @@ if [ -d "$TRIBES_DIR/immovables/pond" ]; then
     cp -r "$TRIBES_DIR/immovables/pond" "$OUTPUT_DIR/tribes/immovables/"
 fi
 
-# Hebrew resource indicators (hebrews_resi_*)
-# These may be defined inline or in separate directories
-for resi in hebrews_resi_none hebrews_resi_iron_1 hebrews_resi_iron_2 \
-            hebrews_resi_gold_1 hebrews_resi_gold_2 \
-            hebrews_resi_stones_1 hebrews_resi_stones_2 \
-            hebrews_resi_water; do
-    if [ -d "$TRIBES_DIR/immovables/$resi" ]; then
-        cp -r "$TRIBES_DIR/immovables/$resi" "$OUTPUT_DIR/tribes/immovables/"
-    fi
-done
+# Hebrew resource indicators (stored under resi/hebrews/ in the source tree)
+if [ -d "$TRIBES_DIR/immovables/resi/hebrews" ]; then
+    mkdir -p "$OUTPUT_DIR/tribes/immovables/resi/hebrews"
+    cp -r "$TRIBES_DIR/immovables/resi/hebrews/"* "$OUTPUT_DIR/tribes/immovables/resi/hebrews/"
+    echo "  Copied resource indicators from resi/hebrews/"
+fi
 
 # ---------------------------------------------------------------------------
 # 8. Copy scripting helpers
@@ -315,182 +319,57 @@ if command -v msgfmt &>/dev/null; then
 fi
 
 # ---------------------------------------------------------------------------
-# 10. Create register.lua
-#     This file registers all Hebrew tribe descriptions with the engine.
-#     It is called when the add-on is loaded.
+# 9b. Create tips.lua for game loading screen tips
 # ---------------------------------------------------------------------------
 
-echo "Writing register.lua..."
-cat > "$OUTPUT_DIR/register.lua" << 'REGISTER_LUA'
--- register.lua for the Hebrew Tribe add-on
--- This file registers all tribe descriptions (buildings, wares, workers,
--- immovables) with the Widelands engine when the add-on is loaded.
-
--- Collect all register.lua files from the tribes/ subdirectory tree.
--- Each register.lua returns a table of description names to register.
-
--- Helper: recursively find and execute register.lua files
-local function collect_registrations(basepath)
-   local result = {}
-   -- The engine's include mechanism handles path resolution
-   -- We register each component type separately
-   return result
-end
-
--- Register the tribe itself
-return {
-   -- The order matters: wares and workers must be registered before
-   -- buildings that reference them.
-
-   -- Wares
-   "tribes/wares/branch/register.lua",
-   "tribes/wares/log/register.lua",
-   "tribes/wares/granite/register.lua",
-   "tribes/wares/clay/register.lua",
-   "tribes/wares/water/register.lua",
-   "tribes/wares/wheat/register.lua",
-   "tribes/wares/wheat_grains/register.lua",
-   "tribes/wares/flour/register.lua",
-   "tribes/wares/bread_hebrews/register.lua",
-   "tribes/wares/fish/register.lua",
-   "tribes/wares/meat/register.lua",
-   "tribes/wares/olives/register.lua",
-   "tribes/wares/olive_oil/register.lua",
-   "tribes/wares/grape/register.lua",
-   "tribes/wares/wine/register.lua",
-   "tribes/wares/copper_ore/register.lua",
-   "tribes/wares/copper/register.lua",
-   "tribes/wares/gold_ore/register.lua",
-   "tribes/wares/gold_leaf/register.lua",
-   "tribes/wares/menorah/register.lua",
-   "tribes/wares/sheep/register.lua",
-   "tribes/wares/wool/register.lua",
-   "tribes/wares/fur/register.lua",
-   "tribes/wares/yarn/register.lua",
-   "tribes/wares/cloth/register.lua",
-   "tribes/wares/pick/register.lua",
-   "tribes/wares/hammer/register.lua",
-   "tribes/wares/fishing_rod/register.lua",
-   "tribes/wares/zizit/register.lua",
-   "tribes/wares/tallit_katan/register.lua",
-   "tribes/wares/tefilin/register.lua",
-   "tribes/wares/tallit/register.lua",
-   "tribes/wares/tunic/register.lua",
-   "tribes/wares/slingshot/register.lua",
-   "tribes/wares/dagger/register.lua",
-
-   -- Workers
-   "tribes/workers/hebrews/carrier/register.lua",
-   "tribes/workers/hebrews/ferry/register.lua",
-   "tribes/workers/hebrews/donkey/register.lua",
-   "tribes/workers/hebrews/builder/register.lua",
-   "tribes/workers/hebrews/stonemason/register.lua",
-   "tribes/workers/hebrews/branch_collector/register.lua",
-   "tribes/workers/hebrews/miner/register.lua",
-   "tribes/workers/hebrews/geologist/register.lua",
-   "tribes/workers/hebrews/scout/register.lua",
-   "tribes/workers/hebrews/shipwright/register.lua",
-   "tribes/workers/hebrews/fisher/register.lua",
-   "tribes/workers/hebrews/farmer/register.lua",
-   "tribes/workers/hebrews/shepherd/register.lua",
-   "tribes/workers/hebrews/smelter/register.lua",
-   "tribes/workers/hebrews/talmid/register.lua",
-   "tribes/workers/hebrews/talmid_chacham/register.lua",
-   "tribes/workers/hebrews/recruit/register.lua",
-   "tribes/workers/hebrews/soldier/register.lua",
-
-   -- Ships
-   "tribes/ships/hebrews/register.lua",
-
-   -- Immovables
-   "tribes/immovables/shipconstruction_hebrews/register.lua",
-   "tribes/immovables/grapevine/tiny/register.lua",
-   "tribes/immovables/grapevine/small/register.lua",
-   "tribes/immovables/grapevine/medium/register.lua",
-   "tribes/immovables/grapevine/ripe/register.lua",
-   "tribes/immovables/pond/dry/register.lua",
-
-   -- Buildings: Warehouses
-   "tribes/buildings/warehouses/hebrews/headquarters/register.lua",
-   "tribes/buildings/warehouses/hebrews/headquarters_tent/register.lua",
-   "tribes/buildings/warehouses/hebrews/warehouse/register.lua",
-   "tribes/buildings/warehouses/hebrews/port/register.lua",
-
-   -- Buildings: Production sites
-   "tribes/buildings/productionsites/hebrews/branch_collectors_hut/register.lua",
-   "tribes/buildings/productionsites/hebrews/fishers_hut/register.lua",
-   "tribes/buildings/productionsites/hebrews/shepherds/register.lua",
-   "tribes/buildings/productionsites/hebrews/well/register.lua",
-   "tribes/buildings/productionsites/hebrews/quarry/register.lua",
-   "tribes/buildings/productionsites/hebrews/clay_pit/register.lua",
-   "tribes/buildings/productionsites/hebrews/brick_kiln/register.lua",
-   "tribes/buildings/productionsites/hebrews/clearing_tent/register.lua",
-   "tribes/buildings/productionsites/hebrews/spinning_mill/register.lua",
-   "tribes/buildings/productionsites/hebrews/zizijot_makers_hut/register.lua",
-   "tribes/buildings/productionsites/hebrews/scouts_house/register.lua",
-   "tribes/buildings/productionsites/hebrews/mill/register.lua",
-   "tribes/buildings/productionsites/hebrews/bakery/register.lua",
-   "tribes/buildings/productionsites/hebrews/butchery/register.lua",
-   "tribes/buildings/productionsites/hebrews/weaving_mill/register.lua",
-   "tribes/buildings/productionsites/hebrews/winery/register.lua",
-   "tribes/buildings/productionsites/hebrews/dressmakery/register.lua",
-   "tribes/buildings/productionsites/hebrews/clay_furnace/register.lua",
-   "tribes/buildings/productionsites/hebrews/gold_beater/register.lua",
-   "tribes/buildings/productionsites/hebrews/workshop/register.lua",
-   "tribes/buildings/productionsites/hebrews/sofers_workshop/register.lua",
-   "tribes/buildings/productionsites/hebrews/weaponsmithy/register.lua",
-   "tribes/buildings/productionsites/hebrews/donkeyfarm/register.lua",
-   "tribes/buildings/productionsites/hebrews/machane/register.lua",
-   "tribes/buildings/productionsites/hebrews/farm/register.lua",
-   "tribes/buildings/productionsites/hebrews/oliveplant/register.lua",
-   "tribes/buildings/productionsites/hebrews/yeshiva/register.lua",
-   "tribes/buildings/productionsites/hebrews/solomons_harbour/register.lua",
-   "tribes/buildings/productionsites/hebrews/coppermine/register.lua",
-   "tribes/buildings/productionsites/hebrews/goldmine/register.lua",
-   "tribes/buildings/productionsites/hebrews/goldmine_deep/register.lua",
-   "tribes/buildings/productionsites/hebrews/granitemine/register.lua",
-   "tribes/buildings/productionsites/hebrews/threshing_floor/register.lua",
-   "tribes/buildings/productionsites/hebrews/vineyard/register.lua",
-   "tribes/buildings/productionsites/hebrews/shipyard/register.lua",
-
-   -- Buildings: Training sites
-   "tribes/buildings/trainingsites/hebrews/trainingcamp/register.lua",
-
-   -- Buildings: Military sites
-   "tribes/buildings/militarysites/hebrews/tent_small/register.lua",
-   "tribes/buildings/militarysites/hebrews/massada/register.lua",
-
-   -- Buildings: Markets
-   "tribes/buildings/markets/hebrews/market/register.lua",
-
-   -- Tribe initialization (must be last)
-   "tribes/initialization/hebrews/init.lua",
-}
-REGISTER_LUA
-
-# ---------------------------------------------------------------------------
-# 11. Create init.lua
-#     This is the entry point for the add-on, executed by the engine.
-# ---------------------------------------------------------------------------
-
-echo "Writing init.lua..."
-cat > "$OUTPUT_DIR/init.lua" << 'INIT_LUA'
--- init.lua for the Hebrew Tribe add-on
--- This file is the entry point executed when the add-on is loaded by the
--- Widelands engine. It sets up the textdomain and includes the tribe
--- initialization files.
-
+echo "Creating tips.lua..."
+cat > "$OUTPUT_DIR/tribes/hebrews/tips.lua" << 'TIPSEOF'
 push_textdomain("hebrews_tribe.wad", true)
-
--- Include the tribe initialization
--- The engine will handle loading based on register.lua
-include("addons/hebrews_tribe.wad/tribes/initialization/hebrews/init.lua")
-
+tips = {
+   {
+      text = _("Clay and branches are the main building materials of the Hebrews. Make sure to build clay pits and branch collector's huts early."),
+      seconds = 5
+   },
+   {
+      text = _("Bread is a staple food for the Hebrew economy. Build farms, threshing floors, mills, and bakeries to keep your workers fed."),
+      seconds = 6
+   },
+   {
+      text = _("The Hebrew tribe uses copper instead of iron. Ensure a steady supply of copper ore from your mines."),
+      seconds = 5
+   },
+   {
+      text = _("Cloth is essential for Hebrew construction. Set up a wool production chain: shepherds, spinning mills, and weaving mills."),
+      seconds = 6
+   },
+}
 pop_textdomain()
-INIT_LUA
+return tips
+TIPSEOF
 
 # ---------------------------------------------------------------------------
-# 12. Create icon.png
+# 10. Add __skip_if_exists to all register.lua files
+#     Add-on entities must define __skip_if_exists or __replace_if_exists
+#     to tell the engine how to handle conflicts with already-registered
+#     entities. The source files in data/tribes/ must NOT have this
+#     attribute (the engine forbids it for built-in tribes), so we inject
+#     it here during packaging.
+# ---------------------------------------------------------------------------
+
+echo "Injecting __skip_if_exists into register.lua files..."
+INJECTED=0
+while IFS= read -r -d '' regfile; do
+    # Empty attribute tables:  = {}  →  = { "__skip_if_exists" }
+    sed -i 's/= {}/= { "__skip_if_exists" }/' "$regfile"
+    # Non-empty attribute tables (if not already patched):
+    #   = { "resi"  →  = { "__skip_if_exists", "resi"
+    sed -i '/__skip_if_exists/!s/= { "/= { "__skip_if_exists", "/' "$regfile"
+    INJECTED=$((INJECTED + 1))
+done < <(find "$OUTPUT_DIR/tribes" -name "register.lua" -print0 2>/dev/null)
+echo "  Injected __skip_if_exists into $INJECTED register.lua files"
+
+# ---------------------------------------------------------------------------
+# 11. Create icon.png
 #     Use one of the Hebrew building menu images as the add-on icon.
 #     Resize to 64x64 if ImageMagick is available, otherwise just copy.
 # ---------------------------------------------------------------------------
@@ -518,7 +397,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 13. Patch textdomains in building/worker/ware init.lua files
+# 12. Patch textdomains in building/worker/ware init.lua files
 #     Replace push_textdomain("tribes") with the add-on textdomain
 # ---------------------------------------------------------------------------
 
@@ -537,7 +416,7 @@ done < <(find "$OUTPUT_DIR/tribes" -name "*.lua" -print0 2>/dev/null)
 echo "  Patched $PATCHED textdomain references"
 
 # ---------------------------------------------------------------------------
-# 14. Summary
+# 13. Summary
 # ---------------------------------------------------------------------------
 
 echo ""
@@ -561,7 +440,7 @@ echo ""
 # Breakdown by category
 echo "  Breakdown:"
 for subdir in tribes/buildings tribes/workers tribes/wares tribes/ships \
-              tribes/immovables tribes/initialization tribes/scripting locale; do
+              tribes/immovables tribes/hebrews tribes/scripting locale; do
     if [ -d "$OUTPUT_DIR/$subdir" ]; then
         count=$(find "$OUTPUT_DIR/$subdir" -type f | wc -l)
         size=$(du -sh "$OUTPUT_DIR/$subdir" | cut -f1)
@@ -570,7 +449,36 @@ for subdir in tribes/buildings tribes/workers tribes/wares tribes/ships \
 done
 echo ""
 
-echo "To install, copy the .wad directory to your Widelands addons folder:"
-echo "  cp -r $OUTPUT_DIR ~/.widelands/addons/"
+# ---------------------------------------------------------------------------
+# 14. Deploy to Flatpak location (if applicable)
+# ---------------------------------------------------------------------------
+
+if [ -d "$HOME/.var/app/org.widelands.Widelands/.widelands" ]; then
+    echo "Deploying to Flatpak location..."
+    if [ -d "$FLATPAK_DIR" ]; then
+        rm -rf "$FLATPAK_DIR"
+    fi
+    cp -r "$OUTPUT_DIR" "$FLATPAK_DIR"
+    echo "  Deployed to: $FLATPAK_DIR"
+
+    # Deploy translations to addons_i18n (where the engine actually looks)
+    FLATPAK_I18N="$HOME/.var/app/org.widelands.Widelands/.widelands/addons_i18n/${ADDON_NAME}.wad"
+    mkdir -p "$FLATPAK_I18N"
+    if [ -f "$OUTPUT_DIR/locale/de/LC_MESSAGES/hebrews_tribe.wad.po" ]; then
+        cp "$OUTPUT_DIR/locale/de/LC_MESSAGES/hebrews_tribe.wad.po" "$FLATPAK_I18N/de.po"
+        echo "  Deployed German translations to: $FLATPAK_I18N/de.po"
+    fi
+fi
+
+# Also deploy translations for native install
+NATIVE_I18N="$HOME/.widelands/addons_i18n/${ADDON_NAME}.wad"
+mkdir -p "$NATIVE_I18N"
+if [ -f "$OUTPUT_DIR/locale/de/LC_MESSAGES/hebrews_tribe.wad.po" ]; then
+    cp "$OUTPUT_DIR/locale/de/LC_MESSAGES/hebrews_tribe.wad.po" "$NATIVE_I18N/de.po"
+    echo "  Deployed German translations to: $NATIVE_I18N/de.po"
+fi
+
+echo ""
+echo "Installed to: $OUTPUT_DIR"
 echo ""
 echo "Done."
