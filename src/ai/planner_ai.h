@@ -19,6 +19,8 @@
 #ifndef WL_AI_PLANNER_AI_H
 #define WL_AI_PLANNER_AI_H
 
+#include <algorithm>
+#include <array>
 #include <limits>
 #include <memory>
 #include <set>
@@ -197,7 +199,13 @@ struct PlannerAI : ComputerPlayer {
 
 private:
 	// --- Constants ---
-	static constexpr int32_t kNormalizationBudget = 10'000'000;
+	static constexpr int32_t kNormalizationBudget = 1'000'000;
+	static constexpr int32_t kPidOutputScale = 1'000'000;
+	using GlobalPIDState = Widelands::Player::AiPersistentState::PlannerAIGlobalPIDState;
+	static constexpr size_t kPidIdxWareBmatInputBalance = GlobalPIDState::kPidIdxWareBmatInputBalance;
+	static constexpr size_t kPidIdxMilitaryGate = GlobalPIDState::kPidIdxMilitaryGate;
+	static constexpr size_t kPidIdxMetaI = GlobalPIDState::kPidIdxMetaI;
+	static constexpr size_t kPidIdxMetaD = GlobalPIDState::kPidIdxMetaD;
 	static constexpr Duration kFieldInfoExpiration{14 * 1000};
 	static constexpr Duration kMineFieldInfoExpiration{20 * 1000};
 	static constexpr Duration kBuildingMinInterval{25 * 1000};
@@ -235,43 +243,67 @@ private:
 	void gain_building(Widelands::Building&);
 	void lose_building(const Widelands::Building&);
 
+	static int32_t int_tanh(int32_t x) {
+		const int64_t S = kPidOutputScale;
+		const int64_t x64 = std::clamp<int64_t>(x, -8 * S, 8 * S);
+
+		// Rational tanh approximation:
+		// y = x * (27 + (x/S)^2) / (27 + 9*(x/S)^2)
+		// Evaluated in deci-units to keep all intermediates int64-safe
+		// while preserving good low-range resolution.
+		constexpr int64_t kScale = 10;
+		const int64_t xs = x64 / kScale;
+		const int64_t ss = std::max<int64_t>(1, S / kScale);
+		const int64_t x2 = xs * xs;
+		const int64_t s2 = ss * ss;
+		const int64_t num = xs * (27 * s2 + x2);
+		const int64_t den = 27 * s2 + 9 * x2;
+		if (den == 0) {
+			return 0;
+		}
+		int64_t y = num * kScale / den;
+		y = std::clamp<int64_t>(y, -S, S);
+		return static_cast<int32_t>(y);
+	}
+
 	// ========== PID Controller (shared by all three circles) ==========
 	//
 	// Standard PID controller with accumulation pattern:
 	//   Phase 1: error = 0; error += signal_a; error += signal_b; ...
 	//   Phase 2: tick(P, I, D)
-	//   Phase 3: read outputControl (pre-normalization = [raw_pid])
-	//   Phase 4: normalization → outputControl becomes [budget]
+	//   Phase 3: read outputControl (post-int_tanh, bipolar decision signal)
 	//
 	// Unit contract:
-	//   error:         Circle 1: [count] (building/ware imbalance)
-	//                  Circle 2: [budget] (from ware_pressure_.outputControl)
-	//                  Circle 3: [count] (land/territory imbalance)
+	//   error:         controller-specific measurement signal
 	//   ipart:         Same unit as error (accumulated across ticks)
 	//   lastError:     Same unit as error
-	//   outputControl: [raw_pid] after tick() (= P×error + I×ipart + D×Δerror)
-	//                  [budget] after normalization (= raw × 10M / sum)
+	//   outputControl: bipolar decision signal in [-kPidOutputScale, +kPidOutputScale]
+	//                  after int_tanh saturation
 	//
 	// Overflow budget (int32_t max = 2,147,483,647):
 	//   Leaky integral converges to error × N_ticks (memory window).
 	//   Circle 1: error ∈ [-100, +100], integral ≤ 100×50 = 5K.
 	//     P=100×100 + I_permille×5K/1000 + D×50 = 12.5K. Safe.
-	//   Circle 2: error ∈ [0, 10M], integral ≤ 10M×50 = 500M.
-	//     P=100×10M + 500×500M/1000 + 100×10M = 1G+250M+1G = 2.25G.
-	//     Exceeds int32 at max D_permille. tick() uses int64 + clamp.
-	//   Sum for normalization uses int64_t (see update_building_pressures).
+	//   Circle 2: error ∈ [0, 1M], integral ≤ 1M×50 = 50M.
+	//     P=100×1M + 500×50M/1000 + 100×1M = 225M. Safe.
 	//
 	// Per think(), at most one tick() per controller instance.
 	// The D-term (derivative) detects rate-of-change in error signals,
 	// enabling anticipatory supply chain building: bakery placed →
 	// flour consumption rises → D-term spikes → mill gets immediate
 	// pressure instead of waiting for integral to accumulate.
+	//
+	// Mixer contract (when converting bipolar PID output to two positive weights):
+	//   weight_plus  = (S + outputControl) / (2S)
+	//   weight_minus = (S - outputControl) / (2S)
+	// with S = kPidOutputScale. At outputControl=0, both weights are exactly equal.
 	/// PID controller from the global register bank.
 	///
 	/// Usage contract:
 	///   1. Accumulate error signals: `pid.error += some_measurement;`
 	///   2. Call `pid.tick(P, I_permille, D, leak_num, leak_den)` once per think cycle.
 	///   3. Read the decision: `pid.outputControl` (> 0 → do A, < 0 → do B).
+	///      The value is saturated through `int_tanh` to [-kPidOutputScale, +kPidOutputScale].
 	///
 	/// Internal state (integral, derivative memory) is private.
 	/// Use the provided methods for anti-windup, serialization, and diagnostics.
@@ -289,28 +321,30 @@ private:
 		/// Anti-windup is automatic — no external integral manipulation needed.
 		///
 		/// i_permille: integral weight in permille (1..500 = 0.001..0.5×).
-		///   Tuned by meta_I_ PID from ware stock velocity feedback.
+		///   Tuned by global PID bank slot kPidIdxMetaI from ware stock velocity feedback.
 		///   Applied as: i_permille × integral / 1000 (int64 intermediate).
 		///
 		/// d_weight: derivative weight = D_permille × N_ticks / 1000.
-		///   Tuned by meta_D_ PID from idle-vs-scarcity balance.
+		///   Tuned by global PID bank slot kPidIdxMetaD from idle-vs-scarcity balance.
 		///
 		/// The D-term responds to error rate-of-change, providing anticipatory
 		/// correction when conditions change (building placed → error drops →
 		/// D fires negative → immediate priority reduction).
 		void tick(int32_t p_weight, int32_t i_permille, int32_t d_weight,
-			int32_t leak_num, int32_t leak_den) {
+		          int32_t leak_num, int32_t leak_den) {
 			const int64_t p_term = static_cast<int64_t>(p_weight) * error;
 			const int64_t i_term = static_cast<int64_t>(i_permille) * ipart_ / 1000;
 			const int64_t d_term = static_cast<int64_t>(d_weight) * (error - lastError_);
 			const int64_t raw = p_term + i_term + d_term;
+			int32_t clamped_raw = 0;
 			if (raw > std::numeric_limits<int32_t>::max()) {
-				outputControl = std::numeric_limits<int32_t>::max();
+				clamped_raw = std::numeric_limits<int32_t>::max();
 			} else if (raw < std::numeric_limits<int32_t>::min()) {
-				outputControl = std::numeric_limits<int32_t>::min();
+				clamped_raw = std::numeric_limits<int32_t>::min();
 			} else {
-				outputControl = static_cast<int32_t>(raw);
+				clamped_raw = static_cast<int32_t>(raw);
 			}
+			outputControl = PlannerAI::int_tanh(clamped_raw);
 			lastError_ = error;
 			ipart_ = ipart_ * leak_num / leak_den + error;
 		}
@@ -334,6 +368,12 @@ private:
 		int32_t ipart_{0};         // integral accumulator (leaky)
 		int32_t lastError_{0};     // previous tick's error (for D-term)
 	};
+	// Global PID register bank (fixed slot contract):
+	//   kPidIdxWareBmatInputBalance: bmat vs input mixer feedback
+	//   kPidIdxMilitaryGate: expansion vs conservation gate
+	//   kPidIdxMetaI: self-tuning integral gain controller
+	//   kPidIdxMetaD: self-tuning derivative gain controller
+	std::array<PIDController, GlobalPIDState::kPidCount> global_pid_bank_;
 
 	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
 	std::vector<PIDController> ware_pressure_;
@@ -373,7 +413,6 @@ private:
 	// ========== Military Gate PID ==========
 	// Controls military expansion cost/benefit ratio based on
 	// expansion urgency vs construction material strain.
-	PIDController military_gate_;
 	int32_t smallest_garrison_{1};  // smallest military building's max_soldiers
 	void update_military_gate(const Time& gametime);
 
@@ -393,8 +432,6 @@ private:
 	//   Many idle buildings → D too aggressive → reduce D.
 	//   Many scarce wares, no idle → D too conservative → increase D.
 	//   Error = (scarce ware count) - (idle building count).
-	PIDController meta_I_;
-	PIDController meta_D_;
 	int32_t I_permille_{250};   // [permille] integral weight, rails [1, 500]
 	int32_t D_permille_{1000};  // [permille] derivative scale, rails [100, 2000]
 	int32_t cached_stock_velocity_{0};      // total stock change from previous cycle

@@ -417,6 +417,16 @@ void Player::AiPersistentState::initialize() {
 	std::fill(std::begin(f_neurons), std::end(f_neurons), 0);
 	std::fill(std::begin(magic_numbers), std::end(magic_numbers), 0);
 	remaining_basic_buildings.clear();
+	pi_tick_count = 0;
+	ware_pressure_integrals.clear();
+	ware_pressure_last_errors.clear();
+	building_pressure_integrals.clear();
+	building_pressure_last_errors.clear();
+	building_prevention_integrals.clear();
+	building_prevention_last_errors.clear();
+	expansion_integrals.clear();
+	expansion_last_errors.clear();
+	planner_global_pid = PlannerAIGlobalPIDState{};
 
 	initialized = true;
 }

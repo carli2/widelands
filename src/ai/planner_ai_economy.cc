@@ -74,7 +74,9 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 	++pi_tick_count_;
 	const size_t nr_wares = wares.size();
 	std::vector<int32_t> raw_A(nr_wares, 0);  // Factor A: capacity PID
-	std::vector<int32_t> raw_B(nr_wares, 0);  // Factor B: demand signals
+	std::vector<int32_t> raw_B_input(nr_wares, 0);  // Factor B1: production/input demand
+	std::vector<int32_t> raw_B_bmat(nr_wares, 0);   // Factor B2: construction material demand
+	std::vector<int32_t> raw_B(nr_wares, 0);        // Combined Factor B after PID mix
 	std::vector<int32_t> raw_total(nr_wares, 0);
 
 	// PID parameters from shared weights (recomputed in update_building_pressures)
@@ -88,20 +90,68 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 	//   Error = (scarce wares) - (idle buildings).
 	//   Positive → more scarcity than idleness → increase D.
 	//   Negative → more idleness than scarcity → decrease D.
-	meta_D_.error = cached_scarce_ware_count_ - cached_idle_count_;
-	meta_D_.tick(
+	global_pid_bank_[kPidIdxMetaD].error = cached_scarce_ware_count_ - cached_idle_count_;
+	global_pid_bank_[kPidIdxMetaD].tick(
 		P_weight, I_permille_, effective_D, weights_.leak_num, weights_.leak_den);
-	D_permille_ = std::clamp(1000 + meta_D_.outputControl / P_weight, 100, 2000);
+	{
+		const int64_t shifted = static_cast<int64_t>(
+		   std::clamp(global_pid_bank_[kPidIdxMetaD].outputControl, -kPidOutputScale, kPidOutputScale)) + kPidOutputScale;
+		D_permille_ = static_cast<int32_t>(
+		   100 + shifted * (2000 - 100) / (2LL * kPidOutputScale));
+	}
 	const int32_t effective_D_updated = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
 
 	// Meta-I: stock velocity → I_permille.
 	//   Positive velocity (stocks growing) → increase I (more integral memory).
 	//   Negative velocity (stocks shrinking) → decrease I (more reactive).
 	const int32_t nr_wares_i = std::max<int32_t>(1, static_cast<int32_t>(nr_wares));
-	meta_I_.error = cached_stock_velocity_ / nr_wares_i;
-	meta_I_.tick(
+	global_pid_bank_[kPidIdxMetaI].error = cached_stock_velocity_ / nr_wares_i;
+	global_pid_bank_[kPidIdxMetaI].tick(
 		P_weight, I_permille_, effective_D_updated, weights_.leak_num, weights_.leak_den);
-	I_permille_ = std::clamp(250 + meta_I_.outputControl / P_weight, 1, 500);
+	{
+		const int64_t shifted = static_cast<int64_t>(
+		   std::clamp(global_pid_bank_[kPidIdxMetaI].outputControl, -kPidOutputScale, kPidOutputScale)) + kPidOutputScale;
+		I_permille_ = static_cast<int32_t>(
+		   1 + shifted * (500 - 1) / (2LL * kPidOutputScale));
+	}
+
+	// PID feedback for "build materials vs production inputs" in Factor B.
+	// stalled construction (+error) shifts budget toward build materials.
+	// fully supplied construction (-error) shifts budget back to production inputs.
+	int32_t stalled_sites = 0;
+	int32_t supplied_sites = 0;
+	for (const BuildingObserver& bo : buildings_) {
+		if (bo.cnt_under_construction == 0) {
+			continue;
+		}
+		const Widelands::Buildcost& cost = bo.desc->buildcost();
+		if (cost.empty()) {
+			continue;
+		}
+		int32_t total_needed = 0;
+		int32_t total_missing = 0;
+		bool all_materials_available = true;
+		for (const auto& [ware_idx, amount] : cost) {
+			const int32_t needed =
+			   static_cast<int32_t>(amount) * static_cast<int32_t>(bo.cnt_under_construction);
+			const int32_t available = std::min<int32_t>(
+			   needed, static_cast<int32_t>(calculate_total_stocklevel(ware_idx)));
+			total_needed += needed;
+			total_missing += (needed - available);
+			if (available < needed) {
+				all_materials_available = false;
+			}
+		}
+		if (total_missing > 0) {
+			stalled_sites += std::max<int32_t>(1, total_missing * 1000 /
+			   std::max<int32_t>(1, total_needed));
+		} else if (all_materials_available) {
+			supplied_sites += std::max<int32_t>(1, static_cast<int32_t>(bo.cnt_under_construction));
+		}
+	}
+	global_pid_bank_[kPidIdxWareBmatInputBalance].error = stalled_sites - supplied_sites;
+	global_pid_bank_[kPidIdxWareBmatInputBalance].tick(
+	   P_weight, I_permille_, effective_D_updated, weights_.leak_num, weights_.leak_den);
 
 	// === Priority Conservation: consumer type count per ware ===
 	//
@@ -304,9 +354,10 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 						if (tool_idx != Widelands::INVALID_INDEX &&
 						    static_cast<size_t>(tool_idx) == w) {
 							// Scale: building pressure × tool amount × worker need
-							raw_B[w] += bp * static_cast<int32_t>(tool_amount) *
+							raw_B_input[w] += static_cast<int32_t>(
+							   static_cast<int64_t>(bp) * static_cast<int32_t>(tool_amount) *
 							   worker_need /
-							   std::max<int32_t>(1, static_cast<int32_t>(nr_wares));
+							   std::max<int32_t>(1, static_cast<int32_t>(nr_wares)));
 						}
 					}
 				}
@@ -318,7 +369,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		// Convert to raw error scale by dividing by nr_wares (= avg_wp
 		// in absolute terms). This makes training demand compete with
 		// production ware deficits on the same scale.
-		// At full training pressure (10M) and 30 wares: +333k per input
+		// At full training pressure (1M) and 30 wares: +33k per input
 		// ware. After PI amplification (×100) and normalization, this
 		// becomes a significant share of the budget.
 		if (training_pressure_ > 0) {
@@ -330,7 +381,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				}
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) == w) {
-						raw_B[w] += training_inject;
+						raw_B_input[w] += training_inject;
 					}
 				}
 			}
@@ -347,12 +398,11 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				}
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) == w) {
-						raw_B[w] += recruiting_inject;
+						raw_B_input[w] += recruiting_inject;
 					}
 				}
 			}
 		}
-
 		// STEP 3: PID tick (I/D weights tuned by meta-PIDs)
 		// Unit flow:
 		//   wp.error [count] (accumulated above)
@@ -402,7 +452,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				   std::max<int32_t>(1, total_cost);
 				for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
 					if (static_cast<size_t>(ware_idx) < nr_wares) {
-						raw_B[ware_idx] += mil_readiness *
+						raw_B_bmat[ware_idx] += mil_readiness *
 						   static_cast<int32_t>(amount) * efficiency /
 						   std::max<int32_t>(1, efficiency + 1);
 					}
@@ -613,7 +663,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				}
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) < nr_wares) {
-						raw_B[input] += per_input;
+						raw_B_input[input] += per_input;
 					}
 				}
 			}
@@ -625,7 +675,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				   static_cast<int32_t>(bo.inputs.size());
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) < nr_wares) {
-						raw_B[input] += bp / n_inputs;
+						raw_B_input[input] += bp / n_inputs;
 					}
 				}
 			}
@@ -650,7 +700,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 							const int64_t needed = static_cast<int64_t>(amount) *
 							   static_cast<int64_t>(bo.cnt_under_construction);
 							if (stock < needed * 3) {
-								raw_B[ware_idx] += static_cast<int32_t>(
+								raw_B_bmat[ware_idx] += static_cast<int32_t>(
 								   static_cast<int64_t>(bp) *
 								   amount / total_cost_units);
 							}
@@ -681,7 +731,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 								// every building) from accumulating 20× more
 								// demand than production inputs, which causes
 								// their producers to monopolize construction.
-								raw_B[ware_idx] += static_cast<int32_t>(
+								raw_B_bmat[ware_idx] += static_cast<int32_t>(
 								   static_cast<int64_t>(bp) *
 								   amount / total_cost_units /
 								   (1 + ware_producer_count[ware_idx]));
@@ -737,7 +787,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 					// Phase 1: Bootstrap — strong seed for all CM wares.
 					for (size_t w = 0; w < nr_wares; ++w) {
 						if (cm_structural[w] > 0) {
-							raw_B[w] += cm_structural[w] * seed_unit / max_structural;
+							raw_B_bmat[w] += cm_structural[w] * seed_unit / max_structural;
 						}
 					}
 				}
@@ -778,14 +828,14 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 							const int32_t boost =
 							   avg_wp_floor * shortfall / need;
 							raw_A[w] = std::max(raw_A[w], boost);
-							raw_B[w] += boost;
+							raw_B_bmat[w] += boost;
 						} else {
 							// Enough stock: normal floor only.
 							const int32_t floor =
 							   cm_structural[w] * avg_wp_floor /
 							   max_structural;
-							if (raw_B[w] < floor) {
-								raw_B[w] = floor;
+							if (raw_B_bmat[w] < floor) {
+								raw_B_bmat[w] = floor;
 							}
 						}
 					}
@@ -794,61 +844,50 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		}
 	}
 
-	// STEP 4b: Demand compression — cap per-ware Factor B.
-	//
-	// Demand-pull backwards propagation creates self-reinforcing feedback
-	// loops: brick kiln needs clay → high building pressure → clay gets
-	// massive demand → quarry building pressure → more quarries → more
-	// clay → more bricks → more buildings → more brick kiln demand → ...
-	//
-	// Without compression, a single ware (clay) can monopolize 50-60% of
-	// the entire Factor B budget, starving all other production chains
-	// (cloth, wool, sheep) and causing permanent deadlocks.
-	//
-	// Cap: no single ware takes more than 4× its fair share (4/nr_wares)
-	// of the total Factor B budget. For 32 wares: cap = 4 × 312K = 1.25M.
-	// Clay goes from 7.6M → 1.25M. Cloth stays at 360K. Ratio drops from
-	// 21:1 to 3.5:1, giving diversified production chains a chance.
+	// STEP 4b: Demand compression and PID mixing of Factor B channels.
 	{
 		const int32_t avg_b = kNormalizationBudget /
 		   std::max<int32_t>(1, static_cast<int32_t>(nr_wares));
 		const int32_t cap_b = avg_b * 4;
 		for (size_t w = 0; w < nr_wares; ++w) {
-			if (raw_B[w] > cap_b) {
-				raw_B[w] = cap_b;
-			}
+			raw_B_input[w] = std::min(raw_B_input[w], cap_b);
+			raw_B_bmat[w] = std::min(raw_B_bmat[w], cap_b);
 		}
 	}
 
-	// STEP 5a: Linear normalization of Factor A and Factor B independently.
-	//
-	// Each factor is normalized to kNormalizationBudget (10M) using linear
-	// scaling: norm[w] = raw[w] * 10M / sum(raw). This ensures both factors
-	// contribute equally to the final decision regardless of their absolute
-	// magnitudes. Without this, demand signals (millions from backwards
-	// propagation) overwhelm capacity signals (hundreds from production
-	// balance), causing the AI to ignore capacity deficits.
-	//
-	// After normalization, both factors are on the same [0, 10M] scale.
-	// Combined: raw_total = norm_A + norm_B, range [0, 20M].
-	// The subsequent softmax normalization maps this to the final [0, 10M].
+	// STEP 5a: independent normalization for A, input-B and bmat-B.
+	// Then mix B channels directly from the bipolar mixer PID output:
+	//   bmat_weight  = (mix + S) / (2S)
+	//   input_weight = (S - mix) / (2S)
+	// mix=0 starts at exact 50:50 weighting.
 	{
+		const int32_t mix = std::clamp(
+		   global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl, -kPidOutputScale, kPidOutputScale);
+		const int64_t w_input = static_cast<int64_t>(kPidOutputScale) - mix;
+		const int64_t w_bmat = static_cast<int64_t>(kPidOutputScale) + mix;
+		const int64_t w_den = 2LL * kPidOutputScale;
 		int64_t sum_A = 0;
-		int64_t sum_B = 0;
+		int64_t sum_B_input = 0;
+		int64_t sum_B_bmat = 0;
 		for (size_t w = 0; w < nr_wares; ++w) {
 			sum_A += raw_A[w];
-			sum_B += raw_B[w];
+			sum_B_input += raw_B_input[w];
+			sum_B_bmat += raw_B_bmat[w];
 		}
 		for (size_t w = 0; w < nr_wares; ++w) {
 			const int32_t norm_A = (sum_A > 0) ?
 			   static_cast<int32_t>(
-			      static_cast<int64_t>(raw_A[w]) *
-			      kNormalizationBudget / sum_A) : 0;
-			const int32_t norm_B = (sum_B > 0) ?
+			      static_cast<int64_t>(raw_A[w]) * kNormalizationBudget / sum_A) : 0;
+			const int32_t norm_B_input = (sum_B_input > 0) ?
 			   static_cast<int32_t>(
-			      static_cast<int64_t>(raw_B[w]) *
-			      kNormalizationBudget / sum_B) : 0;
-			raw_total[w] = norm_A + norm_B;
+			      static_cast<int64_t>(raw_B_input[w]) * kNormalizationBudget / sum_B_input) : 0;
+			const int32_t norm_B_bmat = (sum_B_bmat > 0) ?
+			   static_cast<int32_t>(
+			      static_cast<int64_t>(raw_B_bmat[w]) * kNormalizationBudget / sum_B_bmat) : 0;
+			raw_B[w] = static_cast<int32_t>(
+			   (static_cast<int64_t>(norm_B_input) * w_input +
+			    static_cast<int64_t>(norm_B_bmat) * w_bmat) / w_den);
+			raw_total[w] = norm_A + raw_B[w];
 		}
 	}
 
@@ -866,7 +905,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 	//   At scale=20: a 2:1 raw ratio yields ~3.6:1 weight ratio.
 	//
 	// Integer-safe: max weight = 1+20+200 = 221, max sum = 30×221 = 6630.
-	// weight × 10M = 2.2×10⁹, fits int64 easily. No overflow possible.
+	// weight × 1M = 2.2×10⁸, fits int64 easily. No overflow possible.
 	{
 		constexpr int32_t kSoftmaxScale = 20;
 		int32_t max_raw = 0;
@@ -905,11 +944,15 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 			}
 		}
 		std::sort(sorted_wp.begin(), sorted_wp.end(), std::greater<>());
+		const int32_t bmat_mix_percent = static_cast<int32_t>(
+		   (static_cast<int64_t>(global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl + kPidOutputScale) * 100) /
+		   (2LL * kPidOutputScale));
 		verb_log_info_time(gametime,
-		   "P%u WARE SCARCITY (tick %u, %zu wares, I=%d D=%d idle=%d scarce=%d vel=%d):\n",
+		   "P%u WARE SCARCITY (tick %u, %zu wares, I=%d D=%d idle=%d scarce=%d vel=%d bmat_mix=%d%% fb=%d):\n",
 		   static_cast<unsigned>(player_number()), pi_tick_count_,
 		   sorted_wp.size(), I_permille_, D_permille_,
-		   cached_idle_count_, cached_scarce_ware_count_, cached_stock_velocity_);
+		   cached_idle_count_, cached_scarce_ware_count_, cached_stock_velocity_,
+		   bmat_mix_percent, global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl);
 		for (size_t i = 0; i < std::min<size_t>(8, sorted_wp.size()); ++i) {
 			const size_t w = sorted_wp[i].second;
 			const auto wi = static_cast<Widelands::DescriptionIndex>(w);
@@ -952,6 +995,11 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		   persistent_data->ware_pressure_integrals[w],
 		   persistent_data->ware_pressure_last_errors[w]);
 	}
+	persistent_data->planner_global_pid.i_permille = I_permille_;
+	persistent_data->planner_global_pid.d_permille = D_permille_;
+	persistent_data->planner_global_pid.cached_stock_velocity = cached_stock_velocity_;
+	persistent_data->planner_global_pid.cached_idle_count = cached_idle_count_;
+	persistent_data->planner_global_pid.cached_scarce_ware_count = cached_scarce_ware_count_;
 }
 
 // Circle 2: Building Pressure
@@ -1084,7 +1132,7 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 		    bo.type == BuildingObserver::Type::kMine) {
 			// Capacity-based: building pressure = output ware pressure.
 			// Unit: bp.error [budget] (inherits from ware_pressure_.outputControl).
-			// ware_pressure_[w].outputControl is normalized to [0, 10M budget].
+			// ware_pressure_[w].outputControl is normalized to [0, 1M budget].
 			// So bp.error starts in [budget] units and stays there through
 			// all subsequent additions (supporter demand, structural floor, etc).
 			int32_t output_demand = 0;  // [budget]
@@ -1458,7 +1506,7 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 	// more candidates for future upgrades.
 	//
 	// Propagation happens BEFORE normalization so the predecessor gets a
-	// naturally larger share of the 10M budget.
+	// naturally larger share of the 1M budget.
 	for (size_t bi = 0; bi < buildings_.size(); ++bi) {
 		const BuildingObserver& bo = buildings_[bi];
 		if (raw_total[bi] <= 0) {
@@ -1487,7 +1535,7 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 	// Linear normalization to kNormalizationBudget.
 	// Unit: raw_total[bi] [raw_pid] → building_pressure_[bi].outputControl [budget]
 	// S uses int64_t because sum of ~80 buildings × ~200M each = ~16G > int32 max.
-	// After: outputControl = raw_total × 10M / S ∈ [0, 10M] [budget].
+	// After: outputControl = raw_total × budget / S ∈ [0, budget].
 	int64_t S = 0;
 	for (size_t bi = 0; bi < buildings_.size(); ++bi) {
 		if (raw_total[bi] > 0) {
@@ -1732,14 +1780,14 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 	// Normalize CONTRA to kNormalizationBudget (same scale as PRO).
 	//
 	// Without this, CONTRA uses absolute avg_wp units while PRO is
-	// normalized to 10M. In large economies (N_ticks=10, P_weight=20),
+	// normalized to 1M. In large economies (N_ticks=10, P_weight=20),
 	// CONTRA for 1 missing input reaches ~13M steady state while
-	// PRO is capped at 10M total budget. This makes CONTRA
+	// PRO is capped at 1M total budget. This makes CONTRA
 	// disproportionately strong, permanently blocking buildings
 	// with even minor issues.
 	//
 	// With normalization: the total CONTRA budget equals the total
-	// PRO budget (10M). A building with the MOST contra problems
+	// PRO budget (1M). A building with the MOST contra problems
 	// absorbs the largest share. When problems are concentrated
 	// (1 building, 3 missing inputs), that building is strongly
 	// blocked. When problems are distributed (many buildings,
@@ -2169,7 +2217,7 @@ bool PlannerAI::construct_building(const Time& gametime) {
 	   wares.empty() ? 1 :
 	   kNormalizationBudget / static_cast<int32_t>(wares.size());
 	const int32_t gate_divisor = std::max<int32_t>(1,
-	   1 - military_gate_.outputControl / std::max<int32_t>(1, avg_wp_gate));
+	   1 - global_pid_bank_[kPidIdxMilitaryGate].outputControl / std::max<int32_t>(1, avg_wp_gate));
 
 	// Precompute which wares have a built producer (for conservation premium).
 	// Wares without a built producer are treated as non-renewable even if

@@ -1647,13 +1647,13 @@ void PlannerAI::update_military_gate(const Time& /* gametime */) {
 	const int32_t P_weight = weights_.P_weight;
 	const int32_t N_ticks = weights_.N_ticks;
 
-	military_gate_.error = 0;
+	global_pid_bank_[kPidIdxMilitaryGate].error = 0;
 
 	// Signal 1: Expansion urgency.
 	// When expansion_targets_[0] is high, unowned land is plentiful
 	// and the AI should expand. Capped at P_weight to prevent windup.
 	if (!expansion_targets_.empty()) {
-		military_gate_.error += std::min<int32_t>(P_weight,
+		global_pid_bank_[kPidIdxMilitaryGate].error += std::min<int32_t>(P_weight,
 		   expansion_targets_[0].outputControl / avg_wp);
 	}
 
@@ -1677,12 +1677,17 @@ void PlannerAI::update_military_gate(const Time& /* gametime */) {
 		}
 	}
 	// Normalize to [count] by dividing by avg_wp²
-	military_gate_.error -= static_cast<int32_t>(
+	global_pid_bank_[kPidIdxMilitaryGate].error -= static_cast<int32_t>(
 	   std::min<int64_t>(static_cast<int64_t>(P_weight) * 2,
 	      cm_strain / std::max<int64_t>(1, static_cast<int64_t>(avg_wp) * avg_wp)));
 
 	const int32_t gate_effective_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
-	military_gate_.tick(P_weight, I_permille_, gate_effective_D, weights_.leak_num, weights_.leak_den);
+	global_pid_bank_[kPidIdxMilitaryGate].tick(P_weight, I_permille_, gate_effective_D, weights_.leak_num, weights_.leak_den);
+	for (size_t i = 0; i < global_pid_bank_.size(); ++i) {
+		global_pid_bank_[i].save_state(
+		   persistent_data->planner_global_pid.pids[i].integral,
+		   persistent_data->planner_global_pid.pids[i].last_error);
+	}
 }
 
 // Bully weight interface

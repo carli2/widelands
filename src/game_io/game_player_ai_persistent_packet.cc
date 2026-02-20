@@ -27,7 +27,8 @@
 
 namespace Widelands {
 
-constexpr uint16_t kCurrentPacketVersion = 8;
+constexpr uint16_t kCurrentPacketVersion = 9;
+using GlobalPIDState = Widelands::Player::AiPersistentState::PlannerAIGlobalPIDState;
 
 void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoader* /* mol */) {
 	try {
@@ -167,6 +168,18 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 						player->ai_data_.expansion_last_errors[i] = fr.signed_32();
 					}
 				}
+				// PlannerAI global PID-bank state (version 9+)
+				if (packet_version >= 9) {
+					for (size_t i = 0; i < GlobalPIDState::kPidCount; ++i) {
+						player->ai_data_.planner_global_pid.pids[i].integral = fr.signed_32();
+						player->ai_data_.planner_global_pid.pids[i].last_error = fr.signed_32();
+					}
+					player->ai_data_.planner_global_pid.i_permille = fr.signed_32();
+					player->ai_data_.planner_global_pid.d_permille = fr.signed_32();
+					player->ai_data_.planner_global_pid.cached_stock_velocity = fr.signed_32();
+					player->ai_data_.planner_global_pid.cached_idle_count = fr.signed_32();
+					player->ai_data_.planner_global_pid.cached_scarce_ware_count = fr.signed_32();
+				}
 
 			} catch (const WException& e) {
 				throw GameDataError("player %u: %s", p, e.what());
@@ -281,6 +294,17 @@ void GamePlayerAiPersistentPacket::write(FileSystem& fs,
 		for (int32_t v : player->ai_data_.expansion_last_errors) {
 			fw.signed_32(v);
 		}
+
+		// PlannerAI global PID-bank state (version 9+)
+		for (size_t i = 0; i < GlobalPIDState::kPidCount; ++i) {
+			fw.signed_32(player->ai_data_.planner_global_pid.pids[i].integral);
+			fw.signed_32(player->ai_data_.planner_global_pid.pids[i].last_error);
+		}
+		fw.signed_32(player->ai_data_.planner_global_pid.i_permille);
+		fw.signed_32(player->ai_data_.planner_global_pid.d_permille);
+		fw.signed_32(player->ai_data_.planner_global_pid.cached_stock_velocity);
+		fw.signed_32(player->ai_data_.planner_global_pid.cached_idle_count);
+		fw.signed_32(player->ai_data_.planner_global_pid.cached_scarce_ware_count);
 	}
 
 	fw.write(fs, "binary/player_ai");

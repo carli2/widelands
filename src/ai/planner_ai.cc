@@ -651,6 +651,16 @@ void PlannerAI::late_initialization() {
 			   (i < persistent_data->building_prevention_last_errors.size()) ?
 			      persistent_data->building_prevention_last_errors[i] : 0);
 		}
+		for (size_t i = 0; i < global_pid_bank_.size(); ++i) {
+			global_pid_bank_[i].restore_state(
+			   persistent_data->planner_global_pid.pids[i].integral,
+			   persistent_data->planner_global_pid.pids[i].last_error);
+		}
+		I_permille_ = std::clamp(persistent_data->planner_global_pid.i_permille, 1, 500);
+		D_permille_ = std::clamp(persistent_data->planner_global_pid.d_permille, 100, 2000);
+		cached_stock_velocity_ = persistent_data->planner_global_pid.cached_stock_velocity;
+		cached_idle_count_ = persistent_data->planner_global_pid.cached_idle_count;
+		cached_scarce_ware_count_ = persistent_data->planner_global_pid.cached_scarce_ware_count;
 
 		verb_log_info_time(gametime,
 		   "PlannerAI(%d): restored PID state from savegame (tick=%u, "

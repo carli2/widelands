@@ -19,6 +19,7 @@
 #ifndef WL_LOGIC_PLAYER_H
 #define WL_LOGIC_PLAYER_H
 
+#include <array>
 #include <atomic>
 #include <memory>
 #include <set>
@@ -212,6 +213,25 @@ public:
 		std::vector<int32_t> building_prevention_last_errors;
 		std::vector<int32_t> expansion_integrals;
 		std::vector<int32_t> expansion_last_errors;
+		struct PIDState {
+			int32_t integral{0};
+			int32_t last_error{0};
+		};
+		struct PlannerAIGlobalPIDState {
+			static constexpr size_t kPidIdxWareBmatInputBalance = 0;
+			static constexpr size_t kPidIdxMilitaryGate = 1;
+			static constexpr size_t kPidIdxMetaI = 2;
+			static constexpr size_t kPidIdxMetaD = 3;
+			static constexpr size_t kPidCount = 4;
+
+			std::array<PIDState, kPidCount> pids{};
+			int32_t i_permille{250};
+			int32_t d_permille{1000};
+			int32_t cached_stock_velocity{0};
+			int32_t cached_idle_count{0};
+			int32_t cached_scarce_ware_count{0};
+		};
+		PlannerAIGlobalPIDState planner_global_pid;
 	};
 
 	[[nodiscard]] AiPersistentState* get_mutable_ai_persistent_state() {
