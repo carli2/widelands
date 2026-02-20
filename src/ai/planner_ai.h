@@ -37,21 +37,97 @@ struct Road;
 
 namespace AI {
 
-/// Planner AI: a pressure-driven computer player.
+/// =====================================================================
+/// PlannerAI — Target Architecture Overview
+/// =====================================================================
 ///
-/// Uses three independent PID normalization circles (Power-Iteration):
-///   Circle 1: Ware Pressure   — which ware is most urgently needed?
-///   Circle 2: Building Pressure — which building type to construct/dismantle?
-///   Circle 3: Expansion Pressure — where to expand / whom to attack?
+/// Data Structures (flat, no recursion):
 ///
-/// Each circle has its own PID controller per component, one matrix-vector
-/// product per tick, and normalizes to a 10M-point budget.
-/// P-term: proportional to current error (immediate response).
-/// I-term: accumulates error across ticks (persistent demand memory).
-/// D-term: detects error rate-of-change (anticipatory chain building;
-///   e.g. bakery placed → flour demand spikes → D fires → mill pressure).
+///   1. Wares       — one PID controller per ware type.
+///                    Tracks preciousness / scarcity of each ware.
 ///
-/// The system is completely tribe-agnostic — it reads building configs at runtime.
+///   2. Building Types — one PID controller per building type.
+///                    Dual PID: PRO (should build) vs CONTRA (should not).
+///                    effective_score = PRO - CONTRA.
+///
+///   3. Building Spots — one unified list (UniversalBuildableField).
+///                    Flat terrain AND mine spots in the same deque.
+///                    Each spot carries pre-computed field factors
+///                    (resources nearby, military presence, etc.).
+///                    Only needed for placement — NOT for the build decision.
+///
+///   4. Existing Buildings — one entry per placed building.
+///                    With PID controller for dismantle decisions.
+///                    (productionsites, mines_, militarysites, etc.)
+///
+///   5. Military Actions — union of possible actions:
+///                    { building_spot → build_military,
+///                      enemy_building → attack,
+///                      own_military   → dismantle }
+///                    Each action has a PID-controlled worth score.
+///
+/// Two loops per think() — each propagates one layer, no recursion:
+///
+///   Loop 1: Economy
+///     a) PID-control ware preciousness      (update_ware_pressures)
+///     b) PID-control building type scores    (update_building_pressures)
+///     c) Pick the building type with highest effective_score
+///     d) Walk all building spots, find best location for that type
+///     e) Build 1 building (or nothing if score < 0)
+///     f) Pick the existing building with highest dismantle score
+///     g) Dismantle 1 building (or nothing if score < 0)
+///     h) Reprioritize ware inputs on existing production buildings
+///        (shift input priorities based on ware preciousness from 1a)
+///     i) Stop/start buildings based on supply conditions
+///        (stop starving buildings to free workers, restart when inputs
+///        become available again)
+///
+///   Loop 2: Military
+///     a) Maintain the list of possible military actions
+///        (visible enemy buildings, valid border spots, own garrisons)
+///     b) PID-control each action's worth
+///        (land gain, construction cost, enemy destruction value, etc.)
+///     c) Select the single best action and execute it
+///        (or do nothing if best score < 0)
+///     d) Garrison management: adjust soldier capacity per site
+///        (hero/rookie preference, shortage response)
+///
+/// The system is completely tribe-agnostic — it reads building configs
+/// at runtime.
+///
+/// STATUS vs current implementation:
+///
+///   1a) update_ware_pressures        — IMPLEMENTED
+///   1b) update_building_pressures    — IMPLEMENTED
+///   1c) Pick building type first     — GAP: currently merged field×building
+///       loop in construct_building() scores all types at every spot.
+///       Target: pick type first, THEN find best spot for that type.
+///   1d) Walk spots for that type     — (see 1c)
+///   1e) Build 1 building             — IMPLEMENTED (construct_building)
+///   1f) Unified dismantle PID        — PARTIAL: production sites have
+///       leaky-integrator dismantle_score (11 factors).  Mines use
+///       timeout paths.  Military uses separate dismantle_integral.
+///       Target: single scoring pass across all building types.
+///   1g) Dismantle 1 building         — PARTIAL (scattered across
+///       check_productionsites, check_mines_, check_militarysites)
+///   1h) Ware input reprioritization  — IMPLEMENTED in
+///       check_productionsites (set_inputs_to_zero / set_inputs_to_max)
+///   1i) Stop/start buildings         — IMPLEMENTED in
+///       check_productionsites (stop_site / initiate_dismantling)
+///
+///   2a) Maintain military actions    — PARTIAL: enemy_sites map tracks
+///       visible targets; buildable_fields tracks border spots;
+///       militarysites tracks own garrisons.  Not a single unified list.
+///   2b) PID-control per action       — PARTIAL: per-field military
+///       integral for build, per-target attack_integral for attack,
+///       per-site dismantle_integral for military dismantle.
+///       Each has its own decay rate and threshold.
+///   2c) Select best action           — GAP: build/attack/dismantle are
+///       evaluated in separate functions at different scheduler intervals.
+///       Target: single pass, single best action.
+///   2d) Garrison management          — IMPLEMENTED in
+///       check_militarysites (capacity adjustment, hero/rookie preference)
+/// =====================================================================
 struct PlannerAI : ComputerPlayer {
 
 	// desired_lead: goal-based error parameter.
@@ -150,9 +226,7 @@ private:
 	// --- Field management ---
 	void update_all_not_buildable_fields(const Time&);
 	void update_all_buildable_fields(const Time&);
-	void update_all_mineable_fields(const Time&);
-	void update_buildable_field(BuildableField&);
-	void update_mineable_field(MineableField&);
+	void update_buildable_field(UniversalBuildableField&);
 
 	// --- Building tracking ---
 	void gain_immovable(Widelands::PlayerImmovable&);
@@ -242,6 +316,13 @@ private:
 
 	void update_expansion_pressures(const Time& gametime);
 
+	// ========== Military Gate PID ==========
+	// Controls military expansion cost/benefit ratio based on
+	// expansion urgency vs construction material strain.
+	PIDController military_gate_;
+	int32_t smallest_garrison_{1};  // smallest military building's max_soldiers
+	void update_military_gate(const Time& gametime);
+
 	// ========== Military PI: Training vs Recruiting Split ==========
 	int32_t military_pressure_{0};
 	int32_t training_pressure_{0};
@@ -318,6 +399,12 @@ private:
 	BuildingObserver& get_building_observer(Widelands::DescriptionIndex);
 	BuildingObserver& get_building_observer(char const*);
 
+	// Per-ware renewability: true if the ware can be produced indefinitely
+	// through a chain of non-depleting buildings (not mines, not quarries).
+	// Computed once at late_initialization() via iterative fixed-point.
+	// Used for conservation premium on military construction materials.
+	std::vector<bool> ware_inherently_renewable_;
+
 	// 3-Part Distribution: per building type, the fraction of wantedness
 	// that stays as "build this building" score (0..1000 = 0%..100%).
 	// Computed in update_ware_pressures(), used in update_building_pressures().
@@ -370,8 +457,7 @@ private:
 	// --- Data collections ---
 	std::vector<BuildingObserver> buildings_;
 	std::deque<Widelands::FCoords> unusable_fields;
-	std::deque<BuildableField*> buildable_fields;
-	std::deque<MineableField*> mineable_fields;
+	std::deque<UniversalBuildableField*> buildable_fields;
 	BlockedFields blocked_fields;
 
 	std::deque<ProductionSiteObserver> productionsites;

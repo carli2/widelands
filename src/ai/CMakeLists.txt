@@ -24,6 +24,7 @@ wl_library(ai
     defaultai.h
     planner_ai.cc
     planner_ai.h
+    planner_ai_economy.cc
     planner_ai_seafaring.cc
     planner_ai_warfare.cc
   DEPENDS

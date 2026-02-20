@@ -480,6 +480,32 @@ struct MineableField {
 	// this is to provide that a mine is not built on the edge of mine area
 	int32_t same_mine_fields_nearby{0};
 	int32_t same_type_mines_nearby{0};  // built+construction mines of same resource within radius 4
+
+	// Military scoring fields (for mine-sized military buildings like massada).
+	// Populated in update_mineable_field(), used in Pass 2 of construct_building().
+	int16_t own_military_presence{0};
+	int16_t enemy_military_presence{0};
+	uint8_t unowned_land_nearby{0};
+	uint8_t enemy_owned_land_nearby{0};
+	bool near_border{false};
+	bool enemy_nearby{false};
+	uint8_t military_in_constr_nearby{0};
+	int32_t military_score_{0};
+	int32_t military_integral_{0};
+};
+
+/// Unified field for PlannerAI — carries both flat-terrain and mine-spot data.
+/// Inherits from BuildableField (flat-terrain fields) and adds mine-specific
+/// counters.  DefaultAI continues using BuildableField / MineableField directly.
+struct UniversalBuildableField : BuildableField {
+	explicit UniversalBuildableField(const Widelands::FCoords& fc);
+
+	// True when this field sits on mountain terrain (BUILDCAPS_MINE).
+	bool is_mine_spot{false};
+	// Mine-spot counters (only meaningful when is_mine_spot == true).
+	int32_t mines_nearby{0};
+	int32_t same_mine_fields_nearby{0};
+	int32_t same_type_mines_nearby{0};
 };
 
 struct EconomyObserver {

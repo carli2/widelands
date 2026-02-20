@@ -340,6 +340,10 @@ MineableField::MineableField(const Widelands::FCoords& fc)
    : coords(fc), field_info_expiration(20000) {
 }
 
+UniversalBuildableField::UniversalBuildableField(const Widelands::FCoords& fc)
+   : BuildableField(fc) {
+}
+
 EconomyObserver::EconomyObserver(Widelands::Economy& e)
    : economy(e), fields_block_last_time(Time(0)) {
 }
