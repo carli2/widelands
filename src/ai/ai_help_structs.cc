@@ -1721,6 +1721,12 @@ void AIWeights::update(int32_t nr_wares,
 	}
 	N_ticks = std::min<int32_t>(N_ticks, 50);
 	P_weight = 2 * N_ticks;
+	// Leaky integrator: memory window = N_ticks.
+	// leak = (N_ticks - 1) / N_ticks → steady-state integral ≈ error × N_ticks.
+	// Small economy (N=2): leak=1/2, memory=2 ticks (reactive).
+	// Large economy (N=10): leak=9/10, memory=10 ticks (stable).
+	leak_num = N_ticks - 1;
+	leak_den = N_ticks;
 
 	const int32_t clearing_density =
 	   (trees_territory + rocks_territory) / (spots + 1);

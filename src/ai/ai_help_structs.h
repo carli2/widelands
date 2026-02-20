@@ -1130,6 +1130,8 @@ struct AIWeights {
 	int32_t avg_wp{0};     // [budget/ware] = kNormalizationBudget / nr_wares
 	int32_t N_ticks{2};    // [count] sqrt(economy_size), clamped [2,50]
 	int32_t P_weight{4};   // [count] 2 * N_ticks (PID proportional weight)
+	int32_t leak_num{1};   // [ratio] leaky integrator numerator = N_ticks - 1
+	int32_t leak_den{2};   // [ratio] leaky integrator denominator = N_ticks
 
 	// === Dismantle thresholds (all in [budget/ware] units) ===
 	// Global offset: baseline resistance to dismantling.

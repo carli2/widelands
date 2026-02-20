@@ -1681,7 +1681,8 @@ void PlannerAI::update_military_gate(const Time& /* gametime */) {
 	   std::min<int64_t>(static_cast<int64_t>(P_weight) * 2,
 	      cm_strain / std::max<int64_t>(1, static_cast<int64_t>(avg_wp) * avg_wp)));
 
-	military_gate_.tick(P_weight, 1, N_ticks);
+	const int32_t gate_effective_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
+	military_gate_.tick(P_weight, I_permille_, gate_effective_D, weights_.leak_num, weights_.leak_den);
 }
 
 // Bully weight interface
@@ -2036,6 +2037,21 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 			normal_expansion += avg_wp;
 		}
 
+		// Non-renewable resource depletion: wares that can't be produced
+		// indefinitely (gold, iron, stone, coal) create expansion pressure
+		// proportional to their scarcity. This drives expansion even when
+		// building spots are available — the goal is finding NEW resource
+		// deposits. Without this, the Amazons don't expand for gold/stone
+		// when they have enough building spots but no gold fields.
+		int32_t depletion_expansion = 0;
+		for (size_t w = 0; w < wares.size() && w < ware_pressure_.size(); ++w) {
+			if (w < ware_inherently_renewable_.size() && !ware_inherently_renewable_[w] &&
+			    ware_pressure_[w].outputControl > 0) {
+				depletion_expansion += ware_pressure_[w].outputControl;
+			}
+		}
+		normal_expansion += depletion_expansion / nr_wares_exp;
+
 		// Total unowned land pressure = mine + normal demands
 		expansion_targets_[0].error = mine_expansion + normal_expansion;
 
@@ -2211,10 +2227,13 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 	}
 	N_ticks_exp = std::min<int32_t>(N_ticks_exp, 50);
 	const int32_t P_weight_exp = 2 * N_ticks_exp;
+	const int32_t leak_num_exp = N_ticks_exp - 1;
+	const int32_t leak_den_exp = N_ticks_exp;
 
 	for (size_t t = 0; t < expansion_targets_.size(); ++t) {
 		PIDController& et = expansion_targets_[t];
-		et.tick(P_weight_exp, 1, N_ticks_exp);
+		const int32_t exp_effective_D = std::max<int32_t>(1, D_permille_ * N_ticks_exp / 1000);
+		et.tick(P_weight_exp, I_permille_, exp_effective_D, leak_num_exp, leak_den_exp);
 		raw_total[t] = et.outputControl;
 	}
 
@@ -2247,8 +2266,9 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 	persistent_data->expansion_integrals.resize(expansion_targets_.size());
 	persistent_data->expansion_last_errors.resize(expansion_targets_.size());
 	for (size_t t = 0; t < expansion_targets_.size(); ++t) {
-		persistent_data->expansion_integrals[t] = expansion_targets_[t].ipart;
-		persistent_data->expansion_last_errors[t] = expansion_targets_[t].lastError;
+		expansion_targets_[t].save_state(
+		   persistent_data->expansion_integrals[t],
+		   persistent_data->expansion_last_errors[t]);
 	}
 }
 

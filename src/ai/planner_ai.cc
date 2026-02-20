@@ -613,22 +613,32 @@ void PlannerAI::late_initialization() {
 	if (persistent_data->pi_tick_count > 0) {
 		pi_tick_count_ = persistent_data->pi_tick_count;
 
+		// Restore PID state from savegame (integral + lastError in one call)
 		const size_t n_wp = std::min(
 		   persistent_data->ware_pressure_integrals.size(), ware_pressure_.size());
 		for (size_t i = 0; i < n_wp; ++i) {
-			ware_pressure_[i].ipart = persistent_data->ware_pressure_integrals[i];
+			ware_pressure_[i].restore_state(
+			   persistent_data->ware_pressure_integrals[i],
+			   (i < persistent_data->ware_pressure_last_errors.size()) ?
+			      persistent_data->ware_pressure_last_errors[i] : 0);
 		}
 
 		const size_t n_bp = std::min(
 		   persistent_data->building_pressure_integrals.size(), building_pressure_.size());
 		for (size_t i = 0; i < n_bp; ++i) {
-			building_pressure_[i].ipart = persistent_data->building_pressure_integrals[i];
+			building_pressure_[i].restore_state(
+			   persistent_data->building_pressure_integrals[i],
+			   (i < persistent_data->building_pressure_last_errors.size()) ?
+			      persistent_data->building_pressure_last_errors[i] : 0);
 		}
 
 		const size_t n_exp = std::min(
 		   persistent_data->expansion_integrals.size(), expansion_targets_.size());
 		for (size_t i = 0; i < n_exp; ++i) {
-			expansion_targets_[i].ipart = persistent_data->expansion_integrals[i];
+			expansion_targets_[i].restore_state(
+			   persistent_data->expansion_integrals[i],
+			   (i < persistent_data->expansion_last_errors.size()) ?
+			      persistent_data->expansion_last_errors[i] : 0);
 		}
 
 		building_prevention_.resize(buildings_.size());
@@ -636,38 +646,10 @@ void PlannerAI::late_initialization() {
 		   persistent_data->building_prevention_integrals.size(),
 		   building_prevention_.size());
 		for (size_t i = 0; i < n_prev; ++i) {
-			building_prevention_[i].ipart =
-			   persistent_data->building_prevention_integrals[i];
-		}
-
-		// Restore lastError for D-term continuity
-		{
-			const size_t n = std::min(
-			   persistent_data->ware_pressure_last_errors.size(), ware_pressure_.size());
-			for (size_t i = 0; i < n; ++i) {
-				ware_pressure_[i].lastError = persistent_data->ware_pressure_last_errors[i];
-			}
-		}
-		{
-			const size_t n = std::min(
-			   persistent_data->building_pressure_last_errors.size(), building_pressure_.size());
-			for (size_t i = 0; i < n; ++i) {
-				building_pressure_[i].lastError = persistent_data->building_pressure_last_errors[i];
-			}
-		}
-		{
-			const size_t n = std::min(
-			   persistent_data->building_prevention_last_errors.size(), building_prevention_.size());
-			for (size_t i = 0; i < n; ++i) {
-				building_prevention_[i].lastError = persistent_data->building_prevention_last_errors[i];
-			}
-		}
-		{
-			const size_t n = std::min(
-			   persistent_data->expansion_last_errors.size(), expansion_targets_.size());
-			for (size_t i = 0; i < n; ++i) {
-				expansion_targets_[i].lastError = persistent_data->expansion_last_errors[i];
-			}
+			building_prevention_[i].restore_state(
+			   persistent_data->building_prevention_integrals[i],
+			   (i < persistent_data->building_prevention_last_errors.size()) ?
+			      persistent_data->building_prevention_last_errors[i] : 0);
 		}
 
 		verb_log_info_time(gametime,

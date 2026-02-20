@@ -19,6 +19,7 @@
 #ifndef WL_AI_PLANNER_AI_H
 #define WL_AI_PLANNER_AI_H
 
+#include <limits>
 #include <memory>
 #include <set>
 
@@ -252,12 +253,12 @@ private:
 	//                  [budget] after normalization (= raw × 10M / sum)
 	//
 	// Overflow budget (int32_t max = 2,147,483,647):
-	//   Circle 1: error ∈ [-100, +100] (count). ipart after 200 ticks: ~20K.
-	//     P=100 × 100 + 20K + 50 × 50 = 32.5K. Safe.
-	//   Circle 2: error ∈ [0, 10M] (budget). ipart after 50 ticks: ~500M.
-	//     P=100 × 10M + 500M + 50 × 5M = 1.75G. TIGHT but fits int32.
-	//     At N=50 (economy of 2500 buildings): P=100 × 10M = 1G,
-	//     ipart after 50 ticks at 10M = 500M. Sum = 1.55G. Fits.
+	//   Leaky integral converges to error × N_ticks (memory window).
+	//   Circle 1: error ∈ [-100, +100], integral ≤ 100×50 = 5K.
+	//     P=100×100 + I_permille×5K/1000 + D×50 = 12.5K. Safe.
+	//   Circle 2: error ∈ [0, 10M], integral ≤ 10M×50 = 500M.
+	//     P=100×10M + 500×500M/1000 + 100×10M = 1G+250M+1G = 2.25G.
+	//     Exceeds int32 at max D_permille. tick() uses int64 + clamp.
 	//   Sum for normalization uses int64_t (see update_building_pressures).
 	//
 	// Per think(), at most one tick() per controller instance.
@@ -265,20 +266,73 @@ private:
 	// enabling anticipatory supply chain building: bakery placed →
 	// flour consumption rises → D-term spikes → mill gets immediate
 	// pressure instead of waiting for integral to accumulate.
+	/// PID controller from the global register bank.
+	///
+	/// Usage contract:
+	///   1. Accumulate error signals: `pid.error += some_measurement;`
+	///   2. Call `pid.tick(P, I_permille, D, leak_num, leak_den)` once per think cycle.
+	///   3. Read the decision: `pid.outputControl` (> 0 → do A, < 0 → do B).
+	///
+	/// Internal state (integral, derivative memory) is private.
+	/// Use the provided methods for anti-windup, serialization, and diagnostics.
 	struct PIDController {
-		int32_t lastError{0};      // previous tick's error (for D-term)
 		int32_t error{0};          // accumulated error signal (reset before each tick)
-		int32_t ipart{0};          // integral accumulator
 		int32_t outputControl{0};  // readable output after tick()
 
 		/// Compute PID output and advance state.
 		/// Call once per think, after all error signals are accumulated.
-		void tick(int32_t p_weight, int32_t i_weight, int32_t d_weight) {
-			outputControl = p_weight * error + i_weight * ipart +
-			   d_weight * (error - lastError);
-			lastError = error;
-			ipart += error;
+		///
+		/// Built-in leaky integrator: the integral decays every tick,
+		/// preventing unbounded windup. Leak rate = leak_num/leak_den,
+		/// derived from economy size (see AIWeights). Steady-state
+		/// integral ≈ error × leak_den (memory window = leak_den ticks).
+		/// Anti-windup is automatic — no external integral manipulation needed.
+		///
+		/// i_permille: integral weight in permille (1..500 = 0.001..0.5×).
+		///   Tuned by meta_I_ PID from ware stock velocity feedback.
+		///   Applied as: i_permille × integral / 1000 (int64 intermediate).
+		///
+		/// d_weight: derivative weight = D_permille × N_ticks / 1000.
+		///   Tuned by meta_D_ PID from idle-vs-scarcity balance.
+		///
+		/// The D-term responds to error rate-of-change, providing anticipatory
+		/// correction when conditions change (building placed → error drops →
+		/// D fires negative → immediate priority reduction).
+		void tick(int32_t p_weight, int32_t i_permille, int32_t d_weight,
+			int32_t leak_num, int32_t leak_den) {
+			const int64_t p_term = static_cast<int64_t>(p_weight) * error;
+			const int64_t i_term = static_cast<int64_t>(i_permille) * ipart_ / 1000;
+			const int64_t d_term = static_cast<int64_t>(d_weight) * (error - lastError_);
+			const int64_t raw = p_term + i_term + d_term;
+			if (raw > std::numeric_limits<int32_t>::max()) {
+				outputControl = std::numeric_limits<int32_t>::max();
+			} else if (raw < std::numeric_limits<int32_t>::min()) {
+				outputControl = std::numeric_limits<int32_t>::min();
+			} else {
+				outputControl = static_cast<int32_t>(raw);
+			}
+			lastError_ = error;
+			ipart_ = ipart_ * leak_num / leak_den + error;
 		}
+
+		/// Read the integral accumulator (for diagnostics and supply gate).
+		[[nodiscard]] int32_t integral() const { return ipart_; }
+
+		/// Serialization: save internal state for savegame persistence.
+		void save_state(int32_t& out_integral, int32_t& out_last_error) const {
+			out_integral = ipart_;
+			out_last_error = lastError_;
+		}
+
+		/// Serialization: restore internal state from savegame.
+		void restore_state(int32_t saved_integral, int32_t saved_last_error) {
+			ipart_ = saved_integral;
+			lastError_ = saved_last_error;
+		}
+
+	private:
+		int32_t ipart_{0};         // integral accumulator (leaky)
+		int32_t lastError_{0};     // previous tick's error (for D-term)
 	};
 
 	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
@@ -322,6 +376,30 @@ private:
 	PIDController military_gate_;
 	int32_t smallest_garrison_{1};  // smallest military building's max_soldiers
 	void update_military_gate(const Time& gametime);
+
+	// ========== Meta-PIDs: Self-Tuning I and D Weights ==========
+	//
+	// Instead of deriving PID I/D weights statically from sqrt(economy_size),
+	// two meta-PIDs measure system behavior and adjust weights dynamically.
+	// All PIDs in the register bank use the same I_permille_ and D_permille_
+	// (one-tick delay for self-referential stability).
+	//
+	// Meta-I: ware stock velocity → I_permille.
+	//   Positive velocity (stocks growing) → increase I (more integral memory).
+	//   Negative velocity (stocks shrinking) → decrease I (more reactive).
+	//   Error = sum(stock[w] - stock_last[w]) / nr_wares.
+	//
+	// Meta-D: idle-vs-scarcity balance → D_permille.
+	//   Many idle buildings → D too aggressive → reduce D.
+	//   Many scarce wares, no idle → D too conservative → increase D.
+	//   Error = (scarce ware count) - (idle building count).
+	PIDController meta_I_;
+	PIDController meta_D_;
+	int32_t I_permille_{250};   // [permille] integral weight, rails [1, 500]
+	int32_t D_permille_{1000};  // [permille] derivative scale, rails [100, 2000]
+	int32_t cached_stock_velocity_{0};      // total stock change from previous cycle
+	int32_t cached_idle_count_{0};          // stopped production sites from previous cycle
+	int32_t cached_scarce_ware_count_{0};   // wares with positive scarcity from previous cycle
 
 	// ========== Military PI: Training vs Recruiting Split ==========
 	int32_t military_pressure_{0};
