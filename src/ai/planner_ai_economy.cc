@@ -2481,20 +2481,31 @@ bool PlannerAI::construct_building(const Time& gametime) {
 				}
 
 				// Border reservation
+				// Resource harvesters, fishers, and wells must be placed where
+				// their resources are — even if that's near the border. Workers
+				// can harvest trees/rocks/critters on unowned land, so border
+				// spots with resources are the BEST placement, not the worst.
+				// The military hard-skip still prevents placement at completely
+				// undefended borders.
+				const bool needs_specific_location =
+				   bo.is_resource_harvester || bo.is(BuildingAttribute::kFisher) ||
+				   bo.is(BuildingAttribute::kWell) || bo.is(BuildingAttribute::kNeedsCoast);
 				if (any_military_exists &&
 				    bf->own_military_presence == 0 && bf->military_in_constr_nearby == 0 &&
 				    (bf->near_border || bf->unowned_land_nearby > 3)) {
 					break;  // Hard skip: no military coverage
 				}
-				if (bf->unowned_land_nearby > 0 && !expansion_targets_.empty()) {
-					const int32_t exp_pressure =
-					   std::max<int32_t>(0, expansion_targets_[0].outputControl);
-					prio -= static_cast<int32_t>(
-					   static_cast<int64_t>(bf->unowned_land_nearby) *
-					   prio * exp_pressure / (kNormalizationBudget + 1));
-				}
-				if (bf->enemy_nearby) {
-					prio -= prio;
+				if (!needs_specific_location) {
+					if (bf->unowned_land_nearby > 0 && !expansion_targets_.empty()) {
+						const int32_t exp_pressure =
+						   std::max<int32_t>(0, expansion_targets_[0].outputControl);
+						prio -= static_cast<int32_t>(
+						   static_cast<int64_t>(bf->unowned_land_nearby) *
+						   prio * exp_pressure / (kNormalizationBudget + 1));
+					}
+					if (bf->enemy_nearby) {
+						prio -= prio;
+					}
 				}
 
 				if (prio > economy_priority) {
@@ -3806,21 +3817,19 @@ bool PlannerAI::check_productionsites(const Time& gametime) {
 		}
 
 		// --- Factor: resource depletion for finite-resource buildings ---
-		// Quarries depend on rocks — a finite resource. When rocks are
-		// gone, the quarry produces nothing and should be dismantled to
-		// free the spot and recover materials. Scan the work area for
-		// rocks; if none remain, inject an overwhelming dismantle signal.
-		// This must override ALL counter-forces (output pressure, last-
-		// producer protection, global offset) because a quarry with no
-		// rocks will NEVER produce again. The signal (+10× avg_pressure)
-		// exceeds: offset(1×) + last_producer(1×) + output_pressure(1×)
-		// + clearing_potential + any other factor combined.
-		// Similarly handles other finite-resource buildings (fishers with
-		// no fish, etc.) through their respective resource checks.
-		// Generic resource depletion: scan work area for the building's
-		// collected resource targets. If ALL collected resources are
-		// exhausted (count = 0), this building can never produce again.
-		// Inject overwhelming dismantle signal.
+		// Two cases:
+		//  1) Non-renewable (quarry: rocks are finite, mine: ore depletes).
+		//     When resources are gone, the building will NEVER produce
+		//     again → overwhelming dismantle signal (10× avg_pressure)
+		//     overrides all counter-forces.
+		//  2) Renewable (woodcutter: trees planted by ranger).
+		//     Resources CAN regenerate if a supporter exists/is built.
+		//     No spike here — let the low-productivity factor (+1× per
+		//     visit) build gradually via the leaky integrator. This gives
+		//     the supporter coupling time to build a forester, and gives
+		//     the forester time to plant trees. If resources stay at 0
+		//     for many integrator cycles, the score eventually crosses 0
+		//     and the building gets dismantled naturally.
 		if (site.bo->is_resource_harvester) {
 			bool all_collected_exhausted = true;
 			bool has_any_collected = false;
@@ -3872,9 +3881,14 @@ bool PlannerAI::check_productionsites(const Time& gametime) {
 					break;
 				}
 			}
-			if (has_any_collected && all_collected_exhausted) {
+			if (has_any_collected && all_collected_exhausted &&
+			    !site.bo->requires_supporters) {
+				// Non-renewable: overwhelming spike to force dismantle.
 				delta += weights_.resource_exhausted_penalty;
 			}
+			// Renewable resources with supporters: no spike.
+			// The low-productivity factor already accumulates +avg_pressure
+			// per visit at 0% stats, building the integrator slowly.
 		}
 		// kNeedsRocks fallback for buildings not classified as resource_harvester
 		if (!site.bo->is_resource_harvester &&
