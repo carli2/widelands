@@ -551,7 +551,7 @@ void PlannerAI::late_initialization() {
 			}
 		}
 		verb_log_info_time(gametime,
-		   "PlannerAI(%d): %d/%zu wares are inherently renewable\n",
+		   "PlannerAI(%d): %d/%" PRIuS " wares are inherently renewable\n",
 		   player_number(), renewable_count, ware_inherently_renewable_.size());
 	}
 
@@ -602,6 +602,7 @@ void PlannerAI::late_initialization() {
 	}
 
 	// Initialize building pressure vector (one per BuildingObserver)
+	building_target_pressure_.resize(buildings_.size());
 	building_pressure_.resize(buildings_.size());
 
 	// Initialize expansion targets (0 = unowned, 1..N = player numbers)
@@ -630,6 +631,14 @@ void PlannerAI::late_initialization() {
 			   persistent_data->building_pressure_integrals[i],
 			   (i < persistent_data->building_pressure_last_errors.size()) ?
 			      persistent_data->building_pressure_last_errors[i] : 0);
+		}
+		const size_t n_bt = std::min(
+		   persistent_data->building_target_integrals.size(), building_target_pressure_.size());
+		for (size_t i = 0; i < n_bt; ++i) {
+			building_target_pressure_[i].restore_state(
+			   persistent_data->building_target_integrals[i],
+			   (i < persistent_data->building_target_last_errors.size()) ?
+			      persistent_data->building_target_last_errors[i] : 0);
 		}
 
 		const size_t n_exp = std::min(
@@ -670,6 +679,20 @@ void PlannerAI::late_initialization() {
 		   n_wp, ware_pressure_.size(),
 		   n_bp, building_pressure_.size(),
 		   n_exp, expansion_targets_.size());
+	} else {
+		// Fresh game bootstrap: preload global PID bank for early-game behavior.
+		// Target profile: strong CM focus, expansion-friendly military gate,
+		// planning-biased propagation, and a positive build offset.
+		const int32_t preload_integral = 4 * kPidOutputScale;
+		global_pid_bank_[kPidIdxWareBmatInputBalance].restore_state(preload_integral, 0);
+		global_pid_bank_[kPidIdxMilitaryGate].restore_state(preload_integral / 2, 0);
+		global_pid_bank_[kPidIdxRealPlanningBalance].restore_state(preload_integral, 0);
+		global_pid_bank_[kPidIdxGlobalBuildOffset].restore_state(preload_integral / 2, 0);
+		global_pid_bank_[kPidIdxWorkerCostBalance].restore_state(preload_integral / 2, 0);
+		global_pid_bank_[kPidIdxMilitaryDismantleBalance].restore_state(0, 0);
+		verb_log_info_time(gametime,
+		   "PlannerAI(%d): preloaded startup global PID bank (fresh game)\n",
+		   player_number());
 	}
 
 	// Scan entire map for owned fields and existing buildings
@@ -1157,11 +1180,11 @@ void PlannerAI::update_buildable_field(UniversalBuildableField& field) {
 				++field.critters_nearby;
 			}
 			// Generic bob attribute counting for resource harvesters
-			for (uint32_t attr : bob->descr().attributes()) {
-				if (interesting_resource_attributes_.count(attr) > 0) {
-					field.resource_count_by_attribute[attr] += 1;
+				for (uint32_t attr : bob->descr().attributes()) {
+					if (interesting_resource_attributes_.count(attr) > 0) {
+						++field.resource_count_by_attribute[attr];
+					}
 				}
-			}
 		}
 
 		// Fish (from resource overlay)
@@ -1193,7 +1216,9 @@ void PlannerAI::update_buildable_field(UniversalBuildableField& field) {
 		for (const FutureConquest& fc : future_conquests) {
 			// Only discount fields that are both: within our scan radius (6)
 			// AND within the construction site's conquer radius.
-			const uint32_t effective_radius = std::min<uint32_t>(fc.conquer_radius, 6);
+			// Use full conquer radius here so large military buildings don't
+			// leave phantom "new land" gain in overlapping areas.
+			const uint32_t effective_radius = fc.conquer_radius;
 			Widelands::MapRegion<Widelands::Area<Widelands::FCoords>> fcr(
 			   map, Widelands::Area<Widelands::FCoords>(
 			      map.get_fcoords(fc.pos), effective_radius));
@@ -1224,6 +1249,13 @@ void PlannerAI::update_buildable_field(UniversalBuildableField& field) {
 	if (field.near_border && field.unowned_land_nearby > 0) {
 		field.military_score_ +=
 		   static_cast<int16_t>(field.unowned_land_nearby);
+	}
+	// Strategic mine-claim bonus: border military that can conquer
+	// unowned mine spots gets additional score, so "mountain conquerors"
+	// (e.g. Massada) are considered earlier when they open new mine access.
+	if (field.near_border && field.unowned_mines_spots_nearby > 0) {
+		field.military_score_ += static_cast<int16_t>(
+		   std::min<uint16_t>(field.unowned_mines_spots_nearby * 3, 300));
 	}
 	if (field.enemy_nearby && field.enemy_owned_land_nearby > 0) {
 		field.military_score_ +=

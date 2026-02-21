@@ -992,42 +992,88 @@ bool PlannerAI::check_militarysites(const Time& gametime) {
 
 	militarysites.front().understaffed = 0;
 
-	// Can this site be dismantled?
-	const bool can_be_dismantled =
-	   military_last_dismantle_ + Duration(30 * 1000) < gametime &&
-	   (bf.own_military_presence - current_soldiers > 0 || bf.military_unstationed > 2) &&
-	   militarysites.front().built_time + Duration(10 * 60 * 1000) < gametime &&
-	   bf.military_loneliness < 800;
+	const bool old_enough_for_dismantle =
+	   militarysites.front().built_time + Duration(10 * 60 * 1000) < gametime;
+	const bool spatial_redundancy =
+	   (bf.own_military_presence - current_soldiers > 0 || bf.military_unstationed > 2);
 
-	// --- Cost/benefit dismantle scoring ---
+	// --- Military dismantle PID network ---
 	//
-	// GAIN of dismantling: freed soldiers (can garrison frontier or attack).
-	//   Each freed soldier is worth: military_pressure / total_soldiers.
-	//   Also: freed building materials from dismantle (partial recovery).
+	// Inputs:
+	//   PRO  = reasons to dismantle (free soldiers, redundancy, collapse risk)
+	//   CONTRA = reasons to keep (land protection, hold advantage, rebuild)
 	//
-	// COST of dismantling: lost military coverage.
-	//   Enemy land + unowned land nearby = territory at risk.
-	//   Enemy military presence nearby = direct threat.
-	//   Rebuild cost if we need to re-expand later.
+	// Global PID kPidIdxMilitaryDismantleBalance learns:
+	//   1) mix between PRO and CONTRA
+	//   2) threshold shift for per-site dismantle integral
 	//
-	// Score > 0 means gain > cost → dismantle is worthwhile.
+	// This keeps the decision fully feedback-driven: no fixed hard gate
+	// deciding "always keep at enemy" vs "always dismantle inland".
 
 	const int32_t total_soldiers_now = std::max<int32_t>(1, player_->count_soldiers());
+	const int32_t nr_wares_i =
+	   std::max<int32_t>(1, static_cast<int32_t>(wares.size()));
+	const int32_t avg_wp_mil = std::max<int32_t>(1, kNormalizationBudget / nr_wares_i);
+	const int32_t unit_garrison = std::max<int32_t>(1, smallest_garrison_);
+	const int32_t local_enemy_units =
+	   std::max<int32_t>(0, static_cast<int32_t>(bf.enemy_military_presence) / unit_garrison) +
+	   (bf.enemy_nearby ? 1 : 0) +
+	   (bf.enemy_owned_land_nearby > 0 ? 1 : 0);
+	// Ware-driven dismantle pressure:
+	// - military CM scarcity should push keep-vs-dismantle mix
+	// - dismantle returns of scarce wares should increase dismantle PRO
+	int64_t military_cm_pressure = 0;
+	for (const auto& [ware_idx, amount] : ms->descr().buildcost()) {
+		if (static_cast<size_t>(ware_idx) >= ware_pressure_.size()) {
+			continue;
+		}
+		military_cm_pressure += static_cast<int64_t>(amount) *
+		   std::max<int32_t>(0, ware_pressure_[ware_idx].outputControl);
+	}
+	int64_t dismantle_return_pressure = 0;
+	for (const auto& [ware_idx, amount] : ms->descr().returns_on_dismantle()) {
+		if (static_cast<size_t>(ware_idx) >= ware_pressure_.size()) {
+			continue;
+		}
+		dismantle_return_pressure += static_cast<int64_t>(amount) *
+		   std::max<int32_t>(0, ware_pressure_[ware_idx].outputControl);
+	}
+	const int32_t military_cm_units = static_cast<int32_t>(
+	   std::clamp<int64_t>(military_cm_pressure / std::max<int32_t>(1, avg_wp_mil),
+	                       0, kPidOutputScale));
+	const int32_t dismantle_return_units = static_cast<int32_t>(
+	   std::clamp<int64_t>(dismantle_return_pressure / std::max<int32_t>(1, avg_wp_mil),
+	                       0, kPidOutputScale));
 
 	// GAIN: freed soldiers × their value to us.
 	// soldier_value = how much each soldier matters = pressure per soldier.
 	// When soldiers are scarce (high pressure, few soldiers), gain is high.
-	const int32_t soldier_value =
-	   military_pressure_ / total_soldiers_now;
+	const int32_t soldier_value = std::max<int32_t>(1, military_pressure_ / total_soldiers_now);
 	const int32_t freed_soldiers = static_cast<int32_t>(current_soldiers);
-	int32_t dismantle_gain = freed_soldiers * soldier_value;
+	int32_t dismantle_pro = freed_soldiers * soldier_value;
 
 	// Redundancy bonus: other military sites cover this area.
-	// Each overlapping soldier reduces the strategic cost of dismantling.
+	// Each overlapping soldier strengthens the dismantle argument.
 	// own_military_presence includes THIS building's soldiers, so subtract them.
 	const int32_t overlap = std::max<int32_t>(0,
 	   static_cast<int32_t>(bf.own_military_presence) - freed_soldiers);
-	dismantle_gain += overlap * soldier_value / 2;
+	const int32_t local_own_units =
+	   std::max<int32_t>(0, freed_soldiers / unit_garrison) +
+	   std::max<int32_t>(0, overlap / unit_garrison) +
+	   std::max<int32_t>(0, bf.military_in_constr_nearby);
+	const int32_t collapse_risk_units =
+	   std::max<int32_t>(0, local_enemy_units - local_own_units);
+	const int32_t hold_advantage_units =
+	   std::max<int32_t>(0, local_own_units - local_enemy_units);
+	dismantle_pro += overlap * soldier_value / 2;
+	dismantle_pro += collapse_risk_units * soldier_value;
+	dismantle_pro += static_cast<int32_t>(std::clamp<int64_t>(
+	   dismantle_return_pressure /
+	      std::max<int64_t>(1, static_cast<int64_t>(total_capacity) + 1),
+	   0, kPidOutputScale));
+	if (!bf.enemy_accessible_ && !bf.near_border) {
+		dismantle_pro += std::max<int32_t>(1, static_cast<int32_t>(total_capacity)) * soldier_value / 2;
+	}
 
 	// Vacancy cost: unfilled positions during soldier shortage.
 	//
@@ -1057,13 +1103,12 @@ bool PlannerAI::check_militarysites(const Time& gametime) {
 			// kShortage: half value (less urgent).
 			const int32_t shortage_factor =
 			   (soldier_status_ == SoldiersStatus::kBadShortage) ? 1 : 2;
-			dismantle_gain += vacant * soldier_value / shortage_factor;
+			dismantle_pro += vacant * soldier_value / shortage_factor;
 		}
 	}
 
-	// COST: coverage loss = what this building protects, in ware units.
-	// Territory at risk is valued by its production potential.
-	int32_t dismantle_cost = 0;
+	// KEEP-COST: coverage loss if dismantled.
+	int32_t dismantle_contra = 0;
 
 	// Territory at risk in ware-pressure units:
 	// Each protected field × land_value_per_field_ / scaling.
@@ -1071,47 +1116,112 @@ bool PlannerAI::check_militarysites(const Time& gametime) {
 	// Enemy land: we'd lose the defensive buffer.
 	const int32_t land_scale = std::max<int32_t>(1,
 	   kNormalizationBudget / std::max<int32_t>(1, static_cast<int32_t>(wares.size())));
-	dismantle_cost += static_cast<int32_t>(
+	int32_t land_keep_cost = static_cast<int32_t>(
 	   static_cast<int64_t>(bf.unowned_land_nearby) *
 	   land_value_per_field_ / land_scale);
-	dismantle_cost += static_cast<int32_t>(
+	land_keep_cost += static_cast<int32_t>(
 	   static_cast<int64_t>(bf.enemy_owned_land_nearby) *
 	   land_value_per_field_ * 2 / land_scale);  // enemy land: 2× (offensive value)
+	if (collapse_risk_units > 0) {
+		land_keep_cost = static_cast<int32_t>(
+		   static_cast<int64_t>(land_keep_cost) * hold_advantage_units /
+		   std::max<int32_t>(1, hold_advantage_units + collapse_risk_units));
+	}
+	dismantle_contra += land_keep_cost;
 
-	// Enemy military threat: each enemy soldier nearby makes dismantling risky.
-	dismantle_cost += bf.enemy_military_presence * soldier_value;
+	// Hold advantage means the site is still defendable and should be kept.
+	dismantle_contra += hold_advantage_units * soldier_value;
 
 	// Rebuild cost: larger buildings cost more to rebuild if needed later.
 	// Proportional to capacity = building size.
-	dismantle_cost += static_cast<int32_t>(total_capacity) * soldier_value / 2;
+	dismantle_contra += static_cast<int32_t>(total_capacity) * soldier_value / 2;
 
 	// Port space protection: port spaces are uniquely valuable and rare.
 	if (bf.portspace_nearby == ExtendedBool::kTrue) {
-		dismantle_cost += soldier_value * static_cast<int32_t>(total_capacity);
+		dismantle_contra += soldier_value * static_cast<int32_t>(total_capacity);
+	}
+	// Isolated military sites are harder to replace and should resist dismantle.
+	const int32_t loneliness_keep = std::max<int32_t>(
+	   0, static_cast<int32_t>(bf.military_loneliness) - 500);
+	dismantle_contra += loneliness_keep * soldier_value / 100;
+	if (!spatial_redundancy && collapse_risk_units == 0) {
+		dismantle_contra += std::max<int32_t>(1, static_cast<int32_t>(total_capacity)) * soldier_value;
 	}
 
-	// Per-site dismantle integral: accumulates when gain > cost,
+	// Global PID for mix and threshold shift.
+	const int32_t N_ticks = std::max<int32_t>(1, weights_.N_ticks);
+	const int32_t P_weight = std::max<int32_t>(1, weights_.P_weight);
+	const int32_t shortage_units = std::max<int32_t>(
+	   0, static_cast<int32_t>(soldier_status_) - static_cast<int32_t>(SoldiersStatus::kEnough)) +
+	   std::max<int32_t>(
+	      0, static_cast<int32_t>(current_target) - static_cast<int32_t>(current_soldiers));
+	const int32_t scarcity_units = std::max<int32_t>(0, military_pressure_ / avg_wp_mil);
+	const int32_t dismantle_mix_recentering = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxMilitaryDismantleBalance].outputControl) /
+	   P_weight);
+	global_pid_bank_[kPidIdxMilitaryDismantleBalance].error =
+	   shortage_units + scarcity_units + military_cm_units + dismantle_return_units +
+	   collapse_risk_units +
+	   std::max<int32_t>(0, bf.military_unstationed) -
+	   hold_advantage_units - dismantle_mix_recentering;
+	const int32_t mix_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
+	global_pid_bank_[kPidIdxMilitaryDismantleBalance].tick(
+	   P_weight, I_permille_, mix_D,
+	   std::max<int32_t>(1, weights_.leak_num), std::max<int32_t>(1, weights_.leak_den));
+	global_pid_bank_[kPidIdxMilitaryDismantleBalance].save_state(
+	   persistent_data->planner_global_pid.pids[kPidIdxMilitaryDismantleBalance].integral,
+	   persistent_data->planner_global_pid.pids[kPidIdxMilitaryDismantleBalance].last_error);
+	const int32_t dismantle_mix_permille = static_cast<int32_t>(
+	   (static_cast<int64_t>(std::clamp(
+	                       global_pid_bank_[kPidIdxMilitaryDismantleBalance].outputControl,
+	                       -kPidOutputScale, kPidOutputScale)) + kPidOutputScale) * 1000 /
+	   (2LL * kPidOutputScale));
+
+	// Can this site be dismantled?
+	const bool can_be_dismantled =
+	   military_last_dismantle_ + Duration(30 * 1000) < gametime &&
+	   old_enough_for_dismantle;
+
+	// Per-site dismantle integral: accumulates when PRO > CONTRA,
 	// decays when cost > gain. Only dismantle after sustained positive
 	// scoring over multiple ticks. This prevents impulsive dismantling
 	// of buildings that briefly seem redundant.
 	//
-	// The error signal is (gain - cost), clamped to prevent runaway.
-	// Decay: 3/4 per tick. After ~4 ticks of consistent positive net,
-	// the integral crosses the threshold.
-	//
-	// Over-militarization: inland buildings with no enemy nearby slowly
-	// accumulate dismantle pressure because gain > cost (freed soldiers
-	// have value, no territory is at risk). But if enemy approaches,
-	// cost jumps up and the integral decays → building is kept.
-	const int32_t dismantle_net = std::clamp(dismantle_gain - dismantle_cost, -200, 200);
+	// The global PID-controlled mix decides how aggressively the AI
+	// follows dismantle PRO versus keep CONTRA in this phase.
+	const int64_t weighted_net = static_cast<int64_t>(dismantle_mix_permille) * dismantle_pro -
+	   static_cast<int64_t>(1000 - dismantle_mix_permille) * dismantle_contra;
+	const int32_t dismantle_net = std::clamp(
+	   static_cast<int32_t>(weighted_net / 500), -200, 200);
+	const int32_t integral_leak_den = std::max<int32_t>(2, 2 * N_ticks);
+	const int32_t integral_leak_num = integral_leak_den - 1;
 	militarysites.front().dismantle_integral =
-	   militarysites.front().dismantle_integral * 3 / 4 + dismantle_net;
+	   militarysites.front().dismantle_integral * integral_leak_num / integral_leak_den +
+	   dismantle_net;
 	// Clamp integral to prevent excessive accumulation
+	const int32_t threshold_base = 150;
+	const int32_t threshold_shift = static_cast<int32_t>(
+	   static_cast<int64_t>(
+	      std::clamp(global_pid_bank_[kPidIdxMilitaryDismantleBalance].outputControl,
+	                 -kPidOutputScale, kPidOutputScale)) * threshold_base /
+	   (2LL * kPidOutputScale));
+	const int32_t dismantle_threshold = std::clamp(
+	   threshold_base - threshold_shift, threshold_base / 2, threshold_base * 2);
 	militarysites.front().dismantle_integral = std::clamp(
-	   militarysites.front().dismantle_integral, -500, 500);
+	   militarysites.front().dismantle_integral, -3 * dismantle_threshold, 3 * dismantle_threshold);
 
-	// Threshold: dismantle when integral > 150 (roughly 3+ ticks of gain > cost)
-	const bool should_be_dismantled = militarysites.front().dismantle_integral > 150;
+	// Threshold: PID-shifted around the historical base threshold.
+	const bool should_be_dismantled =
+	   militarysites.front().dismantle_integral > dismantle_threshold;
+	verb_log_dbg_time(gametime,
+	                  "P%u MIL-DIS %s: pro=%d contra=%d mix=%d thr=%d net=%d int=%d risk=%d hold=%d cm=%d ret=%d\n",
+	                  static_cast<unsigned>(player_number()),
+	                  ms->descr().name().c_str(),
+	                  dismantle_pro, dismantle_contra, dismantle_mix_permille,
+	                  dismantle_threshold, dismantle_net,
+	                  militarysites.front().dismantle_integral,
+	                  collapse_risk_units, hold_advantage_units,
+	                  military_cm_units, dismantle_return_units);
 
 	if (bf.enemy_accessible_ && !should_be_dismantled) {
 
@@ -2103,7 +2213,24 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 				   avg_wp / std::max<uint32_t>(1, our_land + 1));
 			}
 
-			ep = ep * get_bully_weight(pn) / bully_neutral;
+			// Dynamic bully factors: baseline neutral plus power/land shares.
+			// Autocrat and HQ Hunter bias this further toward threatening enemies.
+			const int32_t power_share = static_cast<int32_t>(
+			   static_cast<int64_t>(bully_neutral) * enemy_power /
+			   std::max<uint32_t>(1, enemy_power + our_power + 1));
+			const int32_t land_share = static_cast<int32_t>(
+			   static_cast<int64_t>(bully_neutral) * enemy_land /
+			   std::max<uint32_t>(1, enemy_land + our_land + 1));
+			int32_t bully_weight = bully_neutral + power_share + land_share;
+			if (wc == "Autocrat") {
+				bully_weight += std::max(power_share, land_share);
+			} else if (wc == "HQ Hunter") {
+				bully_weight += power_share;
+			} else if (wc_territorial) {
+				bully_weight += land_share;
+			}
+			set_bully_weight(pn, bully_weight);
+			ep = ep * bully_weight / bully_neutral;
 
 			expansion_targets_[pn].error = ep;
 		}
@@ -2144,6 +2271,35 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 		const int32_t nr_wares_g = std::max<int32_t>(1,
 		   static_cast<int32_t>(wares.size()));
 		const int32_t avg_wp_g = kNormalizationBudget / nr_wares_g;
+		const int32_t economy_sz_goal =
+		   static_cast<int32_t>(productionsites.size() + mines_.size());
+		int32_t economy_target_goal = 1;
+		while (economy_target_goal * economy_target_goal <
+		       std::max<int32_t>(1, static_cast<int32_t>(buildings_.size()))) {
+			++economy_target_goal;
+		}
+		const int32_t maturity_permille_goal = std::clamp<int32_t>(
+		   economy_sz_goal * 1000 / std::max<int32_t>(1, economy_target_goal), 0, 1000);
+		const int32_t idle_penalty_permille = std::clamp<int32_t>(
+		   cached_idle_count_ * 1000 / std::max<int32_t>(1, economy_sz_goal), 0, 1000);
+		const int32_t stock_stability_permille = (cached_stock_velocity_ >= 0) ?
+		   1000 :
+		   std::max<int32_t>(0, 1000 +
+		      cached_stock_velocity_ * 1000 / std::max<int32_t>(1, avg_wp_g));
+		const int32_t stability_permille_goal = static_cast<int32_t>(
+		   static_cast<int64_t>(1000 - idle_penalty_permille) *
+		   stock_stability_permille / 1000);
+		const int32_t computed_goal_activation_permille = static_cast<int32_t>(
+		   static_cast<int64_t>(maturity_permille_goal) *
+		   stability_permille_goal / 1000);
+		// Keep a non-zero military goal feed so soldier production/training
+		// does not start too late even if maturity/stability is still low.
+		const int32_t time_floor_permille = std::clamp<int32_t>(
+		   150 + static_cast<int32_t>(pi_tick_count_) /
+		      std::max<int32_t>(1, 4 * std::max<int32_t>(1, weights_.N_ticks)),
+		   150, 550);
+		const int32_t goal_activation_permille = std::max<int32_t>(
+		   computed_goal_activation_permille, time_floor_permille);
 
 		// Military goal: desired_lead + (best_enemy_strength - our_strength)
 		// Positive = behind desired trajectory → push harder.
@@ -2200,6 +2356,12 @@ void PlannerAI::update_expansion_pressures(const Time& /* gametime */) {
 		// desired_lead > 0 for Normal/Hard → goal_error > 0).
 		goal_error = std::max<int32_t>(goal_error,
 		   std::max<int32_t>(0, desired_lead_));
+		if (!wc_economy_goal) {
+			// Delay military-goal dominance until economy is mature and stable.
+			goal_error = static_cast<int32_t>(
+			   static_cast<int64_t>(goal_error) *
+			   goal_activation_permille / 1000);
+		}
 
 		// Inject: add goal error to expansion targets.
 		if (goal_error > 0) {

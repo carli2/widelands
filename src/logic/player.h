@@ -207,6 +207,8 @@ public:
 		uint16_t pi_tick_count{0};
 		std::vector<int32_t> ware_pressure_integrals;
 		std::vector<int32_t> ware_pressure_last_errors;
+		std::vector<int32_t> building_target_integrals;
+		std::vector<int32_t> building_target_last_errors;
 		std::vector<int32_t> building_pressure_integrals;
 		std::vector<int32_t> building_pressure_last_errors;
 		std::vector<int32_t> building_prevention_integrals;
@@ -222,7 +224,11 @@ public:
 			static constexpr size_t kPidIdxMilitaryGate = 1;
 			static constexpr size_t kPidIdxMetaI = 2;
 			static constexpr size_t kPidIdxMetaD = 3;
-			static constexpr size_t kPidCount = 4;
+			static constexpr size_t kPidIdxRealPlanningBalance = 4;
+			static constexpr size_t kPidIdxGlobalBuildOffset = 5;
+			static constexpr size_t kPidIdxWorkerCostBalance = 6;
+			static constexpr size_t kPidIdxMilitaryDismantleBalance = 7;
+			static constexpr size_t kPidCount = 8;
 
 			std::array<PIDState, kPidCount> pids{};
 			int32_t i_permille{250};

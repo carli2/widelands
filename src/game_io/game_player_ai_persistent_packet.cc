@@ -27,7 +27,11 @@
 
 namespace Widelands {
 
-constexpr uint16_t kCurrentPacketVersion = 9;
+constexpr uint16_t kCurrentPacketVersion = 14;
+constexpr size_t kPidCountPacketV9 = 4;
+constexpr size_t kPidCountPacketV10 = 5;
+constexpr size_t kPidCountPacketV11 = 6;
+constexpr size_t kPidCountPacketV12 = 7;
 using GlobalPIDState = Widelands::Player::AiPersistentState::PlannerAIGlobalPIDState;
 
 void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoader* /* mol */) {
@@ -131,6 +135,13 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 					for (size_t i = 0; i < n; ++i) {
 						player->ai_data_.building_pressure_integrals[i] = fr.signed_32();
 					}
+					if (packet_version >= 14) {
+						n = fr.unsigned_32();
+						player->ai_data_.building_target_integrals.resize(n);
+						for (size_t i = 0; i < n; ++i) {
+							player->ai_data_.building_target_integrals[i] = fr.signed_32();
+						}
+					}
 
 					n = fr.unsigned_32();
 					player->ai_data_.expansion_integrals.resize(n);
@@ -157,6 +168,13 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 					for (size_t i = 0; i < n; ++i) {
 						player->ai_data_.building_pressure_last_errors[i] = fr.signed_32();
 					}
+					if (packet_version >= 14) {
+						n = fr.unsigned_32();
+						player->ai_data_.building_target_last_errors.resize(n);
+						for (size_t i = 0; i < n; ++i) {
+							player->ai_data_.building_target_last_errors[i] = fr.signed_32();
+						}
+					}
 					n = fr.unsigned_32();
 					player->ai_data_.building_prevention_last_errors.resize(n);
 					for (size_t i = 0; i < n; ++i) {
@@ -170,7 +188,12 @@ void GamePlayerAiPersistentPacket::read(FileSystem& fs, Game& game, MapObjectLoa
 				}
 				// PlannerAI global PID-bank state (version 9+)
 				if (packet_version >= 9) {
-					for (size_t i = 0; i < GlobalPIDState::kPidCount; ++i) {
+					const size_t saved_pid_count =
+					   (packet_version >= 13) ? GlobalPIDState::kPidCount :
+					   (packet_version >= 12) ? kPidCountPacketV12 :
+					   (packet_version >= 11) ? kPidCountPacketV11 :
+					   (packet_version >= 10) ? kPidCountPacketV10 : kPidCountPacketV9;
+					for (size_t i = 0; i < saved_pid_count; ++i) {
 						player->ai_data_.planner_global_pid.pids[i].integral = fr.signed_32();
 						player->ai_data_.planner_global_pid.pids[i].last_error = fr.signed_32();
 					}
@@ -265,6 +288,10 @@ void GamePlayerAiPersistentPacket::write(FileSystem& fs,
 		for (int32_t v : player->ai_data_.building_pressure_integrals) {
 			fw.signed_32(v);
 		}
+		fw.unsigned_32(player->ai_data_.building_target_integrals.size());
+		for (int32_t v : player->ai_data_.building_target_integrals) {
+			fw.signed_32(v);
+		}
 
 		fw.unsigned_32(player->ai_data_.expansion_integrals.size());
 		for (int32_t v : player->ai_data_.expansion_integrals) {
@@ -284,6 +311,10 @@ void GamePlayerAiPersistentPacket::write(FileSystem& fs,
 		}
 		fw.unsigned_32(player->ai_data_.building_pressure_last_errors.size());
 		for (int32_t v : player->ai_data_.building_pressure_last_errors) {
+			fw.signed_32(v);
+		}
+		fw.unsigned_32(player->ai_data_.building_target_last_errors.size());
+		for (int32_t v : player->ai_data_.building_target_last_errors) {
 			fw.signed_32(v);
 		}
 		fw.unsigned_32(player->ai_data_.building_prevention_last_errors.size());

@@ -420,6 +420,8 @@ void Player::AiPersistentState::initialize() {
 	pi_tick_count = 0;
 	ware_pressure_integrals.clear();
 	ware_pressure_last_errors.clear();
+	building_target_integrals.clear();
+	building_target_last_errors.clear();
 	building_pressure_integrals.clear();
 	building_pressure_last_errors.clear();
 	building_prevention_integrals.clear();

@@ -24,6 +24,7 @@
 #include <limits>
 #include <memory>
 #include <set>
+#include <string>
 
 #include "ai/ai_help_structs.h"
 #include "ai/computer_player.h"
@@ -206,6 +207,11 @@ private:
 	static constexpr size_t kPidIdxMilitaryGate = GlobalPIDState::kPidIdxMilitaryGate;
 	static constexpr size_t kPidIdxMetaI = GlobalPIDState::kPidIdxMetaI;
 	static constexpr size_t kPidIdxMetaD = GlobalPIDState::kPidIdxMetaD;
+	static constexpr size_t kPidIdxRealPlanningBalance = GlobalPIDState::kPidIdxRealPlanningBalance;
+	static constexpr size_t kPidIdxGlobalBuildOffset = GlobalPIDState::kPidIdxGlobalBuildOffset;
+	static constexpr size_t kPidIdxWorkerCostBalance = GlobalPIDState::kPidIdxWorkerCostBalance;
+	static constexpr size_t kPidIdxMilitaryDismantleBalance =
+	   GlobalPIDState::kPidIdxMilitaryDismantleBalance;
 	static constexpr Duration kFieldInfoExpiration{14 * 1000};
 	static constexpr Duration kMineFieldInfoExpiration{20 * 1000};
 	static constexpr Duration kBuildingMinInterval{25 * 1000};
@@ -373,6 +379,10 @@ private:
 	//   kPidIdxMilitaryGate: expansion vs conservation gate
 	//   kPidIdxMetaI: self-tuning integral gain controller
 	//   kPidIdxMetaD: self-tuning derivative gain controller
+	//   kPidIdxRealPlanningBalance: real-economy vs planning-depth mixer feedback
+	//   kPidIdxGlobalBuildOffset: global build threshold correction
+	//   kPidIdxWorkerCostBalance: worker-cost pressure vs worker-block fallback
+	//   kPidIdxMilitaryDismantleBalance: military keep-vs-dismantle mix and threshold shift
 	std::array<PIDController, GlobalPIDState::kPidCount> global_pid_bank_;
 
 	// ========== Circle 1: Ware Pressure (Power-Iteration) ==========
@@ -383,17 +393,20 @@ private:
 
 	// ========== Circle 2: Building Pressure (Power-Iteration) ==========
 	//
-	// Dual-PID per building type: PRO (should build) vs CONTRA (should NOT build).
-	// PRO = "how much does the economy need this building?"
+	// Triple-PID per building type:
+	//   PLAN  = target size pressure ("how much of this building type should exist?")
+	//   PRO   = build-now pressure (target deficit translated into concrete build impulse)
 	// CONTRA = "why should we NOT build this building right now?"
 	//
 	// Build decision: effective_score = PRO.outputControl - CONTRA.outputControl
 	// Positive → consider building. Highest wins.
 	// Negative → skip. The contra reasons outweigh the demand.
 	//
-	// PRO accumulates: output ware demand, military/expansion need, etc.
+	// PLAN accumulates: output ware demand, military/expansion need, etc.
+	// PRO accumulates only target deficits (PLAN vs built/in-construction).
 	// CONTRA accumulates: missing input chains, non-renewable CM consumption,
 	//   overcapacity, economy too young for military, etc.
+	std::vector<PIDController> building_target_pressure_;  // PLAN signal
 	std::vector<PIDController> building_pressure_;   // PRO signal
 	std::vector<PIDController> building_prevention_;  // CONTRA signal
 
@@ -511,6 +524,7 @@ private:
 	// --- Utilities ---
 	uint32_t calculate_stocklevel(Widelands::DescriptionIndex) const;
 	uint32_t calculate_total_stocklevel(Widelands::DescriptionIndex) const;
+	int32_t evaluate_goal_progress_score(const std::string& wc_name);
 	BuildingObserver& get_building_observer(Widelands::DescriptionIndex);
 	BuildingObserver& get_building_observer(char const*);
 
@@ -641,6 +655,9 @@ private:
 	int32_t spots_{0};
 	int32_t trees_on_territory_{0};
 	int32_t rocks_on_territory_{0};
+	Time last_economy_build_{Time(0)};
+	int32_t cached_avg_build_score_{0};
+	int32_t cached_goal_score_{0};
 
 	// Per-attribute territory-wide resource count (attr_id -> count).
 	// Populated in update_all_buildable_fields() alongside trees/rocks counts.

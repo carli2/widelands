@@ -70,14 +70,65 @@ uint32_t PlannerAI::calculate_total_stocklevel(Widelands::DescriptionIndex wt) c
 	return count;
 }
 
+int32_t PlannerAI::evaluate_goal_progress_score(const std::string& wc_name) {
+	if (wc_name == "Collectors") {
+		int64_t points = 0;
+		for (const auto& [ware_name, ware_points] : tribe_->collectors_points_table()) {
+			const Widelands::DescriptionIndex wi = tribe_->ware_index(ware_name);
+			if (wi == Widelands::INVALID_INDEX) {
+				continue;
+			}
+			points += static_cast<int64_t>(ware_points) * calculate_stocklevel(wi);
+		}
+		return static_cast<int32_t>(std::clamp<int64_t>(
+		   points, std::numeric_limits<int32_t>::min(),
+		   std::numeric_limits<int32_t>::max()));
+	}
+
+	if (wc_name == "Wood Gnome") {
+		return trees_on_territory_;
+	}
+
+	const int32_t our_land = static_cast<int32_t>(
+	   player_statistics.get_player_land(player_number()));
+	const int32_t our_power = static_cast<int32_t>(
+	   player_statistics.get_player_power(player_number()));
+	const int32_t enemy_land = static_cast<int32_t>(
+	   player_statistics.get_enemies_max_land());
+	const int32_t enemy_power = static_cast<int32_t>(
+	   player_statistics.get_enemies_max_power());
+
+	if (wc_name == "Territorial Lord" || wc_name == "Territorial Time") {
+		return our_land - enemy_land;
+	}
+	if (wc_name == "HQ Hunter") {
+		return (our_power - enemy_power) + our_land;
+	}
+	if (wc_name == "Artifacts") {
+		return our_power + our_land;
+	}
+	if (wc_name == "Autocrat") {
+		return (our_power - enemy_power) + (our_land - enemy_land);
+	}
+	if (wc_name == "Endless Game") {
+		return static_cast<int32_t>(productionsites.size() + mines_.size()) + our_land;
+	}
+
+	// Fallback: balance military and land progress.
+	return (our_power - enemy_power) + (our_land - enemy_land);
+}
+
 void PlannerAI::update_ware_pressures(const Time& gametime) {
 	++pi_tick_count_;
 	const size_t nr_wares = wares.size();
 	std::vector<int32_t> raw_A(nr_wares, 0);  // Factor A: capacity PID
-	std::vector<int32_t> raw_B_input(nr_wares, 0);  // Factor B1: production/input demand
-	std::vector<int32_t> raw_B_bmat(nr_wares, 0);   // Factor B2: construction material demand
+	std::vector<int32_t> raw_B_input(nr_wares, 0);      // Factor B input + real economy (pr*rw)
+	std::vector<int32_t> raw_B_input_pl(nr_wares, 0);   // Factor B input + planning (pr*pl)
+	std::vector<int32_t> raw_B_bmat(nr_wares, 0);       // Factor B build-mat + real economy (bm*rw)
+	std::vector<int32_t> raw_B_bmat_pl(nr_wares, 0);    // Factor B build-mat + planning (bm*pl)
 	std::vector<int32_t> raw_B(nr_wares, 0);        // Combined Factor B after PID mix
 	std::vector<int32_t> raw_total(nr_wares, 0);
+	const std::string& wc_name = game().get_win_condition_displayname();
 
 	// PID parameters from shared weights (recomputed in update_building_pressures)
 	const int32_t N_ticks = weights_.N_ticks;
@@ -118,6 +169,10 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 	// PID feedback for "build materials vs production inputs" in Factor B.
 	// stalled construction (+error) shifts budget toward build materials.
 	// fully supplied construction (-error) shifts budget back to production inputs.
+	//
+	// PID feedback for "real economy vs planning depth" in Factor B.
+	// planning pipeline pressure (+error) shifts budget toward planning channels.
+	// real economy strain (-error) shifts budget back toward real-economy channels.
 	int32_t stalled_sites = 0;
 	int32_t supplied_sites = 0;
 	for (const BuildingObserver& bo : buildings_) {
@@ -149,8 +204,81 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 			supplied_sites += std::max<int32_t>(1, static_cast<int32_t>(bo.cnt_under_construction));
 		}
 	}
-	global_pid_bank_[kPidIdxWareBmatInputBalance].error = stalled_sites - supplied_sites;
+	const int32_t avg_wp_unit =
+	   std::max<int32_t>(1, kNormalizationBudget / std::max<int32_t>(1, nr_wares_i));
+	// Startup profile for global mixers:
+	// - early game: strongly bias toward construction materials and planning depth
+	// - later: recenter toward feedback-driven equilibrium
+	const int32_t economy_sz_mix =
+	   static_cast<int32_t>(productionsites.size() + mines_.size());
+	int32_t economy_target_mix = 1;
+	while (economy_target_mix * economy_target_mix <
+	       std::max<int32_t>(1, static_cast<int32_t>(buildings_.size()))) {
+		++economy_target_mix;
+	}
+	const int32_t maturity_permille_mix = std::clamp<int32_t>(
+	   economy_sz_mix * 1000 / std::max<int32_t>(1, economy_target_mix), 0, 1000);
+	const int32_t startup_horizon =
+	   std::max<int32_t>(1, 2 * std::max<int32_t>(1, weights_.N_ticks));
+	const int32_t startup_ticks_left = std::max<int32_t>(
+	   0, startup_horizon - static_cast<int32_t>(pi_tick_count_));
+	const int32_t tick_bootstrap_permille =
+	   startup_ticks_left * 1000 / std::max<int32_t>(1, startup_horizon);
+	const int32_t startup_permille_mix =
+	   std::max<int32_t>(0, std::max(tick_bootstrap_permille, 1000 - maturity_permille_mix));
+	const int32_t settled_permille_mix = 1000 - startup_permille_mix;
+	const int32_t startup_mix_bias = static_cast<int32_t>(
+	   static_cast<int64_t>(kPidOutputScale) * startup_permille_mix /
+	   (1000LL * std::max<int32_t>(1, P_weight)));
+	int32_t wc_mix_bmat_input_bias = 0;
+	int32_t wc_mix_real_plan_bias = 0;
+	const int32_t expansion_units = expansion_targets_.empty() ? 0 :
+	   std::max<int32_t>(0, expansion_targets_[0].outputControl) / avg_wp_unit;
+	if (wc_name == "Collectors") {
+		wc_mix_bmat_input_bias -= std::max<int32_t>(1, nr_wares_i / 2);
+		wc_mix_real_plan_bias -= std::max<int32_t>(1, nr_wares_i / 2);
+	} else if (wc_name == "Wood Gnome") {
+		wc_mix_bmat_input_bias -= std::max<int32_t>(1, expansion_units / 2);
+		wc_mix_real_plan_bias += std::max<int32_t>(1, expansion_units / 3);
+	} else if (wc_name == "Artifacts") {
+		wc_mix_bmat_input_bias += std::max<int32_t>(1, expansion_units);
+		wc_mix_real_plan_bias += std::max<int32_t>(1, expansion_units);
+	} else if (wc_name == "Territorial Lord" || wc_name == "Territorial Time") {
+		wc_mix_bmat_input_bias += std::max<int32_t>(1, expansion_units);
+		wc_mix_real_plan_bias += std::max<int32_t>(1, expansion_units / 2);
+	} else if (wc_name == "HQ Hunter" || wc_name == "Autocrat") {
+		wc_mix_bmat_input_bias += std::max<int32_t>(1, expansion_units + nr_wares_i / 2);
+		wc_mix_real_plan_bias += std::max<int32_t>(1, expansion_units);
+	}
+	const int32_t bm_recentering = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl) *
+	   settled_permille_mix / (1000LL * std::max<int32_t>(1, P_weight)));
+	global_pid_bank_[kPidIdxWareBmatInputBalance].error =
+	   stalled_sites - supplied_sites + wc_mix_bmat_input_bias +
+	   startup_mix_bias - bm_recentering;
 	global_pid_bank_[kPidIdxWareBmatInputBalance].tick(
+	   P_weight, I_permille_, effective_D_updated, weights_.leak_num, weights_.leak_den);
+	int32_t planning_pipeline_units = 0;
+	for (size_t bi = 0; bi < buildings_.size() && bi < building_pressure_.size(); ++bi) {
+		const int32_t bp = std::max<int32_t>(0, building_pressure_[bi].outputControl);
+		if (bp <= 0) {
+			continue;
+		}
+		const BuildingObserver& bo = buildings_[bi];
+		if (bo.cnt_built == 0 && bo.cnt_under_construction == 0) {
+			planning_pipeline_units += bp / avg_wp_unit;
+		}
+	}
+	const int32_t real_economy_stress =
+	   std::max<int32_t>(0, cached_idle_count_) +
+	   std::max<int32_t>(0, -cached_stock_velocity_ / avg_wp_unit);
+	const int32_t plan_recentering = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxRealPlanningBalance].outputControl) *
+	   settled_permille_mix / (1000LL * std::max<int32_t>(1, P_weight)));
+	global_pid_bank_[kPidIdxRealPlanningBalance].error =
+	   planning_pipeline_units - real_economy_stress + wc_mix_real_plan_bias +
+	   startup_mix_bias - plan_recentering;
+	global_pid_bank_[kPidIdxRealPlanningBalance].tick(
 	   P_weight, I_permille_, effective_D_updated, weights_.leak_num, weights_.leak_den);
 
 	// === Priority Conservation: consumer type count per ware ===
@@ -452,7 +580,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				   std::max<int32_t>(1, total_cost);
 				for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
 					if (static_cast<size_t>(ware_idx) < nr_wares) {
-						raw_B_bmat[ware_idx] += mil_readiness *
+						raw_B_bmat_pl[ware_idx] += mil_readiness *
 						   static_cast<int32_t>(amount) * efficiency /
 						   std::max<int32_t>(1, efficiency + 1);
 					}
@@ -523,6 +651,31 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 			for (const auto& output : bo.ware_outputs) {
 				if (static_cast<size_t>(output) < nr_wares) {
 					ware_producer_count[output] += count;
+				}
+			}
+		}
+		// Producer graph for planning propagation:
+		// ware -> building types that can produce this ware.
+		std::vector<std::vector<size_t>> ware_to_producer_buildings(nr_wares);
+		std::vector<bool> ware_has_surface_nonrenewable_producer(nr_wares, false);
+		std::vector<bool> ware_has_mine_producer(nr_wares, false);
+		for (size_t bi = 0; bi < n_bldgs; ++bi) {
+			const BuildingObserver& bo = buildings_[bi];
+			if (bo.type != BuildingObserver::Type::kProductionsite &&
+			    bo.type != BuildingObserver::Type::kMine) {
+				continue;
+			}
+			for (const auto& output : bo.ware_outputs) {
+				if (static_cast<size_t>(output) >= nr_wares) {
+					continue;
+				}
+				ware_to_producer_buildings[output].push_back(bi);
+				if (bo.desc->get_ismine()) {
+					ware_has_mine_producer[output] = true;
+				}
+				if (!bo.desc->get_ismine() && bo.is_resource_harvester &&
+				    !bo.requires_supporters) {
+					ware_has_surface_nonrenewable_producer[output] = true;
 				}
 			}
 		}
@@ -663,7 +816,78 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				}
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) < nr_wares) {
-						raw_B_input[input] += per_input;
+						if (bo.cnt_built > 0 || bo.cnt_under_construction > 0) {
+							raw_B_input[input] += per_input;
+						} else {
+							raw_B_input_pl[input] += per_input;
+						}
+					}
+				}
+				// Immediate commitment propagation (D-like response):
+				// once a building is under construction, input wares get an
+				// additional immediate pull so upstream chains react quickly.
+				if (bo.cnt_under_construction > 0) {
+					const int32_t construction_pull = std::max<int32_t>(
+					   1, static_cast<int32_t>(
+					      static_cast<int64_t>(bp) *
+					      static_cast<int32_t>(bo.cnt_under_construction) /
+					      std::max<int32_t>(1, n_inputs)));
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) < nr_wares) {
+							raw_B_input[input] += construction_pull;
+						}
+					}
+				}
+				// Planning-phase propagation:
+				// if this building is only planned (not built yet), push demand
+				// one level deeper into producers' input wares.
+				if (bo.cnt_built == 0 && bo.cnt_under_construction == 0) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) >= nr_wares) {
+							continue;
+						}
+						for (const size_t pbi : ware_to_producer_buildings[input]) {
+							const BuildingObserver& pbo = buildings_[pbi];
+							if (pbo.inputs.empty()) {
+								continue;
+							}
+							const int32_t upstream_pull = std::max<int32_t>(
+							   1, per_input /
+							      std::max<int32_t>(1, static_cast<int32_t>(pbo.inputs.size())));
+							for (const auto& pin : pbo.inputs) {
+								if (static_cast<size_t>(pin) >= nr_wares) {
+									continue;
+								}
+								if (pbo.cnt_built > 0 || pbo.cnt_under_construction > 0) {
+									raw_B_input[pin] += upstream_pull;
+								} else {
+									raw_B_input_pl[pin] += upstream_pull;
+								}
+							}
+						}
+					}
+				}
+
+				// Input-starved existing buildings propagate additional
+				// upstream demand instead of duplicating the same type.
+				if (bo.cnt_built > 0) {
+					const int32_t productivity_deficit = std::clamp<int32_t>(
+					   100 - static_cast<int32_t>(bo.current_stats), 0, 100);
+					if (productivity_deficit > 0) {
+						for (const auto& input : bo.inputs) {
+							if (static_cast<size_t>(input) < nr_wares) {
+								const int32_t input_scarcity =
+								   std::max<int32_t>(0, ware_pressure_[input].outputControl);
+								const int32_t scarcity_factor =
+								   1 + input_scarcity / std::max<int32_t>(1, avg_wp_unit);
+								const int32_t starvation_boost = std::max<int32_t>(
+								   1, static_cast<int32_t>(
+								      static_cast<int64_t>(bp) *
+								      productivity_deficit /
+								      (50LL * std::max<int32_t>(1, n_inputs))));
+								raw_B_input[input] += starvation_boost * scarcity_factor;
+							}
+						}
 					}
 				}
 			}
@@ -675,7 +899,11 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 				   static_cast<int32_t>(bo.inputs.size());
 				for (const auto& input : bo.inputs) {
 					if (static_cast<size_t>(input) < nr_wares) {
-						raw_B_input[input] += bp / n_inputs;
+						if (bo.cnt_built > 0 || bo.cnt_under_construction > 0) {
+							raw_B_input[input] += bp / n_inputs;
+						} else {
+							raw_B_input_pl[input] += bp / n_inputs;
+						}
 					}
 				}
 			}
@@ -699,11 +927,26 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 							   calculate_total_stocklevel(ware_idx));
 							const int64_t needed = static_cast<int64_t>(amount) *
 							   static_cast<int64_t>(bo.cnt_under_construction);
-							if (stock < needed * 3) {
-								raw_B_bmat[ware_idx] += static_cast<int32_t>(
-								   static_cast<int64_t>(bp) *
-								   amount / total_cost_units);
+							const int32_t cm_pull = std::max<int32_t>(
+							   1, static_cast<int32_t>(
+							      static_cast<int64_t>(bp) *
+							      amount / total_cost_units));
+							raw_B_bmat[ware_idx] += cm_pull;
+
+							// Missing CM at active construction sites keeps direct
+							// ware pressure high. Producer decisions remain separate
+							// via their own PRO/CONTRA PID loops.
+							const int64_t shortfall = std::max<int64_t>(0, needed - stock);
+							if (shortfall <= 0) {
+								continue;
 							}
+							const int32_t shortfall_permille = static_cast<int32_t>(
+							   std::min<int64_t>(1000, shortfall * 1000 /
+							      std::max<int64_t>(1, needed)));
+							raw_B_bmat[ware_idx] += std::max<int32_t>(
+							   1, static_cast<int32_t>(
+							      static_cast<int64_t>(cm_pull) *
+							      shortfall_permille / 1000));
 						}
 					}
 				}
@@ -723,6 +966,11 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 					if (total_cost_units > 0) {
 						for (const auto& [ware_idx, amount] : cost) {
 							if (static_cast<size_t>(ware_idx) < nr_wares) {
+								const int32_t cm_plan_pull = std::max<int32_t>(
+								   1, static_cast<int32_t>(
+								      static_cast<int64_t>(bp) *
+								      amount / total_cost_units /
+								      (1 + ware_producer_count[ware_idx])));
 								// Dampen by producer count: wares with many
 								// producers need less pre-stocking demand.
 								// 0 producers: full injection (bootstrapping).
@@ -731,15 +979,75 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 								// every building) from accumulating 20× more
 								// demand than production inputs, which causes
 								// their producers to monopolize construction.
-								raw_B_bmat[ware_idx] += static_cast<int32_t>(
-								   static_cast<int64_t>(bp) *
-								   amount / total_cost_units /
-								   (1 + ware_producer_count[ware_idx]));
+								raw_B_bmat_pl[ware_idx] += cm_plan_pull;
 							}
 						}
 					}
 				}
 			}
+		}
+		// Non-renewable fallback foresight:
+		// If a ware is currently sourced by surface finite harvesters but has
+		// mine producers available, start planning pressure on that ware before
+		// the surface chain collapses.
+		for (size_t w = 0; w < nr_wares; ++w) {
+			if (!ware_has_surface_nonrenewable_producer[w] ||
+			    !ware_has_mine_producer[w]) {
+				continue;
+			}
+			int32_t consumer_load = 0;
+			int32_t surface_supply = 0;
+			int32_t built_mine_supply = 0;
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kProductionsite ||
+				    bo.type == BuildingObserver::Type::kMine ||
+				    bo.type == BuildingObserver::Type::kTrainingsite) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) == w) {
+							consumer_load += static_cast<int32_t>(
+							   bo.cnt_built + bo.cnt_under_construction);
+							break;
+						}
+					}
+				}
+				bool outputs_w = false;
+				for (const auto& output : bo.ware_outputs) {
+					if (static_cast<size_t>(output) == w) {
+						outputs_w = true;
+						break;
+					}
+				}
+				if (!outputs_w) {
+					continue;
+				}
+				const int32_t built_count =
+				   static_cast<int32_t>(bo.cnt_built + bo.cnt_under_construction);
+				if (built_count <= 0) {
+					continue;
+				}
+				if (bo.desc->get_ismine()) {
+					built_mine_supply += built_count;
+				}
+				if (!bo.desc->get_ismine() && bo.is_resource_harvester &&
+				    !bo.requires_supporters) {
+					surface_supply += built_count;
+				}
+			}
+			if (surface_supply <= 0 || built_mine_supply > 0) {
+				continue;
+			}
+			const int32_t scarcity_units = std::max<int32_t>(
+			   0, raw_A[w] / std::max<int32_t>(1, avg_wp_unit));
+			const int32_t foresight_gap = std::max<int32_t>(
+			   0, consumer_load + scarcity_units - surface_supply);
+			if (foresight_gap <= 0) {
+				continue;
+			}
+			const int32_t fallback_push = std::max<int32_t>(
+			   1, static_cast<int32_t>(
+			      static_cast<int64_t>(avg_wp_unit) * foresight_gap /
+			      std::max<int32_t>(1, consumer_load + scarcity_units + surface_supply)));
+			raw_B_input_pl[w] += fallback_push;
 		}
 
 		// === Structural CM demand ===
@@ -787,7 +1095,7 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 					// Phase 1: Bootstrap — strong seed for all CM wares.
 					for (size_t w = 0; w < nr_wares; ++w) {
 						if (cm_structural[w] > 0) {
-							raw_B_bmat[w] += cm_structural[w] * seed_unit / max_structural;
+							raw_B_bmat_pl[w] += cm_structural[w] * seed_unit / max_structural;
 						}
 					}
 				}
@@ -828,15 +1136,196 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 							const int32_t boost =
 							   avg_wp_floor * shortfall / need;
 							raw_A[w] = std::max(raw_A[w], boost);
-							raw_B_bmat[w] += boost;
+							raw_B_bmat_pl[w] += boost;
 						} else {
 							// Enough stock: normal floor only.
 							const int32_t floor =
 							   cm_structural[w] * avg_wp_floor /
 							   max_structural;
-							if (raw_B_bmat[w] < floor) {
-								raw_B_bmat[w] = floor;
+							if (raw_B_bmat_pl[w] < floor) {
+								raw_B_bmat_pl[w] = floor;
 							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// STEP 4a: Win-condition injection into economy channels.
+	// Every win condition contributes a concrete signal to Circle 1.
+	// - Points modes push score wares directly.
+	// - Military/territorial modes push military CM and soldier-input wares.
+	// - Wood Gnome pushes forestry-support chain wares.
+	{
+		const int32_t wc_unit = std::max<int32_t>(
+		   1, kNormalizationBudget / std::max<int32_t>(1, nr_wares_i));
+		const int32_t goal_chain_activation_permille =
+		   (wc_name == "Collectors" || wc_name == "Wood Gnome") ?
+		      1000 :
+		      std::max<int32_t>(0, 1000 - startup_permille_mix);
+
+		if (wc_name == "Collectors") {
+			// score-wares-first: pressure follows collectors_points_table.
+			int32_t max_points = 1;
+			for (const auto& entry : tribe_->collectors_points_table()) {
+				max_points = std::max(max_points, entry.second);
+			}
+			const int32_t warehouse_scale = std::max<int32_t>(
+			   1, static_cast<int32_t>(numof_warehouses_ + numof_warehouses_in_const_));
+			for (const auto& [ware_name, ware_points] : tribe_->collectors_points_table()) {
+				const Widelands::DescriptionIndex wi = tribe_->ware_index(ware_name);
+				if (wi == Widelands::INVALID_INDEX ||
+				    static_cast<size_t>(wi) >= nr_wares) {
+					continue;
+				}
+				const int32_t stock = static_cast<int32_t>(calculate_stocklevel(wi));
+				const int32_t target_stock =
+				   std::max<int32_t>(1, ware_points * warehouse_scale);
+				const int32_t deficit = std::max<int32_t>(0, target_stock - stock);
+				const int32_t boost = std::max<int32_t>(1, static_cast<int32_t>(
+				   static_cast<int64_t>(wc_unit) * ware_points * deficit /
+				   std::max<int32_t>(1, max_points * target_stock)));
+				if (stock > 0) {
+					raw_B_input[wi] += boost;
+				} else {
+					raw_B_input_pl[wi] += boost;
+				}
+			}
+		} else if (wc_name == "Wood Gnome") {
+			const int32_t tree_goal = std::max<int32_t>(1, spots_);
+			const int32_t tree_deficit =
+			   std::max<int32_t>(0, tree_goal - trees_on_territory_);
+			const int32_t boost = std::max<int32_t>(
+			   1, wc_unit * tree_deficit / tree_goal);
+			std::set<Widelands::DescriptionIndex> forestry_outputs;
+			for (const BuildingObserver& bo : buildings_) {
+				if (!bo.is(BuildingAttribute::kRanger) &&
+				    !bo.is(BuildingAttribute::kSupportingProducer) &&
+				    !bo.is(BuildingAttribute::kLumberjack)) {
+					continue;
+				}
+				for (const auto& out : bo.ware_outputs) {
+					forestry_outputs.insert(out);
+				}
+			}
+			for (const auto& out : forestry_outputs) {
+				if (static_cast<size_t>(out) < nr_wares) {
+					raw_B_input_pl[out] += boost;
+				}
+			}
+		} else if (wc_name == "Artifacts") {
+			const int32_t artifact_push =
+			   std::max<int32_t>(1, static_cast<int32_t>(
+			      static_cast<int64_t>(expansion_units) *
+			      goal_chain_activation_permille / 1000));
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kMilitarysite) {
+					int32_t total_cost = 0;
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						total_cost += amount;
+					}
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						if (static_cast<size_t>(ware_idx) < nr_wares) {
+							raw_B_bmat_pl[ware_idx] += artifact_push * amount /
+							   std::max<int32_t>(1, total_cost);
+						}
+					}
+				}
+				if (bo.type == BuildingObserver::Type::kTrainingsite ||
+				    bo.is(BuildingAttribute::kBarracks)) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) < nr_wares) {
+							raw_B_input_pl[input] += artifact_push;
+						}
+					}
+				}
+			}
+		} else if (wc_name == "Territorial Lord" || wc_name == "Territorial Time") {
+			const int32_t land_deficit = std::max<int32_t>(0,
+			   static_cast<int32_t>(player_statistics.get_enemies_max_land()) -
+			   static_cast<int32_t>(player_statistics.get_player_land(player_number())));
+			const int32_t territorial_push = std::max<int32_t>(1,
+			   static_cast<int32_t>(static_cast<int64_t>(wc_unit) * land_deficit /
+			      std::max<uint32_t>(1, player_statistics.get_player_land(player_number()) + 1)) *
+			      goal_chain_activation_permille / 1000);
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kMilitarysite) {
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						if (static_cast<size_t>(ware_idx) < nr_wares) {
+							raw_B_bmat[ware_idx] += territorial_push * amount;
+						}
+					}
+				}
+				if (bo.type == BuildingObserver::Type::kTrainingsite ||
+				    bo.is(BuildingAttribute::kBarracks)) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) < nr_wares) {
+							raw_B_input[input] += territorial_push;
+						}
+					}
+				}
+			}
+		} else if (wc_name == "HQ Hunter") {
+			const int32_t hunter_push = std::max<int32_t>(1,
+			   static_cast<int32_t>(static_cast<int64_t>(wc_unit) *
+			      std::max<uint32_t>(1, player_statistics.get_enemies_max_power()) /
+			      std::max<uint32_t>(1, player_statistics.get_player_power(player_number()) + 1)) *
+			      goal_chain_activation_permille / 1000);
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kMilitarysite) {
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						if (static_cast<size_t>(ware_idx) < nr_wares) {
+							raw_B_bmat_pl[ware_idx] += hunter_push * amount;
+						}
+					}
+				}
+				if (bo.type == BuildingObserver::Type::kTrainingsite ||
+				    bo.is(BuildingAttribute::kBarracks)) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) < nr_wares) {
+							raw_B_input_pl[input] += hunter_push;
+						}
+					}
+				}
+			}
+		} else if (wc_name == "Autocrat") {
+			const int32_t military_deficit =
+			   std::max<int32_t>(0, static_cast<int32_t>(player_statistics.get_enemies_max_power()) -
+			                           static_cast<int32_t>(player_statistics.get_player_power(player_number())));
+			const int32_t autocrat_push = std::max<int32_t>(
+			   1, static_cast<int32_t>(static_cast<int64_t>(wc_unit) * military_deficit /
+			                           std::max<uint32_t>(1, player_statistics.get_player_power(player_number()) + 1)) *
+			                           goal_chain_activation_permille / 1000);
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kMilitarysite) {
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						if (static_cast<size_t>(ware_idx) < nr_wares) {
+							raw_B_bmat_pl[ware_idx] += autocrat_push * amount;
+						}
+					}
+				}
+				if (bo.type == BuildingObserver::Type::kTrainingsite ||
+				    bo.is(BuildingAttribute::kBarracks)) {
+					for (const auto& input : bo.inputs) {
+						if (static_cast<size_t>(input) < nr_wares) {
+							raw_B_input[input] += autocrat_push;
+						}
+					}
+				}
+			}
+		} else if (wc_name == "Endless Game") {
+			// Endless keeps neutral goal pressure; economy runs on generic PID signals.
+		} else {
+			// Fallback for custom win conditions: moderate territorial-military blend.
+			const int32_t fallback_push = std::max<int32_t>(1, static_cast<int32_t>(
+			   static_cast<int64_t>(expansion_units) *
+			   goal_chain_activation_permille / 1000));
+			for (const BuildingObserver& bo : buildings_) {
+				if (bo.type == BuildingObserver::Type::kMilitarysite) {
+					for (const auto& [ware_idx, amount] : bo.desc->buildcost()) {
+						if (static_cast<size_t>(ware_idx) < nr_wares) {
+							raw_B_bmat_pl[ware_idx] += fallback_push * amount;
 						}
 					}
 				}
@@ -851,42 +1340,75 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		const int32_t cap_b = avg_b * 4;
 		for (size_t w = 0; w < nr_wares; ++w) {
 			raw_B_input[w] = std::min(raw_B_input[w], cap_b);
+			raw_B_input_pl[w] = std::min(raw_B_input_pl[w], cap_b);
 			raw_B_bmat[w] = std::min(raw_B_bmat[w], cap_b);
+			raw_B_bmat_pl[w] = std::min(raw_B_bmat_pl[w], cap_b);
 		}
 	}
 
-	// STEP 5a: independent normalization for A, input-B and bmat-B.
-	// Then mix B channels directly from the bipolar mixer PID output:
-	//   bmat_weight  = (mix + S) / (2S)
-	//   input_weight = (S - mix) / (2S)
-	// mix=0 starts at exact 50:50 weighting.
+	// STEP 5a: independent normalization for A and four B channels:
+	//   input+real, input+planning, bmat+real, bmat+planning.
+	//
+	// Two bipolar mixers from global PID bank:
+	//   x_bm in [0..1] vs (1-x_bm) for bmat/input
+	//   x_pl in [0..1] vs (1-x_pl) for planning/real
+	//
+	// The four channel weights are combined multiplicatively:
+	//   bm*rw: x_bm * (1 - x_pl)
+	//   bm*pl: x_bm * x_pl
+	//   pr*rw: (1 - x_bm) * (1 - x_pl)
+	//   pr*pl: (1 - x_bm) * x_pl
+	// with integer-safe staged scaling.
 	{
-		const int32_t mix = std::clamp(
+		const int32_t mix_bm_pr = std::clamp(
 		   global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl, -kPidOutputScale, kPidOutputScale);
-		const int64_t w_input = static_cast<int64_t>(kPidOutputScale) - mix;
-		const int64_t w_bmat = static_cast<int64_t>(kPidOutputScale) + mix;
-		const int64_t w_den = 2LL * kPidOutputScale;
+		const int32_t mix_rw_pl = std::clamp(
+		   global_pid_bank_[kPidIdxRealPlanningBalance].outputControl, -kPidOutputScale, kPidOutputScale);
+		const int64_t scale = 2LL * kPidOutputScale;
+		const int64_t x_bm_num = static_cast<int64_t>(kPidOutputScale) + mix_bm_pr;
+		const int64_t x_pr_num = scale - x_bm_num;
+		const int64_t x_pl_num = static_cast<int64_t>(kPidOutputScale) + mix_rw_pl;
+		const int64_t x_rw_num = scale - x_pl_num;
+
 		int64_t sum_A = 0;
-		int64_t sum_B_input = 0;
-		int64_t sum_B_bmat = 0;
+		int64_t sum_B_input_rw = 0;
+		int64_t sum_B_input_pl = 0;
+		int64_t sum_B_bmat_rw = 0;
+		int64_t sum_B_bmat_pl = 0;
 		for (size_t w = 0; w < nr_wares; ++w) {
 			sum_A += raw_A[w];
-			sum_B_input += raw_B_input[w];
-			sum_B_bmat += raw_B_bmat[w];
+			sum_B_input_rw += raw_B_input[w];
+			sum_B_input_pl += raw_B_input_pl[w];
+			sum_B_bmat_rw += raw_B_bmat[w];
+			sum_B_bmat_pl += raw_B_bmat_pl[w];
 		}
 		for (size_t w = 0; w < nr_wares; ++w) {
 			const int32_t norm_A = (sum_A > 0) ?
 			   static_cast<int32_t>(
 			      static_cast<int64_t>(raw_A[w]) * kNormalizationBudget / sum_A) : 0;
-			const int32_t norm_B_input = (sum_B_input > 0) ?
+			const int32_t norm_B_input_rw = (sum_B_input_rw > 0) ?
 			   static_cast<int32_t>(
-			      static_cast<int64_t>(raw_B_input[w]) * kNormalizationBudget / sum_B_input) : 0;
-			const int32_t norm_B_bmat = (sum_B_bmat > 0) ?
+			      static_cast<int64_t>(raw_B_input[w]) * kNormalizationBudget / sum_B_input_rw) : 0;
+			const int32_t norm_B_input_pl = (sum_B_input_pl > 0) ?
 			   static_cast<int32_t>(
-			      static_cast<int64_t>(raw_B_bmat[w]) * kNormalizationBudget / sum_B_bmat) : 0;
-			raw_B[w] = static_cast<int32_t>(
-			   (static_cast<int64_t>(norm_B_input) * w_input +
-			    static_cast<int64_t>(norm_B_bmat) * w_bmat) / w_den);
+			      static_cast<int64_t>(raw_B_input_pl[w]) * kNormalizationBudget / sum_B_input_pl) : 0;
+			const int32_t norm_B_bmat_rw = (sum_B_bmat_rw > 0) ?
+			   static_cast<int32_t>(
+			      static_cast<int64_t>(raw_B_bmat[w]) * kNormalizationBudget / sum_B_bmat_rw) : 0;
+			const int32_t norm_B_bmat_pl = (sum_B_bmat_pl > 0) ?
+			   static_cast<int32_t>(
+			      static_cast<int64_t>(raw_B_bmat_pl[w]) * kNormalizationBudget / sum_B_bmat_pl) : 0;
+
+			int64_t part_bm_rw = static_cast<int64_t>(norm_B_bmat_rw) * x_bm_num / scale;
+			part_bm_rw = part_bm_rw * x_rw_num / scale;
+			int64_t part_bm_pl = static_cast<int64_t>(norm_B_bmat_pl) * x_bm_num / scale;
+			part_bm_pl = part_bm_pl * x_pl_num / scale;
+			int64_t part_pr_rw = static_cast<int64_t>(norm_B_input_rw) * x_pr_num / scale;
+			part_pr_rw = part_pr_rw * x_rw_num / scale;
+			int64_t part_pr_pl = static_cast<int64_t>(norm_B_input_pl) * x_pr_num / scale;
+			part_pr_pl = part_pr_pl * x_pl_num / scale;
+
+			raw_B[w] = static_cast<int32_t>(part_bm_rw + part_bm_pl + part_pr_rw + part_pr_pl);
 			raw_total[w] = norm_A + raw_B[w];
 		}
 	}
@@ -947,17 +1469,23 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		const int32_t bmat_mix_percent = static_cast<int32_t>(
 		   (static_cast<int64_t>(global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl + kPidOutputScale) * 100) /
 		   (2LL * kPidOutputScale));
+		const int32_t planning_mix_percent = static_cast<int32_t>(
+		   (static_cast<int64_t>(global_pid_bank_[kPidIdxRealPlanningBalance].outputControl + kPidOutputScale) * 100) /
+		   (2LL * kPidOutputScale));
 		verb_log_info_time(gametime,
-		   "P%u WARE SCARCITY (tick %u, %zu wares, I=%d D=%d idle=%d scarce=%d vel=%d bmat_mix=%d%% fb=%d):\n",
+		   "P%u WARE SCARCITY (tick %u, %" PRIuS " wares, I=%d D=%d idle=%d scarce=%d vel=%d bmat_mix=%d%% plan_mix=%d%% fb_bm=%d fb_plan=%d boot=%d%%):\n",
 		   static_cast<unsigned>(player_number()), pi_tick_count_,
 		   sorted_wp.size(), I_permille_, D_permille_,
 		   cached_idle_count_, cached_scarce_ware_count_, cached_stock_velocity_,
-		   bmat_mix_percent, global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl);
+		   bmat_mix_percent, planning_mix_percent,
+		   global_pid_bank_[kPidIdxWareBmatInputBalance].outputControl,
+		   global_pid_bank_[kPidIdxRealPlanningBalance].outputControl,
+		   startup_permille_mix / 10);
 		for (size_t i = 0; i < std::min<size_t>(8, sorted_wp.size()); ++i) {
 			const size_t w = sorted_wp[i].second;
 			const auto wi = static_cast<Widelands::DescriptionIndex>(w);
 			verb_log_info_time(gametime,
-			   "  P%u WP#%zu %s: score=%d (A=%d B=%d err=%d int=%d) stock=%u\n",
+			   "  P%u WP#%" PRIuS " %s: score=%d (A=%d B=%d err=%d int=%d) stock=%u\n",
 			   static_cast<unsigned>(player_number()),
 			   i + 1, tribe_->get_ware_descr(wi)->name().c_str(),
 			   ware_pressure_[w].outputControl, raw_A[w], raw_B[w],
@@ -995,6 +1523,11 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 		   persistent_data->ware_pressure_integrals[w],
 		   persistent_data->ware_pressure_last_errors[w]);
 	}
+	for (size_t i = 0; i < global_pid_bank_.size(); ++i) {
+		global_pid_bank_[i].save_state(
+		   persistent_data->planner_global_pid.pids[i].integral,
+		   persistent_data->planner_global_pid.pids[i].last_error);
+	}
 	persistent_data->planner_global_pid.i_permille = I_permille_;
 	persistent_data->planner_global_pid.d_permille = D_permille_;
 	persistent_data->planner_global_pid.cached_stock_velocity = cached_stock_velocity_;
@@ -1006,6 +1539,9 @@ void PlannerAI::update_ware_pressures(const Time& gametime) {
 // Derives building demand from ware pressures (Circle 1) and
 // expansion pressures (Circle 3).
 void PlannerAI::update_building_pressures(const Time& /* gametime */) {
+	if (building_target_pressure_.size() != buildings_.size()) {
+		building_target_pressure_.resize(buildings_.size());
+	}
 	if (building_pressure_.size() != buildings_.size()) {
 		building_pressure_.resize(buildings_.size());
 	}
@@ -1071,10 +1607,25 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 	// Used for worker producibility check and CONTRA section below.
 	const size_t nr_wares_sz = wares.size();
 	std::vector<bool> ware_has_built_producer(nr_wares_sz, false);
+	std::vector<bool> ware_has_any_mine_producer(nr_wares_sz, false);
+	std::vector<bool> ware_has_built_mine_producer(nr_wares_sz, false);
+	std::vector<bool> ware_has_built_surface_nonrenewable_producer(nr_wares_sz, false);
 	for (const BuildingObserver& whp_bo : buildings_) {
 		if (whp_bo.type != BuildingObserver::Type::kProductionsite &&
 		    whp_bo.type != BuildingObserver::Type::kMine) {
 			continue;
+		}
+		const bool is_mine_producer = whp_bo.desc->get_ismine();
+		const bool is_surface_nonrenewable =
+		   !is_mine_producer && whp_bo.is_resource_harvester &&
+		   !whp_bo.requires_supporters;
+		for (const auto& output : whp_bo.ware_outputs) {
+			if (static_cast<size_t>(output) >= nr_wares_sz) {
+				continue;
+			}
+			if (is_mine_producer) {
+				ware_has_any_mine_producer[output] = true;
+			}
 		}
 		if (whp_bo.cnt_built + whp_bo.cnt_under_construction == 0) {
 			continue;
@@ -1082,20 +1633,23 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 		for (const auto& output : whp_bo.ware_outputs) {
 			if (static_cast<size_t>(output) < nr_wares_sz) {
 				ware_has_built_producer[output] = true;
+				if (is_mine_producer) {
+					ware_has_built_mine_producer[output] = true;
+				}
+				if (is_surface_nonrenewable) {
+					ware_has_built_surface_nonrenewable_producer[output] = true;
+				}
 			}
 		}
 	}
 
 	// Precompute per-worker-type producibility.
 	// A worker is "producible" if all its buildcost tools have built producers.
-	// Used for counter-pressure dampening (Change 5a) and anti-windup (5b).
+	// Used for worker-cost CONTRA and anti-windup feedback.
 	worker_producible_.clear();
 	for (const BuildingObserver& wp_bo : buildings_) {
 		if (wp_bo.type != BuildingObserver::Type::kProductionsite &&
 		    wp_bo.type != BuildingObserver::Type::kMine) {
-			continue;
-		}
-		if (wp_bo.unoccupied_count == 0) {
 			continue;
 		}
 		for (const auto& worker_idx : wp_bo.positions) {
@@ -1121,8 +1675,55 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 			worker_producible_[worker_idx] = producible;
 		}
 	}
+	std::map<Widelands::DescriptionIndex, int32_t> worker_cost_pressure;
+	std::map<Widelands::DescriptionIndex, int32_t> worker_block_pressure;
+	for (const auto& [worker_idx, producible] : worker_producible_) {
+		const Widelands::WorkerDescr* wd = tribe_->get_worker_descr(worker_idx);
+		if (wd == nullptr || !wd->is_buildable()) {
+			worker_cost_pressure[worker_idx] = avg_wp;
+			worker_block_pressure[worker_idx] = avg_wp;
+			continue;
+		}
+
+		int64_t weighted_pressure = 0;
+		int64_t weighted_amount = 0;
+		int32_t block_signal = producible ? 0 : avg_wp;
+		for (const auto& [tool_name, tool_amount_u] : wd->buildcost()) {
+			const int32_t tool_amount = std::max<int32_t>(1, tool_amount_u);
+			Widelands::DescriptionIndex tool_idx = tribe_->ware_index(tool_name);
+			if (tool_idx == Widelands::INVALID_INDEX ||
+			    static_cast<size_t>(tool_idx) >= nr_wares_sz) {
+				weighted_pressure += static_cast<int64_t>(avg_wp) * tool_amount;
+				weighted_amount += tool_amount;
+				block_signal += avg_wp;
+				continue;
+			}
+
+			const int32_t tool_pressure =
+			   std::max<int32_t>(0, ware_pressure_[tool_idx].outputControl);
+			weighted_pressure += static_cast<int64_t>(tool_pressure) * tool_amount;
+			weighted_amount += tool_amount;
+
+			if (calculate_total_stocklevel(tool_idx) <
+			    static_cast<uint32_t>(tool_amount_u)) {
+				block_signal += std::max<int32_t>(1, tool_pressure / 2);
+				if (!ware_has_built_producer[tool_idx]) {
+					block_signal += avg_wp;
+				}
+			}
+		}
+
+		const int32_t cost_signal = (weighted_amount > 0) ?
+		   static_cast<int32_t>(weighted_pressure / weighted_amount) :
+		   0;
+		worker_cost_pressure[worker_idx] =
+		   std::clamp<int32_t>(cost_signal, 0, kPidOutputScale);
+		worker_block_pressure[worker_idx] =
+		   std::clamp<int32_t>(block_signal, 0, kPidOutputScale);
+	}
 
 	for (size_t bi = 0; bi < buildings_.size(); ++bi) {
+		PIDController& bt = building_target_pressure_[bi];
 		PIDController& bp = building_pressure_[bi];
 		const BuildingObserver& bo = buildings_[bi];
 
@@ -1486,12 +2087,25 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 			}
 		}
 
+		// PLAN PID: desired size pressure for this building type.
+		bt.error = bp.error;
+		const int32_t bt_effective_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
+		bt.tick(P_weight, I_permille_, bt_effective_D, weights_.leak_num, weights_.leak_den);
+
+		// BUILD PID: only reacts to PLAN deficit versus currently existing
+		// and already queued buildings. This separates "target size should
+		// be high" from "build another one right now".
+		const int32_t target_units = (bt.outputControl > 0) ?
+		   (1 + (bt.outputControl - 1) / std::max<int32_t>(1, avg_wp)) : 0;
+		const int32_t current_units = static_cast<int32_t>(
+		   bo.cnt_built + bo.cnt_under_construction);
+		const int32_t deficit_units = std::max<int32_t>(0, target_units - current_units);
+		bp.error = static_cast<int32_t>(
+		   std::clamp<int64_t>(
+		      static_cast<int64_t>(deficit_units) * avg_wp,
+		      0, static_cast<int64_t>(kPidOutputScale)));
+
 		// PID tick with economy-derived parameters (same as Circle 1).
-		// Unit flow: bp.error [budget] → outputControl [raw_pid]
-		//   = P_weight × error + I_permille × ipart / 1000 + D × Δerror
-		//   Note: [raw_pid] here means "P-scaled budget" — dimensionally
-		//   [budget × dimensionless] = [budget], but the magnitude is
-		//   amplified by P_weight (up to 100×). Uses int64 + clamp in tick().
 		const int32_t bp_effective_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
 		bp.tick(P_weight, I_permille_, bp_effective_D, weights_.leak_num, weights_.leak_den);
 		raw_total[bi] = bp.outputControl;  // [raw_pid]
@@ -1636,18 +2250,74 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 		}
 	}
 
+	// Worker-cost global mix PID:
+	//   >0 => trust ware-based worker cost pressure more
+	//   <0 => trust worker-block fallback more
+	int32_t worker_cost_need_units = 0;
+	int32_t worker_block_need_units = 0;
+	int32_t worker_relief_units = 0;
+	for (const BuildingObserver& bo : buildings_) {
+		if (bo.type != BuildingObserver::Type::kProductionsite &&
+		    bo.type != BuildingObserver::Type::kMine) {
+			continue;
+		}
+		if (bo.positions.empty()) {
+			continue;
+		}
+		const int32_t worker_need = static_cast<int32_t>(
+		   bo.unoccupied_count + bo.cnt_under_construction);
+		if (worker_need <= 0) {
+			continue;
+		}
+
+		int32_t max_cost_signal = 0;
+		int32_t max_block_signal = 0;
+		for (const auto& worker_idx : bo.positions) {
+			auto wc_it = worker_cost_pressure.find(worker_idx);
+			if (wc_it != worker_cost_pressure.end()) {
+				max_cost_signal = std::max(max_cost_signal, wc_it->second);
+			}
+			auto wb_it = worker_block_pressure.find(worker_idx);
+			if (wb_it != worker_block_pressure.end()) {
+				max_block_signal = std::max(max_block_signal, wb_it->second);
+			}
+		}
+
+		worker_cost_need_units += static_cast<int32_t>(
+		   static_cast<int64_t>(worker_need) * max_cost_signal /
+		   std::max<int32_t>(1, avg_wp));
+		worker_block_need_units += static_cast<int32_t>(
+		   static_cast<int64_t>(worker_need) * max_block_signal /
+		   std::max<int32_t>(1, avg_wp));
+		if (max_block_signal == 0 && max_cost_signal <= avg_wp / 4) {
+			worker_relief_units += worker_need;
+		}
+	}
+	const int32_t worker_mix_recentering = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxWorkerCostBalance].outputControl) /
+	   std::max<int32_t>(1, P_weight));
+	global_pid_bank_[kPidIdxWorkerCostBalance].error =
+	   worker_cost_need_units + worker_block_need_units -
+	   worker_relief_units - worker_mix_recentering;
+	const int32_t worker_mix_D = std::max<int32_t>(1, D_permille_ * N_ticks / 1000);
+	global_pid_bank_[kPidIdxWorkerCostBalance].tick(
+	   P_weight, I_permille_, worker_mix_D, weights_.leak_num, weights_.leak_den);
+	global_pid_bank_[kPidIdxWorkerCostBalance].save_state(
+	   persistent_data->planner_global_pid.pids[kPidIdxWorkerCostBalance].integral,
+	   persistent_data->planner_global_pid.pids[kPidIdxWorkerCostBalance].last_error);
+	const int32_t worker_cost_mix_permille = static_cast<int32_t>(
+	   (static_cast<int64_t>(std::clamp(global_pid_bank_[kPidIdxWorkerCostBalance].outputControl,
+	                       -kPidOutputScale, kPidOutputScale)) + kPidOutputScale) * 1000 /
+	   (2LL * kPidOutputScale));
+
 	for (size_t bi = 0; bi < buildings_.size(); ++bi) {
 		PIDController& cv = building_prevention_[bi];
 		const BuildingObserver& bo = buildings_[bi];
 
 		cv.error = 0;
 
-		// Already built or under construction → minimal contra
-		// (committed investments shouldn't accumulate prevention)
-		if (bo.cnt_built > 0) {
-			// No contra for existing buildings.
-		} else if (bo.type == BuildingObserver::Type::kProductionsite ||
-		           bo.type == BuildingObserver::Type::kMine) {
+		if (bo.type == BuildingObserver::Type::kProductionsite ||
+		    bo.type == BuildingObserver::Type::kMine) {
 			// --- 1. Missing input chain ---
 			// Each input ware without a producer → big contra.
 			// This prevents: weaponsmithy without mine, bakery without farm,
@@ -1655,7 +2325,7 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 			for (const auto& input : bo.inputs) {
 				if (static_cast<size_t>(input) < contra_nr_wares &&
 				    !ware_has_built_producer[input]) {
-					cv.error += avg_wp;
+					cv.error += (bo.cnt_built > 0) ? std::max<int32_t>(1, avg_wp / 2) : avg_wp;
 				}
 			}
 
@@ -1708,6 +2378,55 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 			if (bo.cnt_under_construction > 0) {
 				cv.error += avg_wp * static_cast<int32_t>(bo.cnt_under_construction);
 			}
+			// --- 3b. Mine readiness vs finite surface harvesters ---
+			// If this building is a finite surface producer for a ware that has
+			// mine producers available but not yet built, bias against adding
+			// more surface copies so the chain can pivot toward mine readiness.
+			if (bo.is_resource_harvester && !bo.desc->get_ismine() &&
+			    !bo.requires_supporters && bo.cnt_built > 0) {
+				for (const auto& output : bo.ware_outputs) {
+					if (static_cast<size_t>(output) >= contra_nr_wares) {
+						continue;
+					}
+					if (!ware_has_any_mine_producer[output] ||
+					    ware_has_built_mine_producer[output]) {
+						continue;
+					}
+					if (!ware_has_built_surface_nonrenewable_producer[output]) {
+						continue;
+					}
+					const int32_t output_pressure =
+					   std::max<int32_t>(0, ware_pressure_[output].outputControl);
+					if (output_pressure > 0) {
+						cv.error += static_cast<int32_t>(
+						   static_cast<int64_t>(output_pressure) *
+						   std::max<uint32_t>(1, bo.cnt_built) /
+						   (1 + static_cast<int32_t>(bo.cnt_under_construction)));
+					}
+				}
+			}
+
+			// Input-starvation coupling:
+			// Existing instances with low productivity and scarce inputs
+			// should route pressure upstream (input wares), not duplicate
+			// the same building type again.
+			if (bo.cnt_built > 0 && !bo.inputs.empty()) {
+				const int32_t productivity_deficit = std::clamp<int32_t>(
+				   100 - static_cast<int32_t>(bo.current_stats), 0, 100);
+				int32_t max_input_pressure = 0;
+				for (const auto& input : bo.inputs) {
+					if (static_cast<size_t>(input) < ware_pressure_.size()) {
+						max_input_pressure = std::max<int32_t>(
+						   max_input_pressure,
+						   std::max<int32_t>(0, ware_pressure_[input].outputControl));
+					}
+				}
+				if (productivity_deficit > 0 && max_input_pressure > 0) {
+					cv.error += static_cast<int32_t>(
+					   static_cast<int64_t>(max_input_pressure) * productivity_deficit *
+					   std::max<uint32_t>(1, bo.cnt_built) / 50);
+				}
+			}
 
 		} else if (bo.type == BuildingObserver::Type::kMilitarysite) {
 			// --- 4. Economy too young for military ---
@@ -1746,19 +2465,30 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 			}
 		}
 
-		// --- 5. Worker blocked ---
-		// Workers that can't be produced (missing tool producers)
-		// are a reason NOT to build. The error signal feeds the
-		// D-term, providing immediate response when worker tools
-		// become producible (error drops → D fires negative).
+		// --- 5. Worker cost / worker block mix ---
+		// Worker buildcost wares feed CONTRA through ware pressure.
+		// The global worker-cost PID decides x vs (1-x):
+		//   x = ware-based worker-cost signal
+		//   1-x = worker-block fallback signal
 		if (bo.type == BuildingObserver::Type::kProductionsite ||
 		    bo.type == BuildingObserver::Type::kMine) {
+			int32_t worker_cost_signal = 0;
+			int32_t worker_block_signal = 0;
 			for (const auto& worker_idx : bo.positions) {
-				auto it = worker_producible_.find(worker_idx);
-				if (it != worker_producible_.end() && !it->second) {
-					cv.error += avg_wp;
-					break;
+				auto wc_it = worker_cost_pressure.find(worker_idx);
+				if (wc_it != worker_cost_pressure.end()) {
+					worker_cost_signal = std::max(worker_cost_signal, wc_it->second);
 				}
+				auto wb_it = worker_block_pressure.find(worker_idx);
+				if (wb_it != worker_block_pressure.end()) {
+					worker_block_signal = std::max(worker_block_signal, wb_it->second);
+				}
+			}
+			if (worker_cost_signal > 0 || worker_block_signal > 0) {
+				cv.error += static_cast<int32_t>(
+				   (static_cast<int64_t>(worker_cost_mix_permille) * worker_cost_signal +
+				    static_cast<int64_t>(1000 - worker_cost_mix_permille) * worker_block_signal) /
+				   1000);
 			}
 		}
 
@@ -1863,7 +2593,12 @@ void PlannerAI::update_building_pressures(const Time& /* gametime */) {
 	// Sync building PID state to persistent data
 	persistent_data->building_pressure_integrals.resize(buildings_.size());
 	persistent_data->building_pressure_last_errors.resize(buildings_.size());
+	persistent_data->building_target_integrals.resize(buildings_.size());
+	persistent_data->building_target_last_errors.resize(buildings_.size());
 	for (size_t bi = 0; bi < buildings_.size(); ++bi) {
+		building_target_pressure_[bi].save_state(
+		   persistent_data->building_target_integrals[bi],
+		   persistent_data->building_target_last_errors[bi]);
 		building_pressure_[bi].save_state(
 		   persistent_data->building_pressure_integrals[bi],
 		   persistent_data->building_pressure_last_errors[bi]);
@@ -1994,6 +2729,84 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		// pi_tick_count_ is now 10, next normal call makes it 11
 	}
 
+	if (last_economy_build_.get() == 0u) {
+		last_economy_build_ = gametime;
+	}
+
+	const int32_t avg_wp_build = wares.empty() ? 1 :
+	   kNormalizationBudget / static_cast<int32_t>(wares.size());
+	int64_t effective_sum = 0;
+	int32_t effective_count = 0;
+	for (size_t bi = 0; bi < buildings_.size() && bi < building_pressure_.size(); ++bi) {
+		const BuildingObserver& bo = buildings_[bi];
+		if (bo.type == BuildingObserver::Type::kMilitarysite ||
+		    !bo.buildable(*player_) ||
+		    bo.aimode_limit_status() != AiModeBuildings::kAnotherAllowed) {
+			continue;
+		}
+		const int32_t pro = building_pressure_[bi].outputControl;
+		const int32_t contra = (bi < building_prevention_.size()) ?
+		   building_prevention_[bi].outputControl : 0;
+		effective_sum += (pro - contra);
+		++effective_count;
+	}
+	const int32_t avg_effective = (effective_count > 0) ?
+	   static_cast<int32_t>(effective_sum / effective_count) : 0;
+	const int32_t score_velocity = avg_effective - cached_avg_build_score_;
+	cached_avg_build_score_ = avg_effective;
+
+	const int32_t goal_score = evaluate_goal_progress_score(game().get_win_condition_displayname());
+	const int32_t goal_velocity = goal_score - cached_goal_score_;
+	cached_goal_score_ = goal_score;
+
+	const Duration since_last_build = gametime - last_economy_build_;
+	const int32_t no_build_ticks = static_cast<int32_t>(
+	   since_last_build.get() / std::max<uint32_t>(1, kBuildingMinInterval.get()));
+	const int32_t no_build_error = std::max<int32_t>(
+	   0, no_build_ticks - std::max<int32_t>(1, weights_.N_ticks / 2));
+
+	const int32_t score_velocity_units =
+	   score_velocity / std::max<int32_t>(1, avg_wp_build);
+	const int32_t goal_velocity_units =
+	   goal_velocity / std::max<int32_t>(1, avg_wp_build);
+	int32_t economy_target_build = 1;
+	while (economy_target_build * economy_target_build <
+	       std::max<int32_t>(1, static_cast<int32_t>(buildings_.size()))) {
+		++economy_target_build;
+	}
+	const int32_t startup_build_permille = std::max<int32_t>(
+	   0, 1000 - std::clamp<int32_t>(
+	      static_cast<int32_t>(productionsites.size() + mines_.size()) * 1000 /
+	      std::max<int32_t>(1, economy_target_build), 0, 1000));
+	const int32_t no_build_pressure_units =
+	   no_build_error * std::max<int32_t>(
+	      1, avg_wp_build / std::max<int32_t>(1, weights_.P_weight));
+	const int32_t startup_build_bias_units = static_cast<int32_t>(
+	   static_cast<int64_t>(startup_build_permille) *
+	   std::max<int32_t>(1, avg_wp_build / std::max<int32_t>(1, weights_.P_weight)) / 1000);
+	const int32_t unowned_exp_units = expansion_targets_.empty() ? 0 :
+	   std::max<int32_t>(0, expansion_targets_[0].outputControl) /
+	      std::max<int32_t>(1, avg_wp_build);
+	const int32_t offset_recentering = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxGlobalBuildOffset].outputControl) *
+	   (1000 - startup_build_permille) /
+	   (1000LL * std::max<int32_t>(1, weights_.P_weight)));
+	global_pid_bank_[kPidIdxGlobalBuildOffset].error =
+	   score_velocity_units + goal_velocity_units / 2 +
+	   no_build_pressure_units + unowned_exp_units / 2 +
+	   startup_build_bias_units - offset_recentering;
+	const int32_t build_offset_D = std::max<int32_t>(
+	   1, D_permille_ * std::max<int32_t>(1, weights_.N_ticks) / 1000);
+	global_pid_bank_[kPidIdxGlobalBuildOffset].tick(
+	   std::max<int32_t>(1, weights_.P_weight), I_permille_, build_offset_D,
+	   std::max<int32_t>(1, weights_.leak_num), std::max<int32_t>(1, weights_.leak_den));
+	global_pid_bank_[kPidIdxGlobalBuildOffset].save_state(
+	   persistent_data->planner_global_pid.pids[kPidIdxGlobalBuildOffset].integral,
+	   persistent_data->planner_global_pid.pids[kPidIdxGlobalBuildOffset].last_error);
+	const int32_t global_build_offset_bias = static_cast<int32_t>(
+	   static_cast<int64_t>(global_pid_bank_[kPidIdxGlobalBuildOffset].outputControl) *
+	   std::max<int32_t>(1, avg_wp_build) / kPidOutputScale);
+
 	// Construction limit for economy buildings (military is independent)
 	const uint32_t economy_size = productionsites.size() + mines_.size();
 	uint32_t max_construction = economy_size / 5 + 2;
@@ -2025,7 +2838,7 @@ bool PlannerAI::construct_building(const Time& gametime) {
 			const int32_t pro = building_pressure_[bi].outputControl;
 			const int32_t contra = (bi < building_prevention_.size()) ?
 			   building_prevention_[bi].outputControl : 0;
-			const int32_t effective = pro - contra;
+			const int32_t effective = pro - contra + global_build_offset_bias;
 			if (pro > 0) {
 				sorted_bp.emplace_back(effective, bi);
 			}
@@ -2035,9 +2848,10 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		   buildable_fields.begin(), buildable_fields.end(),
 		   [](const UniversalBuildableField* bf) { return bf->is_mine_spot; });
 		verb_log_info_time(gametime,
-		   "P%u BUILD DECISIONS (fields=%zu mine_spots=%zu spots=%d constr=%u econ=%u):\n",
+		   "P%u BUILD DECISIONS (fields=%" PRIuS " mine_spots=%" PRIuS " spots=%d constr=%u econ=%u offset=%d):\n",
 		   static_cast<unsigned>(player_number()), buildable_fields.size(),
-		   mine_spot_count, spots_, numof_psites_in_constr, economy_size);
+		   mine_spot_count, spots_, numof_psites_in_constr, economy_size,
+		   global_build_offset_bias);
 		for (size_t i = 0; i < std::min<size_t>(8, sorted_bp.size()); ++i) {
 			const size_t bi = sorted_bp[i].second;
 			const BuildingObserver& bo = buildings_[bi];
@@ -2047,9 +2861,10 @@ bool PlannerAI::construct_building(const Time& gametime) {
 			const int32_t supply =
 			   (bi < building_supply_score_.size()) ? building_supply_score_[bi] : 1000;
 			verb_log_info_time(gametime,
-			   "  P%u BP#%zu %s: eff=%d (pro=%d contra=%d) supply=%d built=%u constr=%u\n",
+			   "  P%u BP#%" PRIuS " %s: eff=%d (pro=%d contra=%d off=%d) supply=%d built=%u constr=%u\n",
 			   static_cast<unsigned>(player_number()),
-			   i + 1, bo.name, pro - contra, pro, contra, supply,
+			   i + 1, bo.name, pro - contra + global_build_offset_bias, pro, contra,
+			   global_build_offset_bias, supply,
 			   bo.cnt_built, bo.cnt_under_construction);
 		}
 	}
@@ -2062,7 +2877,7 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		   (bi < building_pressure_.size()) ? building_pressure_[bi].outputControl : 0;
 		const int32_t contra =
 		   (bi < building_prevention_.size()) ? building_prevention_[bi].outputControl : 0;
-		const int32_t effective = pro - contra;
+		const int32_t effective = pro - contra + global_build_offset_bias;
 
 		bo.add_new_building_score = std::max<int32_t>(0, effective);
 
@@ -2070,19 +2885,9 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		    bo.aimode_limit_status() == AiModeBuildings::kAnotherAllowed) {
 			bo.new_building = BuildingNecessity::kNeeded;
 
-			// Material availability gate.
-			//
-			// Production/mine buildings: HARD GATE. Don't start construction
-			// unless stock covers the full buildcost. Starting a building
-			// you can't finish drains CM from other sites and deadlocks
-			// the economy. Wait until CM reproduction fills the stock.
-			//
-			// Exception: first instance (total_count == 0) keeps a 25%
-			// floor for bootstrap ("need wood to build woodcutter").
-			//
-			// Military buildings: SOFT GATE with 25% floor. They must
-			// always be considered for placement so the per-field integral
-			// can accumulate. CM will arrive during construction.
+			// Material availability gate (soft only).
+			// Coverage scales score continuously; no hard zeroing.
+			// Floor is derived from buildcost arity: 1 / (1 + n_cost_wares).
 			const Widelands::Buildcost& cost = bo.desc->buildcost();
 			if (!cost.empty()) {
 				Widelands::Quantity total_needed = 0;
@@ -2093,39 +2898,26 @@ bool PlannerAI::construct_building(const Time& gametime) {
 					total_available += std::min<uint32_t>(stock, item.second);
 				}
 				if (total_needed > 0) {
-					if (bo.type == BuildingObserver::Type::kMilitarysite) {
-						// Military: soft gate, floor at 25%.
-						const int32_t numerator_mil =
-						   1 + 3 * static_cast<int32_t>(total_available) /
-						         static_cast<int32_t>(total_needed);
-						bo.add_new_building_score =
-						   bo.add_new_building_score * numerator_mil / 4;
-					} else if (total_available < total_needed) {
-						// Production/mine: stock doesn't cover buildcost.
-						if (bo.total_count() == 0) {
-							// Bootstrap: first instance, allow at 25%.
-							// Supply gate handles chain ordering — a
-							// weaponsmithy with no input producers gets
-							// a low supply factor that drops it below
-							// basic buildings.
-							const int32_t numerator =
-							   1 + 3 * static_cast<int32_t>(total_available) /
-							         static_cast<int32_t>(total_needed);
-							bo.add_new_building_score =
-							   bo.add_new_building_score * numerator / 4;
-						} else {
-							// Duplicate: hard gate. Don't build a 2nd
-							// instance unless stock covers full buildcost.
-							bo.add_new_building_score = 0;
-						}
-					}
-					// else: full stock available, score unchanged.
+					const int32_t coverage_permille = std::clamp<int32_t>(
+					   static_cast<int32_t>(
+					      static_cast<int64_t>(total_available) * 1000 /
+					      static_cast<int32_t>(total_needed)),
+					   0, 1000);
+					const int32_t floor_permille = std::max<int32_t>(
+					   1, 1000 / (1 + static_cast<int32_t>(cost.size())));
+					const int32_t material_factor = floor_permille +
+					   static_cast<int32_t>(
+					      static_cast<int64_t>(1000 - floor_permille) *
+					      coverage_permille / 1000);
+					bo.add_new_building_score = static_cast<int32_t>(
+					   static_cast<int64_t>(bo.add_new_building_score) *
+					   material_factor / 1000);
 				}
 				bo.build_material_shortage = (total_available < total_needed);
 			}
 
-			// Input chain readiness: hard gate by supply chain completeness.
-			// Supply chain gate: scale score by supply readiness.
+			// Input chain readiness: soft gate by supply chain completeness.
+			// Floor is derived from input arity: 1 / (1 + n_inputs).
 			//
 			// Uses the PID-based building_supply_score_ computed in
 			// update_ware_pressures(). The factor is derived from:
@@ -2136,22 +2928,46 @@ bool PlannerAI::construct_building(const Time& gametime) {
 			if ((bo.type == BuildingObserver::Type::kProductionsite ||
 			     bo.type == BuildingObserver::Type::kMine) &&
 			    bi < building_supply_score_.size() && !bo.inputs.empty()) {
-				bo.add_new_building_score =
-				   bo.add_new_building_score * building_supply_score_[bi] / 1000;
+				const int32_t supply_signal =
+				   std::clamp<int32_t>(building_supply_score_[bi], 0, 1000);
+				const int32_t floor_permille = std::max<int32_t>(
+				   1, 1000 / (1 + static_cast<int32_t>(bo.inputs.size())));
+				const int32_t supply_factor = floor_permille +
+				   static_cast<int32_t>(
+				      static_cast<int64_t>(1000 - floor_permille) *
+				      supply_signal / 1000);
+				bo.add_new_building_score = static_cast<int32_t>(
+				   static_cast<int64_t>(bo.add_new_building_score) *
+				   supply_factor / 1000);
 			}
 
-			// Respect construction interval for production sites
-			if ((bo.type == BuildingObserver::Type::kProductionsite ||
-			     bo.type == BuildingObserver::Type::kMine) &&
-			    gametime - bo.construction_decision_time < kBuildingMinInterval &&
-			    !bo.is_resource_harvester) {
-				bo.new_building = BuildingNecessity::kForbidden;
+			// Respect construction interval with soft cooldown (no hard forbid).
+				if ((bo.type == BuildingObserver::Type::kProductionsite ||
+				     bo.type == BuildingObserver::Type::kMine) &&
+				    gametime - bo.construction_decision_time < kBuildingMinInterval &&
+				    !bo.is_resource_harvester) {
+				const Duration elapsed = gametime - bo.construction_decision_time;
+				const int32_t elapsed_permille = std::clamp<int32_t>(
+				   static_cast<int32_t>(
+				      static_cast<int64_t>(elapsed.get()) * 1000 /
+				      std::max<uint32_t>(1, kBuildingMinInterval.get())),
+				   0, 1000);
+				const int32_t floor_permille = std::max<int32_t>(
+				   1, 1000 / (1 + std::max<int32_t>(
+				      1, static_cast<int32_t>(bo.inputs.size()))));
+				const int32_t cooldown_factor = floor_permille +
+				   static_cast<int32_t>(
+				      static_cast<int64_t>(1000 - floor_permille) *
+				      elapsed_permille / 1000);
+					bo.add_new_building_score = static_cast<int32_t>(
+					   static_cast<int64_t>(bo.add_new_building_score) *
+					   cooldown_factor / 1000);
+				}
+			} else {
+				bo.new_building = BuildingNecessity::kNotNeeded;
+				bo.add_new_building_score = 0;
 			}
-		} else {
-			bo.new_building = BuildingNecessity::kNotNeeded;
-			bo.add_new_building_score = 0;
 		}
-	}
 
 	// --- Spot size value estimation ---
 	//
@@ -2292,9 +3108,6 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		if (bo.add_new_building_score <= 0) {
 			continue;
 		}
-		if (bo.cnt_under_construction >= 2) {
-			continue;
-		}
 		economy_candidates.push_back(&bo);
 	}
 	std::sort(economy_candidates.begin(), economy_candidates.end(),
@@ -2309,6 +3122,17 @@ bool PlannerAI::construct_building(const Time& gametime) {
 	// Must iterate per field for integral accumulation, but the
 	// inner loop is tiny compared to the full buildings_ vector.
 	// Pre-compute material cost and time factor for each candidate.
+	const int32_t economy_sz_military =
+	   static_cast<int32_t>(productionsites.size() + mines_.size());
+	int32_t economy_target_military = 1;
+	while (economy_target_military * economy_target_military <
+	       std::max<int32_t>(1, static_cast<int32_t>(buildings_.size()))) {
+		++economy_target_military;
+	}
+	const int32_t startup_military_permille = std::max<int32_t>(
+	   0, 1000 - std::clamp<int32_t>(
+	      economy_sz_military * 1000 / std::max<int32_t>(1, economy_target_military),
+	      0, 1000));
 	struct MilitaryCandidateInfo {
 		BuildingObserver* bo;
 		int64_t material_cost;
@@ -2357,28 +3181,38 @@ bool PlannerAI::construct_building(const Time& gametime) {
 					   avg_wp_gate * conservation_factor / 1000;
 				}
 			}
-			const Widelands::MilitarySiteDescr* ms_desc =
-			   dynamic_cast<const Widelands::MilitarySiteDescr*>(bo.desc);
-			const int32_t garrison = ms_desc != nullptr ?
-			   static_cast<int32_t>(ms_desc->get_max_number_of_soldiers()) : 1;
-			mat_cost += static_cast<int64_t>(garrison) *
-			   soldier_cost_factor * avg_wp_mil;
-			mat_cost = std::max<int64_t>(1, mat_cost);
-			const int32_t tfactor = std::max<int32_t>(1,
-			   1 + (total_wares + garrison) / 2);
-			military_candidates.push_back(
+				const Widelands::MilitarySiteDescr* ms_desc =
+				   dynamic_cast<const Widelands::MilitarySiteDescr*>(bo.desc);
+				const int32_t garrison = ms_desc != nullptr ?
+				   static_cast<int32_t>(ms_desc->get_max_number_of_soldiers()) : 1;
+				mat_cost += static_cast<int64_t>(garrison) *
+				   soldier_cost_factor * avg_wp_mil;
+				// Early-game military depth guard:
+				// expensive/high-garrison military sites are delayed until
+				// the economy matures, while cheap huts remain comparatively viable.
+				mat_cost += static_cast<int64_t>(startup_military_permille) *
+				   std::max<int32_t>(1, garrison) * avg_wp_mil / 1000;
+				mat_cost = std::max<int64_t>(1, mat_cost);
+				const int32_t tfactor = std::max<int32_t>(1,
+				   1 + (total_wares + garrison) / 2);
+				military_candidates.push_back(
 			   {&bo, mat_cost, garrison, tfactor,
 			    bo.add_new_building_score * 4});
 		}
 	}
 
-	// Pre-compute: does any military building exist? (for border reservation)
-	bool any_military_exists = false;
-	for (const BuildingObserver& mbo : buildings_) {
-		if (mbo.type == BuildingObserver::Type::kMilitarysite &&
-		    (mbo.cnt_built + mbo.cnt_under_construction) > 0) {
-			any_military_exists = true;
-			break;
+	// Border reservation basis:
+	// if any border opportunity exists, each border field is unlocked only
+	// by local military coverage (built or under construction).
+	bool border_opportunity_exists = false;
+	for (const UniversalBuildableField* bf : buildable_fields) {
+		if (bf->field_info_expiration < gametime) {
+			continue;
+		}
+		if (bf->near_border &&
+		    (bf->unowned_land_nearby > 0 || bf->enemy_owned_land_nearby > 0 ||
+		     bf->unowned_mines_spots_nearby > 0)) {
+			border_opportunity_exists = true;
 		}
 	}
 
@@ -2415,15 +3249,28 @@ bool PlannerAI::construct_building(const Time& gametime) {
 				BuildingObserver* best_mil_type = nullptr;
 
 				for (const auto& mc : military_candidates) {
-					if (mc.bo->desc->get_size() > maxsize) {
-						continue;
-					}
-					const int32_t conquer_r = static_cast<int32_t>(
-					   mc.bo->desc->get_conquers());
-					const int32_t field_gain = bf->military_score_ * conquer_r;
-					const int64_t land_value =
-					   static_cast<int64_t>(field_gain) *
-					   std::max<int32_t>(1, land_value_per_field_);
+						if (mc.bo->desc->get_size() > maxsize) {
+							continue;
+						}
+						const int32_t conquer_r = static_cast<int32_t>(
+						   mc.bo->desc->get_conquers());
+						const int32_t own_presence_units = std::max<int32_t>(
+						   0, static_cast<int32_t>(bf->own_military_presence) /
+						         std::max<int32_t>(1, smallest_garrison_));
+						const int32_t enemy_presence_units = std::max<int32_t>(
+						   0, static_cast<int32_t>(bf->enemy_military_presence) /
+						         std::max<int32_t>(1, smallest_garrison_));
+						const int32_t overlap_units =
+						   own_presence_units + std::max<int32_t>(0, bf->military_in_constr_nearby);
+						// Even without enemies, overlapping conquer areas should
+						// quickly lose marginal value. Enemy pressure softens this.
+						const int32_t overlap_penalty =
+						   std::max<int32_t>(1, 4 - std::min<int32_t>(3, enemy_presence_units));
+						const int32_t field_gain = bf->military_score_ * conquer_r /
+						   std::max<int32_t>(1, 1 + overlap_units * overlap_penalty);
+						const int64_t land_value =
+						   static_cast<int64_t>(field_gain) *
+						   std::max<int32_t>(1, land_value_per_field_);
 					const int64_t total_cost =
 					   mc.material_cost * mc.time_factor;
 					const int32_t raw_efficiency = static_cast<int32_t>(
@@ -2469,14 +3316,16 @@ bool PlannerAI::construct_building(const Time& gametime) {
 			const int32_t maxsize = field_caps & Widelands::BUILDCAPS_SIZEMASK;
 			const bool field_is_mine_spot = (field_caps & Widelands::BUILDCAPS_MINE) != 0;
 
-			// Border reservation: fields near the border without military
-			// coverage are reserved for military expansion. Economy buildings
-			// should not take spots that military buildings need to claim land.
-			// Only apply when at least one military building exists (early
-			// game needs economy on border spots before first military).
-			// Mine spots are exempt: military can't be built on them.
-			if (any_military_exists && !field_is_mine_spot &&
-			    bf->near_border && bf->own_military_presence == 0) {
+			// Queue ownership invariant:
+			// Border fields stay in military queue until a military building
+			// (built or under construction) covers the area.
+			const bool border_reserved_for_military = border_opportunity_exists &&
+			   bf->near_border &&
+			   (bf->unowned_land_nearby > 0 || bf->enemy_owned_land_nearby > 0 ||
+			    bf->unowned_mines_spots_nearby > 0 || bf->enemy_nearby) &&
+			   bf->own_military_presence == 0 &&
+			   bf->military_in_constr_nearby == 0;
+			if (border_reserved_for_military) {
 				continue;
 			}
 
@@ -2489,6 +3338,8 @@ bool PlannerAI::construct_building(const Time& gametime) {
 			if (field_compatible) do {  // breakable block for early exits
 				BuildingObserver& bo = *economy_candidate;
 				int32_t prio = bo.add_new_building_score;
+				prio = std::max<int32_t>(
+				   1, prio / (1 + static_cast<int32_t>(bo.cnt_under_construction)));
 
 				// Lookup field counts for this building type
 				uint8_t number_of_supporters_nearby = 0;
@@ -2724,20 +3575,9 @@ bool PlannerAI::construct_building(const Time& gametime) {
 				}
 
 				// Border reservation
-				// Resource harvesters, fishers, and wells must be placed where
-				// their resources are — even if that's near the border. Workers
-				// can harvest trees/rocks/critters on unowned land, so border
-				// spots with resources are the BEST placement, not the worst.
-				// The military hard-skip still prevents placement at completely
-				// undefended borders.
 				const bool needs_specific_location =
 				   bo.is_resource_harvester || bo.is(BuildingAttribute::kFisher) ||
 				   bo.is(BuildingAttribute::kWell) || bo.is(BuildingAttribute::kNeedsCoast);
-				if (any_military_exists &&
-				    bf->own_military_presence == 0 && bf->military_in_constr_nearby == 0 &&
-				    (bf->near_border || bf->unowned_land_nearby > 3)) {
-					break;  // Hard skip: no military coverage
-				}
 				if (!needs_specific_location) {
 					if (bf->unowned_land_nearby > 0 && !expansion_targets_.empty()) {
 						const int32_t exp_pressure =
@@ -2844,6 +3684,32 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		}
 		if (pred_bo == nullptr || pred_bo->cnt_built == 0) {
 			continue;  // No predecessor buildings exist to upgrade
+		}
+		// Keep at least one base producer online for supporter-dependent
+		// harvesting chains.
+		if (pred_bo->requires_supporters &&
+		    pred_bo->cnt_built <= 1 && pred_bo->cnt_under_construction == 0) {
+			continue;
+		}
+		// Output continuity safeguard:
+		// If this is the last predecessor instance and the enhancement would
+		// drop currently scarce outputs, don't upgrade it without a replacement.
+		if (pred_bo->cnt_built <= 1 && pred_bo->cnt_under_construction == 0) {
+			bool drops_scarce_output = false;
+			for (const auto& pred_out : pred_bo->ware_outputs) {
+				if (static_cast<size_t>(pred_out) >= ware_pressure_.size() ||
+				    ware_pressure_[pred_out].outputControl <= 0) {
+					continue;
+				}
+				if (std::find(en_bo.ware_outputs.begin(), en_bo.ware_outputs.end(), pred_out) ==
+				    en_bo.ware_outputs.end()) {
+					drops_scarce_output = true;
+					break;
+				}
+			}
+			if (drops_scarce_output) {
+				continue;
+			}
 		}
 
 		// For kUpgradeExtends: keep at least one predecessor (don't upgrade ALL)
@@ -3018,6 +3884,7 @@ bool PlannerAI::construct_building(const Time& gametime) {
 		blocked_fields.add(economy_coords, gametime + Duration(2 * 60 * 1000));
 		best_economy->new_building_overdue = 0;
 		best_economy->construction_decision_time = gametime;
+		last_economy_build_ = gametime;
 
 		// No integral reset needed: the leaky integrator in tick() handles
 		// winddown automatically. On next tick, error drops (cnt_built increased)
